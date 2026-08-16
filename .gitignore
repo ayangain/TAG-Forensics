@@ -1,0 +1,14 @@
+# Operating System
+.DS_Store
+
+# Python Bytecode & Cache
+__pycache__/
+*.pyc
+
+# Dataset archives and raw dump data
+*.dump
+*.dump.gz
+*.bsm
+*.praudit-l
+LLS_DDOS_1.0/
+LLDOS 2.0.2/
