@@ -16,10 +16,12 @@ from experiment.ftag_metrics import (
     corridor_narrowing_ratio,
     path_alignment_score,
     dwell_time_bounds,
-    temporal_propagation_rate
+    temporal_propagation_rate,
+    anti_forensics_confidence_score,
+    structural_tag_metrics
 )
 
-def run_case_study(ftag, title, src_node, dst_node, active_evidence):
+def run_case_study(ftag, title, src_node, dst_node, active_evidence, delta_skew=0, total_windows=5):
     print("\n" + "═" * 70)
     print(f"  CASE STUDY: {title}")
     print("═" * 70)
@@ -33,6 +35,8 @@ def run_case_study(ftag, title, src_node, dst_node, active_evidence):
     print(f"  -> Source: [{src_node}] {src_state}")
     print(f"  -> Target: [{dst_node}] {dst_state}")
     print(f"  -> Evidence Provided (Observed Windows): {active_evidence}")
+    if delta_skew > 0:
+        print(f"  -> Evidence Uncertainty (Clock Skew \u03B4): \u00B1{delta_skew} Window(s)")
     
     paths = ftag.enumerate_temporal_paths(src_node, dst_node, max_hops=15)
     print(f"  -> Found {len(paths)} valid temporal attack corridors (Q^a_ij).")
@@ -42,7 +46,7 @@ def run_case_study(ftag, title, src_node, dst_node, active_evidence):
         return
 
     # 1. Forensic Window of Compromise (FWoC)
-    fwocs = [forensic_window_of_compromise(p, active_evidence) for p in paths]
+    fwocs = [forensic_window_of_compromise(p, active_evidence, delta_skew=delta_skew) for p in paths]
     valid_fwocs = [f for f in fwocs if f is not None]
     
     if valid_fwocs:
@@ -70,12 +74,18 @@ def run_case_study(ftag, title, src_node, dst_node, active_evidence):
     dt_lo, dt_hi = dwell_time_bounds(fastest_path, ftag, ftag.window_duration)
     v = temporal_propagation_rate(fastest_path)
     
+    # Anti-Forensics Score
+    all_windows = list(range(total_windows))
+    af_score = anti_forensics_confidence_score(fastest_path, ftag, active_evidence, all_windows)
+    
     print(f"\n  [Tier 1] Timeline Bounding")
     print(f"    - FWoC: {fwoc_str}")
     print(f"    - Corridor Narrowing Ratio (rho): {rho:.2f} (0=perfect, 1=no help)")
     
-    print(f"\n  [Tier 2] Evidence Reliability")
+    print(f"\n  [Tier 2] Evidence Reliability & Anti-Forensics")
     print(f"    - Path Alignment Score (A): {alignment*100:.0f}%")
+    if af_score > 0:
+        print(f"    - Anti-Forensics Confidence Score (AF_conf): {af_score*100:.0f}%")
     
     print(f"\n  [Tier 3] Multi-Path Ambiguity")
     print(f"    - Ambiguity (k): {k}")
@@ -105,14 +115,16 @@ def main():
     output_dir = os.path.join(base_dir, "experiment", "mulval_output")
     os.makedirs(output_dir, exist_ok=True)
 
-    print(f"\n[1/5] Generating temporal input_w*.P files in {output_dir}...")
-    generate_mulval_input(output_dir)
-
-    print("\n[2/5] Running MulVAL Docker per time window...")
-    success = run_mulval_docker(output_dir)
-    if not success:
-        print("\n[ERROR] MulVAL Docker execution failed.")
-        sys.exit(1)
+    print(f"\n[1/5] Checking temporal input_w*.P files in {output_dir}...")
+    if not os.path.exists(os.path.join(output_dir, "VERTICES_w2.CSV")):
+        generate_mulval_input(output_dir)
+        print("\n[2/5] Running MulVAL Docker per time window...")
+        success = run_mulval_docker(output_dir)
+        if not success:
+            print("\n[ERROR] MulVAL Docker execution failed.")
+            sys.exit(1)
+    else:
+        print("\n[2/5] Skipping MulVAL Docker execution (outputs already exist).")
 
     print("\n[3/5] Parsing MulVAL window outputs (VERTICES_w*.CSV, ARCS_w*.CSV)...")
     graphs_per_window = parse_mulval_output(output_dir)
@@ -121,7 +133,24 @@ def main():
     ftag = build_ftag_from_mulval(graphs_per_window)
     print(f"  SUCCESS! Temporal F-TAG built. ({len(ftag.nodes)} Nodes, {len(ftag.edges)} Edges)")
     
-    print("\n[5/5] Executing IFIP Case Studies...")
+    print("\n[5/5] Executing IFIP Phase 1: Proactive Risk Assessment...")
+    
+    L_a, E_a, B_a = structural_tag_metrics(ftag)
+    print("═" * 70)
+    print("  PHASE 1: PROACTIVE STRUCTURAL RISK (Before Attack)")
+    print("═" * 70)
+    print(f"  -> Characteristic Temporal Path Length (L^a): {L_a:.3f} windows")
+    print(f"  -> Temporal Global Efficiency (E^a): {E_a:.3f}")
+    
+    print(f"\n  -> Top 3 Structural Bottlenecks (TAG Betweenness Centrality B^a_i):")
+    top_proactive = sorted(B_a.items(), key=lambda x: x[1], reverse=True)[:3]
+    for nid, score in top_proactive:
+        if score > 0:
+            state = ftag.nodes[nid].state_name
+            print(f"        * {state[:35]:<35} : {score:.4f}")
+    print("═" * 70 + "\n")
+    
+    print("[6/6] Executing IFIP Phase 2: Reactive Forensic Case Studies...")
     
     # Identify nodes dynamically
     ext_attacker = None
@@ -147,10 +176,30 @@ def main():
     # Case Study 2: Contradictory Evidence / False Lead
     run_case_study(
         ftag, 
-        title="False-Lead Triage (Contradictory Evidence in W0)",
+        title="False-Lead Triage (Contradictory Evidence in W0, \u03B4=0)",
         src_node=ext_attacker, 
         dst_node=target, 
         active_evidence=[0] # IDS alert fires in W0, but vuln only exists in W2-W4
+    )
+    
+    # Case Study 2b: False Lead with safe delta (delta=1)
+    run_case_study(
+        ftag, 
+        title="False-Lead Triage with Safe Skew (Contradictory Evidence in W0, \u03B4=1)",
+        src_node=ext_attacker, 
+        dst_node=target, 
+        active_evidence=[0],
+        delta_skew=1
+    )
+    
+    # Case Study 2c: False Lead failure with unsafe delta (delta=2)
+    run_case_study(
+        ftag, 
+        title="False-Lead Failure with Unsafe Skew (Contradictory Evidence in W0, \u03B4=2)",
+        src_node=ext_attacker, 
+        dst_node=target, 
+        active_evidence=[0],
+        delta_skew=2
     )
     
     # Case Study 3: Insider Threat
@@ -160,6 +209,16 @@ def main():
         src_node=insider_attacker, 
         dst_node=target, 
         active_evidence=[2, 3, 4]
+    )
+    
+    # Case Study 4: Clock Skew & Anti-Forensics Inference
+    run_case_study(
+        ftag,
+        title="Clock Skew Bounding & Anti-Forensics Inference",
+        src_node=ext_attacker,
+        dst_node=target,
+        active_evidence=[2, 4], # W3 is missing
+        delta_skew=1 # Absorbing 1 window of potential clock drift
     )
 
 if __name__ == "__main__":

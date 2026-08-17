@@ -56,23 +56,128 @@ def tac_aggregated(paths: List[TemporalPath]) -> Tuple[int, int]:
     return (w_min, w_max)
 
 
+# ─────────────────────────────────────────────────────
+# Proactive Structural TAG Metrics (Foundational Theory)
+# ─────────────────────────────────────────────────────
+
+def structural_tag_metrics(ftag) -> Tuple[float, float, Dict[str, float]]:
+    """
+    Computes proactive structural metrics on the unconstrained Temporal Attack Graph.
+    These metrics represent network vulnerability BEFORE forensic evidence is applied.
+    
+    Returns:
+        L_a: Characteristic Temporal Attack Path Length
+        E_a: Temporal Attack Global Efficiency
+        B_a: Dict mapping node_id -> TAG Betweenness Centrality
+    """
+    nodes = list(ftag.nodes.keys())
+    N = len(nodes)
+    
+    # In MulVAL F-TAG, we assume a standard tau=5 time windows for disconnected pairs
+    tau = 5 
+    
+    d_a = {}
+    shortest_paths = {}
+    
+    for j in nodes:
+        for k in nodes:
+            if j == k:
+                continue
+            # Find all valid temporal paths
+            paths = ftag.enumerate_temporal_paths(j, k, max_hops=15)
+            if not paths:
+                d_a[(j, k)] = tau
+                shortest_paths[(j, k)] = []
+            else:
+                # Shortest path in TAG is defined by minimum hops
+                min_hops = min(len(p.hops) for p in paths)
+                d_a[(j, k)] = min_hops
+                shortest_paths[(j, k)] = [p for p in paths if len(p.hops) == min_hops]
+                
+    # Calculate L_a and E_a
+    sum_L = sum(d_a.values())
+    sum_E = sum(1.0 / d for d in d_a.values() if d > 0)
+    
+    L_a = sum_L / (N * (N - 1)) if N > 1 else 0.0
+    E_a = sum_E / (N * (N - 1)) if N > 1 else 0.0
+    
+    # Calculate Betweenness Centrality B_a
+    B_a = {i: 0.0 for i in nodes}
+    if N > 2:
+        for i in nodes:
+            sum_b = 0.0
+            for j in nodes:
+                for k in nodes:
+                    if j == k or j == i or k == i:
+                        continue
+                    
+                    paths_jk = shortest_paths[(j, k)]
+                    sigma_jk = len(paths_jk)
+                    if sigma_jk == 0:
+                        continue
+                        
+                    # Count how many shortest paths pass through node i
+                    sigma_jk_i = 0
+                    for p in paths_jk:
+                        intermediate_nodes = set()
+                        for edge_id, _ in p.hops[:-1]:
+                            intermediate_nodes.add(ftag.edges[edge_id].dst_node_id)
+                        if i in intermediate_nodes:
+                            sigma_jk_i += 1
+                            
+                    sum_b += (sigma_jk_i / sigma_jk)
+            
+            B_a[i] = sum_b / ((N - 1) * (N - 2))
+            
+    return L_a, E_a, B_a
+
+
 def forensic_window_of_compromise(
     path: TemporalPath,
     evidence_windows: List[int],
+    delta_skew: int = 0
 ) -> Optional[Tuple[int, int]]:
-    """FWoC(p) = TAC(p) ∩ [min(t_i), max(t_i)].
+    """FWoC(p) = TAC(p) ∩ [min(t_i) - delta, max(t_i) + delta].
+    delta_skew absorbs NTP clock drift and falsified timestamp uncertainty.
     Returns None if intersection is empty (evidence inconsistent with corridor)."""
     if not evidence_windows:
         return None
     tac = path.tac
-    ev_min = min(evidence_windows)
-    ev_max = max(evidence_windows)
+    ev_min = min(evidence_windows) - delta_skew
+    ev_max = max(evidence_windows) + delta_skew
     fwoc_start = max(tac[0], ev_min)
     fwoc_end = min(tac[1], ev_max)
     if fwoc_start > fwoc_end:
         return None  # Evidence is outside the corridor — inconsistency
     return (fwoc_start, fwoc_end)
 
+
+def anti_forensics_confidence_score(
+    path: TemporalPath,
+    ftag,
+    active_evidence: List[int],
+    total_windows: List[int]
+) -> float:
+    """
+    Computes the likelihood (0.0 to 1.0) that missing evidence is due to deliberate log-wiping.
+    If evidence is missing and the attacker had root privileges along the path, confidence rises.
+    """
+    missing_windows = set(total_windows) - set(active_evidence)
+    if not missing_windows:
+        return 0.0
+        
+    root_nodes = 0
+    for edge_id, _ in path.hops:
+        edge = ftag.edges[edge_id]
+        dst_node = edge.dst_node_id
+        if "root" in ftag.nodes[dst_node].state_name.lower():
+            root_nodes += 1
+    
+    if root_nodes == 0:
+        return 0.15 # Likely benign logging failure
+    else:
+        # Base 60% confidence, plus 10% per root node, plus 5% per missing window
+        return min(0.60 + (0.10 * root_nodes) + (0.05 * len(missing_windows)), 0.99)
 
 def corridor_narrowing_ratio(
     path: TemporalPath,
