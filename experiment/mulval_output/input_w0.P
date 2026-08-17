@@ -1,0 +1,8 @@
+% MulVAL input for Window 0
+
+attackerLocated(internet).
+attackGoal(execCode(workstation, root)).
+hacl(internet, webserver, tcp, 80).
+hacl(webserver, workstation, tcp, 22).
+networkServiceInfo(webserver, httpd, tcp, 80, root).
+networkServiceInfo(workstation, sshd, tcp, 22, root).

@@ -1,0 +1,17 @@
+% MulVAL input.P
+attackerLocated(internet).
+attackGoal(execCode(workstation, root)).
+
+hacl(internet, webserver, tcp, 80).
+hacl(webserver, workstation, tcp, 22).
+
+hasVuln(webserver, vul_web, httpd).
+vulExists(webserver, vul_web, httpd).
+vulProperty(vul_web, remoteExploit, privEscalation).
+
+hasVuln(workstation, vul_ssh, sshd).
+vulExists(workstation, vul_ssh, sshd).
+vulProperty(vul_ssh, remoteExploit, privEscalation).
+
+networkServiceInfo(webserver, httpd, tcp, 80, root).
+networkServiceInfo(workstation, sshd, tcp, 22, root).

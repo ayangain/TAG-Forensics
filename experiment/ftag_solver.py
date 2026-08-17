@@ -18,11 +18,11 @@ from z3 import (
     Real, Solver, sat, unsat, set_param
 )
 
-from experiment.ftag_model import TemporalAttackGraph, TAGEdge
+from experiment.ftag_model import ForensicTemporalAttackGraph, TAGEdge
 
 
 def solve_ftag_constraints(
-    tag: TemporalAttackGraph,
+    tag: ForensicTemporalAttackGraph,
 ) -> Tuple[bool, Set[str], float]:
     """
     STN Consistency Solver via Z3 SMT Difference Logic / Bellman-Ford.
@@ -87,7 +87,7 @@ class IncrementalSTNSolver:
     Incremental STN Live Triage Maintenance Engine: Updates consistency
     in O(Delta) latency as new alerts arrive without recomputing from scratch.
     """
-    def __init__(self, tag: TemporalAttackGraph):
+    def __init__(self, tag: ForensicTemporalAttackGraph):
         self.tag = tag
         self.active_edges: Set[str] = set()
 
@@ -104,7 +104,7 @@ class IncrementalSTNSolver:
         return det, inc_ms
 
 
-def sample_linear_extensions_mcmc(tag: TemporalAttackGraph, num_samples: int = 1000) -> int:
+def sample_linear_extensions_mcmc(tag: ForensicTemporalAttackGraph, num_samples: int = 1000) -> int:
     """
     FPRAS MCMC Sampler to approximate the number of valid timeline total orderings
     (#P-complete via Brightwell & Winkler 1991).
@@ -136,7 +136,7 @@ def sample_linear_extensions_mcmc(tag: TemporalAttackGraph, num_samples: int = 1
 
 
 def backward_causal_attribution(
-    tag: TemporalAttackGraph,
+    tag: ForensicTemporalAttackGraph,
     victim_node_id: str,
     conflict_edge_ids: Set[str],
 ) -> List[Tuple[float, str, str, str]]:
