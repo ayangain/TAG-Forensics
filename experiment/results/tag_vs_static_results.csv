@@ -1,0 +1,10 @@
+scenario,method,precision_mean,recall_mean,f1_mean,f1_ci95,flag_count_mean
+precedence_swap,zhang_static,1.0,1.0,1.0,0.0,1.0
+precedence_swap,static_stn,1.0,1.0,1.0,0.0,1.0
+precedence_swap,our_tag_stn,0.5,1.0,0.6666666666666666,0.0,2.0
+state_revocation,zhang_static,,0.0,0.0,0.0,0.0
+state_revocation,static_stn,,0.0,0.0,0.0,0.0
+state_revocation,our_tag_stn,1.0,1.0,1.0,0.0,1.0
+window_closure,zhang_static,,0.0,0.0,0.0,0.0
+window_closure,static_stn,,0.0,0.0,0.0,0.0
+window_closure,our_tag_stn,1.0,1.0,1.0,0.0,1.0

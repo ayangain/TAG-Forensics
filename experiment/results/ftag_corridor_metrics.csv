@@ -1,0 +1,43 @@
+scenario,path_index,path_hops,path_length,tac_start,tac_end,tac_width_windows,fwoc_start,fwoc_end,fwoc_width_windows,narrowing_ratio_rho,alignment_score_A,dwell_time_lower_sec,dwell_time_upper_sec,propagation_rate_v
+clean,0,E4_ssh_direct[w1] → E5_dns_pivot[w2] → E6_dns_to_internal[w2],3,1,2,2,1.0,2.0,2,1.0,1.0,270.0,7200.0,1.0
+clean,1,E4_ssh_direct[w1] → E5_dns_pivot[w1] → E6_dns_to_internal[w2],3,1,2,2,1.0,2.0,2,1.0,1.0,270.0,7200.0,1.0
+clean,2,E4_ssh_direct[w1] → E3_telnet[w3],2,1,3,3,1.0,2.0,2,0.6666666666666666,0.5,300.0,10800.0,0.3333333333333333
+clean,3,E4_ssh_direct[w1] → E3_telnet[w2],2,1,2,2,1.0,2.0,2,1.0,1.0,300.0,7200.0,0.5
+clean,4,E1_http[w2] → E2_samba[w2] → E5_dns_pivot[w2] → E6_dns_to_internal[w2],4,2,2,1,2.0,2.0,1,1.0,0.5,510.0,3600.0,3.0
+clean,5,E1_http[w2] → E2_samba[w2] → E3_telnet[w3],3,2,3,2,2.0,2.0,1,0.5,0.0,540.0,7200.0,1.0
+clean,6,E1_http[w2] → E2_samba[w2] → E3_telnet[w2],3,2,2,1,2.0,2.0,1,1.0,0.3333333333333333,540.0,3600.0,2.0
+clean,7,E1_http[w1] → E2_samba[w2] → E5_dns_pivot[w2] → E6_dns_to_internal[w2],4,1,2,2,1.0,2.0,2,1.0,0.5,510.0,7200.0,1.5
+clean,8,E1_http[w1] → E2_samba[w2] → E3_telnet[w3],3,1,3,3,1.0,2.0,2,0.6666666666666666,0.0,540.0,10800.0,0.6666666666666666
+clean,9,E1_http[w1] → E2_samba[w2] → E3_telnet[w2],3,1,2,2,1.0,2.0,2,1.0,0.3333333333333333,540.0,7200.0,1.0
+clean,10,E1_http[w1] → E2_samba[w1] → E5_dns_pivot[w2] → E6_dns_to_internal[w2],4,1,2,2,1.0,2.0,2,1.0,0.75,510.0,7200.0,1.5
+clean,11,E1_http[w1] → E2_samba[w1] → E5_dns_pivot[w1] → E6_dns_to_internal[w2],4,1,2,2,1.0,2.0,2,1.0,0.75,510.0,7200.0,1.5
+clean,12,E1_http[w1] → E2_samba[w1] → E3_telnet[w3],3,1,3,3,1.0,2.0,2,0.6666666666666666,0.3333333333333333,540.0,10800.0,0.6666666666666666
+clean,13,E1_http[w1] → E2_samba[w1] → E3_telnet[w2],3,1,2,2,1.0,2.0,2,1.0,0.6666666666666666,540.0,7200.0,1.0
+clean,14,E1_http[w0] → E2_samba[w2] → E5_dns_pivot[w2] → E6_dns_to_internal[w2],4,0,2,3,0.0,2.0,3,1.0,0.75,510.0,10800.0,1.0
+clean,15,E1_http[w0] → E2_samba[w2] → E3_telnet[w3],3,0,3,4,0.0,2.0,3,0.75,0.3333333333333333,540.0,14400.0,0.5
+clean,16,E1_http[w0] → E2_samba[w2] → E3_telnet[w2],3,0,2,3,0.0,2.0,3,1.0,0.6666666666666666,540.0,10800.0,0.6666666666666666
+clean,17,E1_http[w0] → E2_samba[w1] → E5_dns_pivot[w2] → E6_dns_to_internal[w2],4,0,2,3,0.0,2.0,3,1.0,1.0,510.0,10800.0,1.0
+clean,18,E1_http[w0] → E2_samba[w1] → E5_dns_pivot[w1] → E6_dns_to_internal[w2],4,0,2,3,0.0,2.0,3,1.0,1.0,510.0,10800.0,1.0
+clean,19,E1_http[w0] → E2_samba[w1] → E3_telnet[w3],3,0,3,4,0.0,2.0,3,0.75,0.6666666666666666,540.0,14400.0,0.5
+clean,20,E1_http[w0] → E2_samba[w1] → E3_telnet[w2],3,0,2,3,0.0,2.0,3,1.0,1.0,540.0,10800.0,0.6666666666666666
+falsified,0,E4_ssh_direct[w1] → E5_dns_pivot[w2] → E6_dns_to_internal[w2],3,1,2,2,,,0,,1.0,270.0,7200.0,1.0
+falsified,1,E4_ssh_direct[w1] → E5_dns_pivot[w1] → E6_dns_to_internal[w2],3,1,2,2,,,0,,1.0,270.0,7200.0,1.0
+falsified,2,E4_ssh_direct[w1] → E3_telnet[w3],2,1,3,3,3.0,3.0,1,0.3333333333333333,1.0,300.0,10800.0,0.3333333333333333
+falsified,3,E4_ssh_direct[w1] → E3_telnet[w2],2,1,2,2,,,0,,0.5,300.0,7200.0,0.5
+falsified,4,E1_http[w2] → E2_samba[w2] → E5_dns_pivot[w2] → E6_dns_to_internal[w2],4,2,2,1,,,0,,0.5,510.0,3600.0,3.0
+falsified,5,E1_http[w2] → E2_samba[w2] → E3_telnet[w3],3,2,3,2,3.0,3.0,1,0.5,0.3333333333333333,540.0,7200.0,1.0
+falsified,6,E1_http[w2] → E2_samba[w2] → E3_telnet[w2],3,2,2,1,,,0,,0.0,540.0,3600.0,2.0
+falsified,7,E1_http[w1] → E2_samba[w2] → E5_dns_pivot[w2] → E6_dns_to_internal[w2],4,1,2,2,,,0,,0.5,510.0,7200.0,1.5
+falsified,8,E1_http[w1] → E2_samba[w2] → E3_telnet[w3],3,1,3,3,3.0,3.0,1,0.3333333333333333,0.3333333333333333,540.0,10800.0,0.6666666666666666
+falsified,9,E1_http[w1] → E2_samba[w2] → E3_telnet[w2],3,1,2,2,,,0,,0.0,540.0,7200.0,1.0
+falsified,10,E1_http[w1] → E2_samba[w1] → E5_dns_pivot[w2] → E6_dns_to_internal[w2],4,1,2,2,,,0,,0.5,510.0,7200.0,1.5
+falsified,11,E1_http[w1] → E2_samba[w1] → E5_dns_pivot[w1] → E6_dns_to_internal[w2],4,1,2,2,,,0,,0.5,510.0,7200.0,1.5
+falsified,12,E1_http[w1] → E2_samba[w1] → E3_telnet[w3],3,1,3,3,3.0,3.0,1,0.3333333333333333,0.3333333333333333,540.0,10800.0,0.6666666666666666
+falsified,13,E1_http[w1] → E2_samba[w1] → E3_telnet[w2],3,1,2,2,,,0,,0.0,540.0,7200.0,1.0
+falsified,14,E1_http[w0] → E2_samba[w2] → E5_dns_pivot[w2] → E6_dns_to_internal[w2],4,0,2,3,,,0,,0.5,510.0,10800.0,1.0
+falsified,15,E1_http[w0] → E2_samba[w2] → E3_telnet[w3],3,0,3,4,3.0,3.0,1,0.25,0.3333333333333333,540.0,14400.0,0.5
+falsified,16,E1_http[w0] → E2_samba[w2] → E3_telnet[w2],3,0,2,3,,,0,,0.0,540.0,10800.0,0.6666666666666666
+falsified,17,E1_http[w0] → E2_samba[w1] → E5_dns_pivot[w2] → E6_dns_to_internal[w2],4,0,2,3,,,0,,0.5,510.0,10800.0,1.0
+falsified,18,E1_http[w0] → E2_samba[w1] → E5_dns_pivot[w1] → E6_dns_to_internal[w2],4,0,2,3,,,0,,0.5,510.0,10800.0,1.0
+falsified,19,E1_http[w0] → E2_samba[w1] → E3_telnet[w3],3,0,3,4,3.0,3.0,1,0.25,0.3333333333333333,540.0,14400.0,0.5
+falsified,20,E1_http[w0] → E2_samba[w1] → E3_telnet[w2],3,0,2,3,,,0,,0.0,540.0,10800.0,0.6666666666666666

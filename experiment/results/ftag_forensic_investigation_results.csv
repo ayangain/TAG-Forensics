@@ -1,0 +1,7 @@
+experiment,method,forensic_integrity_I,temporal_distortion_D_sec,path_compactness_df_hops,phantom_path_pruning_P,backtrack_efficiency_E
+order_blindness_antedated,static_ag_wang_zhang,1.0,0.0,0.0,0.0,0.0
+order_blindness_antedated,pure_precedence_stn,0.6666666666666666,500.0,0.0,0.5,0.0
+order_blindness_antedated,our_ftag_engine,0.3333333333333333,500.0,1.0,0.75,3.9082204094104944
+physical_duration_fallacy,static_ag_wang_zhang,1.0,0.0,0.0,0.0,0.0
+physical_duration_fallacy,pure_precedence_stn,1.0,0.0,0.0,0.5,0.0
+physical_duration_fallacy,our_ftag_engine,0.3333333333333333,299.9,1.0,0.75,4.086143230394222

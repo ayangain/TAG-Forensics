@@ -1,0 +1,3 @@
+dataset,nodes,edges,windows,static_paths,temporal_paths,surviving_paths,ambiguity_clusters,search_radius
+DARPA LLDOS 1.0 (Novice DDoS),23,17,5,20,28,28,1,0
+DARPA LLDOS 2.0.2 (Stealthy SSH & Exfiltration),9,5,5,3,3,3,1,0

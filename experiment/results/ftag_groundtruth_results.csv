@@ -1,0 +1,7 @@
+experiment,method,precision_mean,recall_mean,f1_mean,f1_ci95,compactness_df_mean,fidelity_Ff_mean
+order_blindness_antedated,static_ag_wang_zhang,,0.0,0.0,0.0,0.0,1.0
+order_blindness_antedated,pure_precedence_stn,1.0,1.0,1.0,0.0,0.0,0.6666666666666666
+order_blindness_antedated,our_ftag_engine,0.5,1.0,0.6666666666666666,0.0,1.0,0.3333333333333333
+physical_duration_fallacy,static_ag_wang_zhang,,0.0,0.0,0.0,0.0,1.0
+physical_duration_fallacy,pure_precedence_stn,,0.0,0.0,0.0,0.0,1.0
+physical_duration_fallacy,our_ftag_engine,0.5,1.0,0.6666666666666666,0.0,1.0,0.3333333333333333

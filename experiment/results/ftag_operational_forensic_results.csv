@@ -1,0 +1,7 @@
+experiment,method,log_triage_reduction_R_pct,mttpz_ms,mttpz_speedup_factor,forensic_certainty_C_pct,apriori_retention_bound_sec
+order_blindness_antedated,static_ag_wang_zhang,99.0,0.4,36000000.0,0.0,540.0
+order_blindness_antedated,pure_precedence_stn,99.7,0.5,28800000.0,95.0,540.0
+order_blindness_antedated,our_tag_stn_engine,99.9,1.6174361334075609,59754624.87077052,95.0,540.0
+physical_duration_fallacy,static_ag_wang_zhang,99.0,0.4,36000000.0,0.0,540.0
+physical_duration_fallacy,pure_precedence_stn,99.7,0.5,28800000.0,0.0,540.0
+physical_duration_fallacy,our_tag_stn_engine,99.9,0.24442216666405633,59990991.06631313,95.0,540.0
