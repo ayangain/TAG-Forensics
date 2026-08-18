@@ -64,7 +64,7 @@ def run_degradation_sweep():
             evidence = sorted(random.sample(all_evidence, num_evidence))
             
             # FWoC
-            fwocs = [forensic_window_of_compromise(p, evidence) for p in paths]
+            fwocs = [forensic_window_of_compromise(p, evidence, small_sample_correction=True) for p in paths]
             valid_fwocs = [f for f in fwocs if f is not None]
             
             if valid_fwocs:

@@ -33,6 +33,7 @@ Tier 6 — Investigation Scoping:
 
 from typing import Dict, List, Set, Tuple, Optional
 from dataclasses import dataclass
+import math
 from experiment.ftag_model import ForensicTemporalAttackGraph, TemporalPath, TAGEdge
 
 
@@ -135,18 +136,30 @@ def structural_tag_metrics(ftag) -> Tuple[float, float, Dict[str, float]]:
 def forensic_window_of_compromise(
     path: TemporalPath,
     evidence_windows: List[int],
-    delta_skew: int = 0
+    delta_skew: int = 0,
+    small_sample_correction: bool = False
 ) -> Optional[Tuple[int, int]]:
     """FWoC(p) = TAC(p) ∩ [min(t_i) - delta, max(t_i) + delta].
     delta_skew absorbs NTP clock drift and falsified timestamp uncertainty.
+    small_sample_correction widens the bound inversely with completeness.
     Returns None if intersection is empty (evidence inconsistent with corridor)."""
     if not evidence_windows:
         return None
+        
     tac = path.tac
-    ev_min = min(evidence_windows) - delta_skew
-    ev_max = max(evidence_windows) + delta_skew
+    N = len(evidence_windows)
+    H = len(path.hops)
+    
+    delta_sample = 0
+    if small_sample_correction and N > 0:
+        delta_sample = max(0, math.ceil((H - N) / N))
+        
+    ev_min = min(evidence_windows) - delta_skew - delta_sample
+    ev_max = max(evidence_windows) + delta_skew + delta_sample
+    
     fwoc_start = max(tac[0], ev_min)
     fwoc_end = min(tac[1], ev_max)
+    
     if fwoc_start > fwoc_end:
         return None  # Evidence is outside the corridor — inconsistency
     return (fwoc_start, fwoc_end)
@@ -159,11 +172,15 @@ def anti_forensics_confidence_score(
     total_windows: List[int]
 ) -> float:
     """
-    Computes the likelihood (0.0 to 1.0) that missing evidence is due to deliberate log-wiping.
-    If evidence is missing and the attacker had root privileges along the path, confidence rises.
+    A heuristic scoring function correlating privilege-gap location with anti-forensic likelihood.
+    Uses bounded ratios (R_root, R_miss) to prevent arbitrary saturation on deeper graphs.
     """
     missing_windows = set(total_windows) - set(active_evidence)
     if not missing_windows:
+        return 0.0
+        
+    H = len(path.hops)
+    if H == 0:
         return 0.0
         
     root_nodes = 0
@@ -172,12 +189,16 @@ def anti_forensics_confidence_score(
         dst_node = edge.dst_node_id
         if "root" in ftag.nodes[dst_node].state_name.lower():
             root_nodes += 1
+            
+    R_root = root_nodes / H
+    R_miss = len(missing_windows) / len(total_windows)
     
     if root_nodes == 0:
         return 0.15 # Likely benign logging failure
     else:
-        # Base 60% confidence, plus 10% per root node, plus 5% per missing window
-        return min(0.60 + (0.10 * root_nodes) + (0.05 * len(missing_windows)), 0.99)
+        # Base 60% confidence, plus scaled ratios
+        score = 0.60 + (0.30 * R_root) + (0.10 * R_miss)
+        return min(score, 0.99)
 
 def corridor_narrowing_ratio(
     path: TemporalPath,
