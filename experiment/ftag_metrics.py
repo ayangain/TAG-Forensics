@@ -152,7 +152,7 @@ def forensic_window_of_compromise(
     
     delta_sample = 0
     if small_sample_correction and N > 0:
-        delta_sample = max(0, math.ceil((H - N) / N))
+        delta_sample = max(0, H - N)
         
     ev_min = min(evidence_windows) - delta_skew - delta_sample
     ev_max = max(evidence_windows) + delta_skew + delta_sample
@@ -166,39 +166,49 @@ def forensic_window_of_compromise(
 
 
 def anti_forensics_confidence_score(
-    path: TemporalPath,
-    ftag,
-    active_evidence: List[int],
-    total_windows: List[int]
+    gap_node_id: str,
+    ftag: ForensicTemporalAttackGraph,
+    P_H1: float = 0.15
 ) -> float:
     """
-    A heuristic scoring function correlating privilege-gap location with anti-forensic likelihood.
-    Uses bounded ratios (R_root, R_miss) to prevent arbitrary saturation on deeper graphs.
+    Computes a Bayesian posterior probability P(H1 | x) for anti-forensic tampering
+    at a specific missing-evidence gap G at node n.
     """
-    missing_windows = set(total_windows) - set(active_evidence)
-    if not missing_windows:
+    node = ftag.nodes.get(gap_node_id)
+    if not node:
         return 0.0
         
-    H = len(path.hops)
-    if H == 0:
-        return 0.0
-        
-    root_nodes = 0
-    for edge_id, _ in path.hops:
-        edge = ftag.edges[edge_id]
-        dst_node = edge.dst_node_id
-        if "root" in ftag.nodes[dst_node].state_name.lower():
-            root_nodes += 1
+    has_root_at_gap = "root" in node.state_name.lower() or "admin" in node.state_name.lower()
             
-    R_root = root_nodes / H
-    R_miss = len(missing_windows) / len(total_windows)
+    # Calculate P(x | H0): base rate of root nodes in the entire topology
+    total_nodes = len(ftag.nodes)
+    if total_nodes == 0:
+        return 0.0
+    graph_root_count = sum(1 for n in ftag.nodes.values() if "root" in n.state_name.lower() or "admin" in n.state_name.lower())
+    P_root_H0 = graph_root_count / total_nodes
+    P_noroot_H0 = 1.0 - P_root_H0
     
-    if root_nodes == 0:
-        return 0.15 # Likely benign logging failure
+    # Calculate P(x | H1): Domain-informed prior based on OS/application access-control conventions.
+    P_root_H1 = 0.75
+    P_noroot_H1 = 1.0 - P_root_H1
+    
+    P_H0 = 1.0 - P_H1
+    
+    if has_root_at_gap:
+        likelihood_H1 = P_root_H1
+        likelihood_H0 = P_root_H0
     else:
-        # Base 60% confidence, plus scaled ratios
-        score = 0.60 + (0.30 * R_root) + (0.10 * R_miss)
-        return min(score, 0.99)
+        likelihood_H1 = P_noroot_H1
+        likelihood_H0 = P_noroot_H0
+        
+    # Bayes Theorem
+    numerator = likelihood_H1 * P_H1
+    denominator = (likelihood_H1 * P_H1) + (likelihood_H0 * P_H0)
+    
+    if denominator == 0:
+        return 0.0
+        
+    return numerator / denominator
 
 def corridor_narrowing_ratio(
     path: TemporalPath,
