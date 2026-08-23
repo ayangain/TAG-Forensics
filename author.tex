@@ -1,0 +1,89 @@
+%%%%%%%%%%%%%%%%%%%% author.tex %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% sample root file for your "contribution" to a proceedings volume
+%
+% Use this file as a template for your own input.
+%
+%%%%%%%%%%%%%%%% Springer %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\documentclass[runningheads]{llncs}
+%
+% RECOMMENDED %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+
+% to typeset URLs, URIs, and DOIs\
+\usepackage{float}
+\usepackage{xltabular}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{comment}
+\def\UrlFont{\rmfamily}
+
+\begin{document}
+\mainmatter              % start of a contribution
+\setlength{\textfloatsep}{8pt plus 2pt minus 2pt}
+\setlength{\floatsep}{8pt plus 2pt minus 2pt}
+\setlength{\intextsep}{8pt plus 2pt minus 2pt}
+%
+\title{Forensic Temporal Attack Graphs (F-TAG): Fusing Structural Reality with Reactive Evidence}
+%
+%\titlerunning{AG Security Metrics For Dynamic Networks}  % abbreviated title (for running head)
+%                                     also used for the TOC unless
+%                                     \toctitle is used
+%
+% === DOUBLE-BLIND SUBMISSION VERSION ===
+% Uncomment the camera-ready block for final version
+\author{Ayan Gain\inst{1} \orcidID{0009-0009-2629-0927}\and Mridul Sankar Barik\inst{1} \orcidID{0000-0001-6322-5336}}
+\institute{Jadavpur University, Kolkata, India\\
+\email{ayan.gain2010@gmail.com, mridulsankar.barik@jadavpuruniversity.in}}
+%\author{Anonymous Author(s)}
+%\institute{Anonymous Institution}
+
+
+\maketitle              % typeset the title of the contribution
+
+\begin{abstract}
+Modern network forensics heavily relies on the reactive reconstruction of digital evidence, such as intrusion detection alerts and system logs. However, digital evidence is fundamentally fragile, as it is prone to accidental loss and vulnerable to deliberate anti-forensic tampering. Traditional Evidence Graphs attempt to reconstruct attack paths purely from observed logs, breaking down completely when evidence is missing. Furthermore, attempting to correlate alerts over legacy static attack graphs ignores the physical reality of evolving network topologies, leading to causality bugs and false positives. In this paper, we introduce the Forensic Temporal Attack Graph (F-TAG), a mathematically sound triage engine that fuses proactive, time-aware structural risk models with reactive forensic evidence. By injecting digital evidence as strict constraints upon the physical topology, F-TAG natively filters contradictory noise. When evidence is missing or wiped, F-TAG computes a Forensic Window of Compromise (FWoC), which is a guaranteed mathematical bound on unobserved attacker actions. Furthermore, we introduce the Anti-Forensics Confidence metric ($AF_{conf}$), a Bayesian posterior that leverages granular privilege topologies to mathematically detect deliberate log tampering. We demonstrate the efficacy of F-TAG on large-scale synthetic topologies, achieving a 0.0\% false-accusation rate at strict operational thresholds and successfully recovering complete attack narratives despite severe evidence degradation.
+
+\keywords{Network Forensics \and Temporal Attack Graphs \and Anti-Forensics \and Intrusion Detection \and Bayesian Analysis}
+\end{abstract}
+%
+\section{Introduction}
+
+The modern cybersecurity landscape is engaged in a continuous arms race. While network defenses have grown increasingly sophisticated, attackers have similarly evolved, employing advanced persistent threats (APTs) that unfold over weeks or months. When an attack is discovered, network forensics becomes the critical task of piecing together the attacker’s movements, establishing the scope of the breach, and determining the root cause. This investigative process fundamentally relies on digital evidence, including intrusion detection system (IDS) alerts, firewall logs, and system timestamps.
+
+However, digital evidence is intrinsically fragile. Logs are routinely lost due to benign operational issues, such as buffer overflows or aggressive log rotation policies. Worse still, sophisticated attackers actively engage in anti-forensics by deliberately wiping logs, falsifying timestamps, and clearing event histories to obscure their tracks. When critical evidence is missing, traditional reactive forensic methods break down. Legacy approaches, such as Evidence Graphs \cite{wang2008evidence}, attempt to reconstruct causal chains using only the observed logs. When a log is wiped, the causal chain shatters, leaving investigators with fragmented, disconnected events and no clear narrative of how an attacker pivoted across the network.
+
+To supplement fragile evidence, researchers have long explored correlating IDS alerts with Attack Graphs, which are proactive models of all possible vulnerability exploitation paths \cite{1004377,10.1145/586110.586144}. However, these approaches predominantly utilize static attack graphs, which collapse all network history into a single, timeless map. Attempting to fuse chronological alerts with a timeless graph produces significant analytical blind spots, such as the "Dormant Attacker" illusion. If an attacker compromises a server on Monday but cannot pivot to a database until a firewall rule is changed on Wednesday, a static graph fails to explain the delay, leading investigators to assume the attacker was simply inactive.
+
+To overcome the fragility of reactive evidence and the temporal blindness of static graphs, we introduce the Forensic Temporal Attack Graph (F-TAG). Instead of building graphs out of messy forensic evidence, F-TAG begins with a proactive, mathematical model of the network's shifting physical reality (the Temporal Attack Graph \cite{Gain2023}) and injects forensic evidence as strict constraints upon it.
+
+This paper makes the following key contributions:
+\begin{enumerate}
+    \item We formalize the F-TAG to strictly enforce chronological sequencing on observed evidence, naturally filtering false-positive noise and causality bugs.
+    \item We introduce the Forensic Window of Compromise (FWoC), a topology-aware continuous correction that computes guaranteed mathematical bounds on unobserved attacker actions when evidence is missing.
+    \item We present the Anti-Forensics Confidence metric ($AF_{conf}$), a Bayesian classifier that evaluates the chokepoints and required privileges of missing paths to probabilistically detect deliberate log tampering.
+\end{enumerate}
+
+\section{Related Work}
+
+\textbf{Attack Graphs and Alert Correlation.} The foundation of proactive security modeling relies heavily on Attack Graphs, which map the complex dependencies of network vulnerabilities \cite{1004377,10.1145/586110.586140}. To bridge proactive defense with reactive investigation, significant research has focused on Intrusion Alert Correlation. Approaches by Ning et al. \cite{10.1145/586110.586144} and Valeur et al. \cite{1366134} construct attack scenarios by matching the prerequisites and consequences of IDS alerts. Similarly, Wang et al. \cite{10.1016/j.comcom.2006.04.001} utilized attack graphs to hypothesize missing alerts and predict future intrusions. However, these methods rely on static attack graphs, which fail to capture the dynamic evolution of network topologies, leading to causal impossibilities when matching timestamps.
+
+\textbf{Evidence Graphs and Forensics.} In the domain of network forensics, Wang and Daniels \cite{wang2008evidence} pioneered the concept of Evidence Graphs, which structure digital evidence into a localized graph for investigative traversal. Expanding on this foundation, He and Xu \cite{he2016network} introduced vulnerability reasoning atop evidence graphs to formalize attacker capabilities. However, these methods are fundamentally reactive, building paths strictly from observed data. Recognizing the fragility of digital evidence, Liu and Ji \cite{liu2012using} utilized proactive attack graphs to guide forensic examinations when logs are missing. Furthermore, Barrere et al. \cite{barrere2017tracking} sought to optimize post-incident investigations by computing core attack graphs to track adversary movements. To address deliberate anti-forensics, Zhang et al. \cite{zhang2015detecting} developed methodologies for detecting falsified timestamps within evidence graphs. While these works significantly advance the field, their structures still struggle when attackers comprehensively wipe their tracks. F-TAG natively integrates these concepts, employing proactive structural constraints to compute mathematical bounds on completely unobserved actions.
+
+\textbf{Temporal and Dynamic Network Security.} Recognizing the limitations of static models, recent work has shifted toward Temporal Attack Graphs and dynamic networks \cite{Casteigts2012}. Enoch et al. \cite{ENOCH2019102448} introduced the TI-HARM model to assess the security posture across multiple dynamic network states. Gain and Barik \cite{Gain2023} formalized Temporal Attack Graph metrics to evaluate whether attackers can reach targets along temporally feasible paths. F-TAG builds directly upon these proactive temporal models, evolving them into a retroactive forensic engine capable of computing bounds on missing evidence and probabilistic confidence in anti-forensic tampering.\section{Conclusion}\label{sec:conclusion}
+
+
+\section{Future Work}\label{sec:future-work}
+
+
+
+\bibliographystyle{splncs04}
+\bibliography{Reference}
+
+\end{document}
