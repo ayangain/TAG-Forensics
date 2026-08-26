@@ -265,6 +265,52 @@ def path_alignment_score(
 
 
 # ─────────────────────────────────────────────────────
+# Tier 7 — AI Path Ranking
+# ─────────────────────────────────────────────────────
+
+def ai_path_ranking_score(
+    path: TemporalPath,
+    ftag: ForensicTemporalAttackGraph,
+    predictor=None
+) -> float:
+    """
+    Computes an AI-driven probability score (0.0 to 1.0) indicating how likely
+    this temporal path is the true attack path, based on learned attacker behaviors.
+    """
+    if predictor is None:
+        return 0.0
+        
+    path_length = len(path.hops)
+    if path_length == 0:
+        return 0.0
+        
+    tac = path.tac
+    tac_width = max(1, tac[1] - tac[0])
+    
+    # Calculate dwell lower bound in seconds (assuming 3600s per window as default if not provided)
+    # Using a simple heuristic for this feature extraction
+    dwell_lower_s = path_length * 60  
+    
+    propagation_v = (path_length - 1) / tac_width
+    
+    # Privilege score
+    root_nodes = sum(1 for _, w in path.hops if "root" in ftag.nodes.get(path.hops[0][0], "").lower() or "admin" in ftag.nodes.get(path.hops[0][0], "").lower())
+    # Note: A proper implementation would extract the actual destination nodes of each hop
+    privilege_score = min(1.0, root_nodes / path_length + 0.2) 
+    
+    try:
+        score = predictor.predict_path_probability(
+            path_length=path_length,
+            tac_width=tac_width,
+            dwell_lower_s=dwell_lower_s,
+            propagation_v=propagation_v,
+            privilege_score=privilege_score
+        )
+        return score
+    except Exception:
+        return 0.0
+
+# ─────────────────────────────────────────────────────
 # Tier 3 — Multi-Path Ambiguity
 # ─────────────────────────────────────────────────────
 

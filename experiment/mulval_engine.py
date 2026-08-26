@@ -60,7 +60,7 @@ def run_mulval_docker(output_dir: str):
             f"wilbercui/mulval:latest bash -c 'cd /input && graph_gen.sh {input_file} -v'"
         )
         try:
-            res = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=30)
+            res = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=300)
             if res.returncode != 0:
                 if "No attack paths found" in res.stderr or "No attack paths found" in res.stdout:
                     print(f"  [MulVAL] No attack paths found for W{w} (expected if attack goal unmet).")
@@ -135,33 +135,70 @@ def build_ftag_from_mulval(graphs_per_window: dict, window_duration: float = 360
     
     # 1. Aggregate all nodes across all windows and track edge presence
     for w, (vertices, arcs) in graphs_per_window.items():
+        
+        # Build temp NX graph for pruning
+        G_w = nx.DiGraph()
+        core_nodes = set()
+        
         for v_id, v_data in vertices.items():
             if v_data["type"] in ["OR", "AND", "LEAF"]:
-                # Clean up the text for node naming
                 node_name = v_data["text"].replace('"', '').strip()
                 host = "unknown"
+                is_core = False
+                
                 if "execCode(" in node_name:
                     parts = node_name.split('(')
                     if len(parts) > 1:
                         host = parts[1].split(',')[0].strip()
+                    is_core = True
                 elif "attackerLocated(" in node_name:
                     parts = node_name.split('(')
                     if len(parts) > 1:
                         host = parts[1].split(',')[0].strip()
+                    is_core = True
+                if v_data["type"] == "AND":
+                    # AND nodes (rules) don't have host arguments in their text.
+                    # Hashing by text collapses distinct rules into mega-nodes, breaking the topology.
+                    # Since BFS runs per-window, intermediate logic nodes only need to be unique per-window.
+                    unique_id = f"W{w}_{v_id}"
+                else:
+                    # OR and LEAF nodes have host arguments, so they are unique per machine.
+                    # We hash them so they map to the same physical node across windows.
+                    unique_id = f"N_{hash(node_name) % 100000}" 
                 
-                # Since MulVAL node IDs can change per run/window, we use the fact text as the unique semantic ID
-                unique_id = f"N_{hash(node_name) % 100000}" 
-                global_nodes[unique_id] = (host, node_name)
-                # Store a mapping from this window's MulVAL ID to our semantic ID
                 v_data["semantic_id"] = unique_id
+                
+                if is_core:
+                    global_nodes[unique_id] = (host, node_name)
+                    core_nodes.add(unique_id)
+                
+                G_w.add_node(unique_id)
 
-        # Map arcs using the semantic IDs
+        # Map arcs to the NX graph using semantic IDs
         for src, dst in arcs:
             if src in vertices and dst in vertices:
-                src_sem = vertices[src]["semantic_id"]
-                dst_sem = vertices[dst]["semantic_id"]
-                # MulVAL outputs Goal -> Preconditions. Reverse to Attacker -> Goal
-                edge_active_windows[(dst_sem, src_sem)].add(w)
+                if "semantic_id" in vertices[src] and "semantic_id" in vertices[dst]:
+                    src_sem = vertices[src]["semantic_id"]
+                    dst_sem = vertices[dst]["semantic_id"]
+                    # MulVAL outputs Goal -> Preconditions. Reverse to Attacker -> Goal
+                    G_w.add_edge(dst_sem, src_sem)
+
+        # Prune: find paths between core nodes that don't pass through other core nodes
+        for src in core_nodes:
+            # BFS from src
+            visited = set([src])
+            queue = [src]
+            while queue:
+                curr = queue.pop(0)
+                for neighbor in G_w.successors(curr):
+                    if neighbor not in visited:
+                        visited.add(neighbor)
+                        if neighbor in core_nodes:
+                            # Reached a core node, add edge and don't explore past it
+                            edge_active_windows[(src, neighbor)].add(w)
+                        else:
+                            # Intermediate logical node, keep exploring
+                            queue.append(neighbor)
 
     # 2. Add all unique nodes to F-TAG
     for sem_id, (host, node_name) in global_nodes.items():

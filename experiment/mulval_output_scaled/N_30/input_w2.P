@@ -1,0 +1,309 @@
+% MulVAL input for Window 2 (N=30)
+attackerLocated(internet).
+attackGoal(execCode(db_11, root)).
+networkServiceInfo(dmz_0, httpd, tcp, 80, root).
+hacl(internet, dmz_0, tcp, 80).
+networkServiceInfo(dmz_1, httpd, tcp, 80, root).
+hacl(internet, dmz_1, tcp, 80).
+networkServiceInfo(dmz_2, httpd, tcp, 80, root).
+hacl(internet, dmz_2, tcp, 80).
+networkServiceInfo(dmz_3, httpd, tcp, 80, root).
+hacl(internet, dmz_3, tcp, 80).
+networkServiceInfo(dmz_4, httpd, tcp, 80, root).
+hacl(internet, dmz_4, tcp, 80).
+networkServiceInfo(dmz_5, httpd, tcp, 80, root).
+hacl(internet, dmz_5, tcp, 80).
+networkServiceInfo(app_0, tomcat, tcp, 8080, root).
+hacl(dmz_0, app_0, tcp, 8080).
+hacl(dmz_1, app_0, tcp, 8080).
+hacl(dmz_2, app_0, tcp, 8080).
+hacl(dmz_3, app_0, tcp, 8080).
+hacl(dmz_4, app_0, tcp, 8080).
+hacl(dmz_5, app_0, tcp, 8080).
+networkServiceInfo(app_1, tomcat, tcp, 8080, root).
+hacl(dmz_0, app_1, tcp, 8080).
+hacl(dmz_1, app_1, tcp, 8080).
+hacl(dmz_2, app_1, tcp, 8080).
+hacl(dmz_3, app_1, tcp, 8080).
+hacl(dmz_4, app_1, tcp, 8080).
+hacl(dmz_5, app_1, tcp, 8080).
+networkServiceInfo(app_2, tomcat, tcp, 8080, root).
+hacl(dmz_0, app_2, tcp, 8080).
+hacl(dmz_1, app_2, tcp, 8080).
+hacl(dmz_2, app_2, tcp, 8080).
+hacl(dmz_3, app_2, tcp, 8080).
+hacl(dmz_4, app_2, tcp, 8080).
+hacl(dmz_5, app_2, tcp, 8080).
+networkServiceInfo(app_3, tomcat, tcp, 8080, root).
+hacl(dmz_0, app_3, tcp, 8080).
+hacl(dmz_1, app_3, tcp, 8080).
+hacl(dmz_2, app_3, tcp, 8080).
+hacl(dmz_3, app_3, tcp, 8080).
+hacl(dmz_4, app_3, tcp, 8080).
+hacl(dmz_5, app_3, tcp, 8080).
+networkServiceInfo(app_4, tomcat, tcp, 8080, root).
+hacl(dmz_0, app_4, tcp, 8080).
+hacl(dmz_1, app_4, tcp, 8080).
+hacl(dmz_2, app_4, tcp, 8080).
+hacl(dmz_3, app_4, tcp, 8080).
+hacl(dmz_4, app_4, tcp, 8080).
+hacl(dmz_5, app_4, tcp, 8080).
+networkServiceInfo(app_5, tomcat, tcp, 8080, root).
+hacl(dmz_0, app_5, tcp, 8080).
+hacl(dmz_1, app_5, tcp, 8080).
+hacl(dmz_2, app_5, tcp, 8080).
+hacl(dmz_3, app_5, tcp, 8080).
+hacl(dmz_4, app_5, tcp, 8080).
+hacl(dmz_5, app_5, tcp, 8080).
+networkServiceInfo(app_6, tomcat, tcp, 8080, root).
+hacl(dmz_0, app_6, tcp, 8080).
+hacl(dmz_1, app_6, tcp, 8080).
+hacl(dmz_2, app_6, tcp, 8080).
+hacl(dmz_3, app_6, tcp, 8080).
+hacl(dmz_4, app_6, tcp, 8080).
+hacl(dmz_5, app_6, tcp, 8080).
+networkServiceInfo(app_7, tomcat, tcp, 8080, root).
+hacl(dmz_0, app_7, tcp, 8080).
+hacl(dmz_1, app_7, tcp, 8080).
+hacl(dmz_2, app_7, tcp, 8080).
+hacl(dmz_3, app_7, tcp, 8080).
+hacl(dmz_4, app_7, tcp, 8080).
+hacl(dmz_5, app_7, tcp, 8080).
+networkServiceInfo(app_8, tomcat, tcp, 8080, root).
+hacl(dmz_0, app_8, tcp, 8080).
+hacl(dmz_1, app_8, tcp, 8080).
+hacl(dmz_2, app_8, tcp, 8080).
+hacl(dmz_3, app_8, tcp, 8080).
+hacl(dmz_4, app_8, tcp, 8080).
+hacl(dmz_5, app_8, tcp, 8080).
+networkServiceInfo(app_9, tomcat, tcp, 8080, root).
+hacl(dmz_0, app_9, tcp, 8080).
+hacl(dmz_1, app_9, tcp, 8080).
+hacl(dmz_2, app_9, tcp, 8080).
+hacl(dmz_3, app_9, tcp, 8080).
+hacl(dmz_4, app_9, tcp, 8080).
+hacl(dmz_5, app_9, tcp, 8080).
+networkServiceInfo(app_10, tomcat, tcp, 8080, root).
+hacl(dmz_0, app_10, tcp, 8080).
+hacl(dmz_1, app_10, tcp, 8080).
+hacl(dmz_2, app_10, tcp, 8080).
+hacl(dmz_3, app_10, tcp, 8080).
+hacl(dmz_4, app_10, tcp, 8080).
+hacl(dmz_5, app_10, tcp, 8080).
+networkServiceInfo(app_11, tomcat, tcp, 8080, root).
+hacl(dmz_0, app_11, tcp, 8080).
+hacl(dmz_1, app_11, tcp, 8080).
+hacl(dmz_2, app_11, tcp, 8080).
+hacl(dmz_3, app_11, tcp, 8080).
+hacl(dmz_4, app_11, tcp, 8080).
+hacl(dmz_5, app_11, tcp, 8080).
+networkServiceInfo(db_0, postgres, tcp, 5432, root).
+hacl(app_0, db_0, tcp, 5432).
+hacl(app_1, db_0, tcp, 5432).
+hacl(app_2, db_0, tcp, 5432).
+hacl(app_3, db_0, tcp, 5432).
+hacl(app_4, db_0, tcp, 5432).
+hacl(app_5, db_0, tcp, 5432).
+hacl(app_6, db_0, tcp, 5432).
+hacl(app_7, db_0, tcp, 5432).
+hacl(app_8, db_0, tcp, 5432).
+hacl(app_9, db_0, tcp, 5432).
+hacl(app_10, db_0, tcp, 5432).
+hacl(app_11, db_0, tcp, 5432).
+networkServiceInfo(db_1, postgres, tcp, 5432, root).
+hacl(app_0, db_1, tcp, 5432).
+hacl(app_1, db_1, tcp, 5432).
+hacl(app_2, db_1, tcp, 5432).
+hacl(app_3, db_1, tcp, 5432).
+hacl(app_4, db_1, tcp, 5432).
+hacl(app_5, db_1, tcp, 5432).
+hacl(app_6, db_1, tcp, 5432).
+hacl(app_7, db_1, tcp, 5432).
+hacl(app_8, db_1, tcp, 5432).
+hacl(app_9, db_1, tcp, 5432).
+hacl(app_10, db_1, tcp, 5432).
+hacl(app_11, db_1, tcp, 5432).
+networkServiceInfo(db_2, postgres, tcp, 5432, root).
+hacl(app_0, db_2, tcp, 5432).
+hacl(app_1, db_2, tcp, 5432).
+hacl(app_2, db_2, tcp, 5432).
+hacl(app_3, db_2, tcp, 5432).
+hacl(app_4, db_2, tcp, 5432).
+hacl(app_5, db_2, tcp, 5432).
+hacl(app_6, db_2, tcp, 5432).
+hacl(app_7, db_2, tcp, 5432).
+hacl(app_8, db_2, tcp, 5432).
+hacl(app_9, db_2, tcp, 5432).
+hacl(app_10, db_2, tcp, 5432).
+hacl(app_11, db_2, tcp, 5432).
+networkServiceInfo(db_3, postgres, tcp, 5432, root).
+hacl(app_0, db_3, tcp, 5432).
+hacl(app_1, db_3, tcp, 5432).
+hacl(app_2, db_3, tcp, 5432).
+hacl(app_3, db_3, tcp, 5432).
+hacl(app_4, db_3, tcp, 5432).
+hacl(app_5, db_3, tcp, 5432).
+hacl(app_6, db_3, tcp, 5432).
+hacl(app_7, db_3, tcp, 5432).
+hacl(app_8, db_3, tcp, 5432).
+hacl(app_9, db_3, tcp, 5432).
+hacl(app_10, db_3, tcp, 5432).
+hacl(app_11, db_3, tcp, 5432).
+networkServiceInfo(db_4, postgres, tcp, 5432, root).
+hacl(app_0, db_4, tcp, 5432).
+hacl(app_1, db_4, tcp, 5432).
+hacl(app_2, db_4, tcp, 5432).
+hacl(app_3, db_4, tcp, 5432).
+hacl(app_4, db_4, tcp, 5432).
+hacl(app_5, db_4, tcp, 5432).
+hacl(app_6, db_4, tcp, 5432).
+hacl(app_7, db_4, tcp, 5432).
+hacl(app_8, db_4, tcp, 5432).
+hacl(app_9, db_4, tcp, 5432).
+hacl(app_10, db_4, tcp, 5432).
+hacl(app_11, db_4, tcp, 5432).
+networkServiceInfo(db_5, postgres, tcp, 5432, root).
+hacl(app_0, db_5, tcp, 5432).
+hacl(app_1, db_5, tcp, 5432).
+hacl(app_2, db_5, tcp, 5432).
+hacl(app_3, db_5, tcp, 5432).
+hacl(app_4, db_5, tcp, 5432).
+hacl(app_5, db_5, tcp, 5432).
+hacl(app_6, db_5, tcp, 5432).
+hacl(app_7, db_5, tcp, 5432).
+hacl(app_8, db_5, tcp, 5432).
+hacl(app_9, db_5, tcp, 5432).
+hacl(app_10, db_5, tcp, 5432).
+hacl(app_11, db_5, tcp, 5432).
+networkServiceInfo(db_6, postgres, tcp, 5432, root).
+hacl(app_0, db_6, tcp, 5432).
+hacl(app_1, db_6, tcp, 5432).
+hacl(app_2, db_6, tcp, 5432).
+hacl(app_3, db_6, tcp, 5432).
+hacl(app_4, db_6, tcp, 5432).
+hacl(app_5, db_6, tcp, 5432).
+hacl(app_6, db_6, tcp, 5432).
+hacl(app_7, db_6, tcp, 5432).
+hacl(app_8, db_6, tcp, 5432).
+hacl(app_9, db_6, tcp, 5432).
+hacl(app_10, db_6, tcp, 5432).
+hacl(app_11, db_6, tcp, 5432).
+networkServiceInfo(db_7, postgres, tcp, 5432, root).
+hacl(app_0, db_7, tcp, 5432).
+hacl(app_1, db_7, tcp, 5432).
+hacl(app_2, db_7, tcp, 5432).
+hacl(app_3, db_7, tcp, 5432).
+hacl(app_4, db_7, tcp, 5432).
+hacl(app_5, db_7, tcp, 5432).
+hacl(app_6, db_7, tcp, 5432).
+hacl(app_7, db_7, tcp, 5432).
+hacl(app_8, db_7, tcp, 5432).
+hacl(app_9, db_7, tcp, 5432).
+hacl(app_10, db_7, tcp, 5432).
+hacl(app_11, db_7, tcp, 5432).
+networkServiceInfo(db_8, postgres, tcp, 5432, root).
+hacl(app_0, db_8, tcp, 5432).
+hacl(app_1, db_8, tcp, 5432).
+hacl(app_2, db_8, tcp, 5432).
+hacl(app_3, db_8, tcp, 5432).
+hacl(app_4, db_8, tcp, 5432).
+hacl(app_5, db_8, tcp, 5432).
+hacl(app_6, db_8, tcp, 5432).
+hacl(app_7, db_8, tcp, 5432).
+hacl(app_8, db_8, tcp, 5432).
+hacl(app_9, db_8, tcp, 5432).
+hacl(app_10, db_8, tcp, 5432).
+hacl(app_11, db_8, tcp, 5432).
+networkServiceInfo(db_9, postgres, tcp, 5432, root).
+hacl(app_0, db_9, tcp, 5432).
+hacl(app_1, db_9, tcp, 5432).
+hacl(app_2, db_9, tcp, 5432).
+hacl(app_3, db_9, tcp, 5432).
+hacl(app_4, db_9, tcp, 5432).
+hacl(app_5, db_9, tcp, 5432).
+hacl(app_6, db_9, tcp, 5432).
+hacl(app_7, db_9, tcp, 5432).
+hacl(app_8, db_9, tcp, 5432).
+hacl(app_9, db_9, tcp, 5432).
+hacl(app_10, db_9, tcp, 5432).
+hacl(app_11, db_9, tcp, 5432).
+networkServiceInfo(db_10, postgres, tcp, 5432, root).
+hacl(app_0, db_10, tcp, 5432).
+hacl(app_1, db_10, tcp, 5432).
+hacl(app_2, db_10, tcp, 5432).
+hacl(app_3, db_10, tcp, 5432).
+hacl(app_4, db_10, tcp, 5432).
+hacl(app_5, db_10, tcp, 5432).
+hacl(app_6, db_10, tcp, 5432).
+hacl(app_7, db_10, tcp, 5432).
+hacl(app_8, db_10, tcp, 5432).
+hacl(app_9, db_10, tcp, 5432).
+hacl(app_10, db_10, tcp, 5432).
+hacl(app_11, db_10, tcp, 5432).
+networkServiceInfo(db_11, postgres, tcp, 5432, root).
+hacl(app_0, db_11, tcp, 5432).
+hacl(app_1, db_11, tcp, 5432).
+hacl(app_2, db_11, tcp, 5432).
+hacl(app_3, db_11, tcp, 5432).
+hacl(app_4, db_11, tcp, 5432).
+hacl(app_5, db_11, tcp, 5432).
+hacl(app_6, db_11, tcp, 5432).
+hacl(app_7, db_11, tcp, 5432).
+hacl(app_8, db_11, tcp, 5432).
+hacl(app_9, db_11, tcp, 5432).
+hacl(app_10, db_11, tcp, 5432).
+hacl(app_11, db_11, tcp, 5432).
+hasVuln(dmz_0, vul_web, httpd).
+vulExists(dmz_0, vul_web, httpd).
+vulProperty(vul_web, remoteExploit, privEscalation).
+hasVuln(dmz_1, vul_web, httpd).
+vulExists(dmz_1, vul_web, httpd).
+vulProperty(vul_web, remoteExploit, privEscalation).
+hasVuln(dmz_2, vul_web, httpd).
+vulExists(dmz_2, vul_web, httpd).
+vulProperty(vul_web, remoteExploit, privEscalation).
+hasVuln(dmz_3, vul_web, httpd).
+vulExists(dmz_3, vul_web, httpd).
+vulProperty(vul_web, remoteExploit, privEscalation).
+hasVuln(dmz_4, vul_web, httpd).
+vulExists(dmz_4, vul_web, httpd).
+vulProperty(vul_web, remoteExploit, privEscalation).
+hasVuln(dmz_5, vul_web, httpd).
+vulExists(dmz_5, vul_web, httpd).
+vulProperty(vul_web, remoteExploit, privEscalation).
+hasVuln(app_0, vul_app, tomcat).
+vulExists(app_0, vul_app, tomcat).
+vulProperty(vul_app, remoteExploit, privEscalation).
+hasVuln(app_1, vul_app, tomcat).
+vulExists(app_1, vul_app, tomcat).
+vulProperty(vul_app, remoteExploit, privEscalation).
+hasVuln(app_2, vul_app, tomcat).
+vulExists(app_2, vul_app, tomcat).
+vulProperty(vul_app, remoteExploit, privEscalation).
+hasVuln(app_3, vul_app, tomcat).
+vulExists(app_3, vul_app, tomcat).
+vulProperty(vul_app, remoteExploit, privEscalation).
+hasVuln(app_4, vul_app, tomcat).
+vulExists(app_4, vul_app, tomcat).
+vulProperty(vul_app, remoteExploit, privEscalation).
+hasVuln(app_5, vul_app, tomcat).
+vulExists(app_5, vul_app, tomcat).
+vulProperty(vul_app, remoteExploit, privEscalation).
+hasVuln(app_6, vul_app, tomcat).
+vulExists(app_6, vul_app, tomcat).
+vulProperty(vul_app, remoteExploit, privEscalation).
+hasVuln(app_7, vul_app, tomcat).
+vulExists(app_7, vul_app, tomcat).
+vulProperty(vul_app, remoteExploit, privEscalation).
+hasVuln(app_8, vul_app, tomcat).
+vulExists(app_8, vul_app, tomcat).
+vulProperty(vul_app, remoteExploit, privEscalation).
+hasVuln(app_9, vul_app, tomcat).
+vulExists(app_9, vul_app, tomcat).
+vulProperty(vul_app, remoteExploit, privEscalation).
+hasVuln(app_10, vul_app, tomcat).
+vulExists(app_10, vul_app, tomcat).
+vulProperty(vul_app, remoteExploit, privEscalation).
+hasVuln(app_11, vul_app, tomcat).
+vulExists(app_11, vul_app, tomcat).
+vulProperty(vul_app, remoteExploit, privEscalation).

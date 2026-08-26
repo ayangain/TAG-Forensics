@@ -1,0 +1,2087 @@
+primitive(inCompetent,1).
+primitive(competent,1).
+primitive(clientProgram,2).
+primitive(vulExists,3).
+primitive(vulProperty,3).
+primitive(hacl,4).
+primitive(attackerLocated,1).
+primitive(hasAccount,3).
+primitive(networkServiceInfo,5).
+primitive(setuidProgramInfo,3).
+primitive(nfsExportInfo,4).
+primitive(nfsMounted,5).
+primitive(localFileProtection,4).
+primitive(dependsOn,3).
+primitive(installed,2).
+primitive(bugHyp,4).
+primitive(vulExists,5).
+primitive(canAccessFile,4).
+primitive(isWebServer,1).
+derived(execCode,2).
+derived(netAccess,3).
+derived(canAccessHost,1).
+derived(accessFile,3).
+derived(accessMaliciousInput,3).
+derived(principalCompromised,1).
+derived(dos,1).
+derived(logInService,3).
+meta(cvss,2).
+meta(attackGoal,1).
+meta(advances,2).
+
+attack(execCode(db_25,root)).
+
+possible_duplicate_trace_step(because(6,rule_desc('direct network access',1.0),netAccess(dmz_3,tcp,80),[hacl(internet,dmz_3,tcp,80),attackerLocated(internet)])).
+
+possible_duplicate_trace_step(because(6,rule_desc('direct network access',1.0),netAccess(dmz_10,tcp,80),[hacl(internet,dmz_10,tcp,80),attackerLocated(internet)])).
+
+possible_duplicate_trace_step(because(6,rule_desc('direct network access',1.0),netAccess(dmz_6,tcp,80),[hacl(internet,dmz_6,tcp,80),attackerLocated(internet)])).
+
+possible_duplicate_trace_step(because(6,rule_desc('direct network access',1.0),netAccess(dmz_9,tcp,80),[hacl(internet,dmz_9,tcp,80),attackerLocated(internet)])).
+
+possible_duplicate_trace_step(because(6,rule_desc('direct network access',1.0),netAccess(dmz_0,tcp,80),[hacl(internet,dmz_0,tcp,80),attackerLocated(internet)])).
+
+possible_duplicate_trace_step(because(6,rule_desc('direct network access',1.0),netAccess(dmz_5,tcp,80),[hacl(internet,dmz_5,tcp,80),attackerLocated(internet)])).
+
+possible_duplicate_trace_step(because(6,rule_desc('direct network access',1.0),netAccess(dmz_8,tcp,80),[hacl(internet,dmz_8,tcp,80),attackerLocated(internet)])).
+
+possible_duplicate_trace_step(because(6,rule_desc('direct network access',1.0),netAccess(dmz_4,tcp,80),[hacl(internet,dmz_4,tcp,80),attackerLocated(internet)])).
+
+possible_duplicate_trace_step(because(6,rule_desc('direct network access',1.0),netAccess(dmz_11,tcp,80),[hacl(internet,dmz_11,tcp,80),attackerLocated(internet)])).
+
+possible_duplicate_trace_step(because(6,rule_desc('direct network access',1.0),netAccess(dmz_1,tcp,80),[hacl(internet,dmz_1,tcp,80),attackerLocated(internet)])).
+
+possible_duplicate_trace_step(because(6,rule_desc('direct network access',1.0),netAccess(dmz_2,tcp,80),[hacl(internet,dmz_2,tcp,80),attackerLocated(internet)])).
+
+possible_duplicate_trace_step(because(6,rule_desc('direct network access',1.0),netAccess(dmz_7,tcp,80),[hacl(internet,dmz_7,tcp,80),attackerLocated(internet)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(dmz_7,root),[netAccess(dmz_7,tcp,80),networkServiceInfo(dmz_7,httpd,tcp,80,root),vulExists(dmz_7,vul_web,httpd,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(dmz_2,root),[netAccess(dmz_2,tcp,80),networkServiceInfo(dmz_2,httpd,tcp,80,root),vulExists(dmz_2,vul_web,httpd,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(dmz_1,root),[netAccess(dmz_1,tcp,80),networkServiceInfo(dmz_1,httpd,tcp,80,root),vulExists(dmz_1,vul_web,httpd,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(dmz_11,root),[netAccess(dmz_11,tcp,80),networkServiceInfo(dmz_11,httpd,tcp,80,root),vulExists(dmz_11,vul_web,httpd,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(dmz_4,root),[netAccess(dmz_4,tcp,80),networkServiceInfo(dmz_4,httpd,tcp,80,root),vulExists(dmz_4,vul_web,httpd,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(dmz_8,root),[netAccess(dmz_8,tcp,80),networkServiceInfo(dmz_8,httpd,tcp,80,root),vulExists(dmz_8,vul_web,httpd,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(dmz_5,root),[netAccess(dmz_5,tcp,80),networkServiceInfo(dmz_5,httpd,tcp,80,root),vulExists(dmz_5,vul_web,httpd,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(dmz_0,root),[netAccess(dmz_0,tcp,80),networkServiceInfo(dmz_0,httpd,tcp,80,root),vulExists(dmz_0,vul_web,httpd,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(dmz_9,root),[netAccess(dmz_9,tcp,80),networkServiceInfo(dmz_9,httpd,tcp,80,root),vulExists(dmz_9,vul_web,httpd,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(dmz_6,root),[netAccess(dmz_6,tcp,80),networkServiceInfo(dmz_6,httpd,tcp,80,root),vulExists(dmz_6,vul_web,httpd,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(dmz_10,root),[netAccess(dmz_10,tcp,80),networkServiceInfo(dmz_10,httpd,tcp,80,root),vulExists(dmz_10,vul_web,httpd,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(dmz_3,root),[netAccess(dmz_3,tcp,80),networkServiceInfo(dmz_3,httpd,tcp,80,root),vulExists(dmz_3,vul_web,httpd,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_7,tcp,8080),[hacl(dmz_7,app_7,tcp,8080),advances(dmz_7,app_7),execCode(dmz_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_7,tcp,8080),[hacl(dmz_2,app_7,tcp,8080),advances(dmz_2,app_7),execCode(dmz_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_7,tcp,8080),[hacl(dmz_1,app_7,tcp,8080),advances(dmz_1,app_7),execCode(dmz_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_7,tcp,8080),[hacl(dmz_11,app_7,tcp,8080),advances(dmz_11,app_7),execCode(dmz_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_7,tcp,8080),[hacl(dmz_4,app_7,tcp,8080),advances(dmz_4,app_7),execCode(dmz_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_7,tcp,8080),[hacl(dmz_8,app_7,tcp,8080),advances(dmz_8,app_7),execCode(dmz_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_7,tcp,8080),[hacl(dmz_5,app_7,tcp,8080),advances(dmz_5,app_7),execCode(dmz_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_7,tcp,8080),[hacl(dmz_0,app_7,tcp,8080),advances(dmz_0,app_7),execCode(dmz_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_7,tcp,8080),[hacl(dmz_9,app_7,tcp,8080),advances(dmz_9,app_7),execCode(dmz_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_7,tcp,8080),[hacl(dmz_6,app_7,tcp,8080),advances(dmz_6,app_7),execCode(dmz_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_7,tcp,8080),[hacl(dmz_10,app_7,tcp,8080),advances(dmz_10,app_7),execCode(dmz_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_7,tcp,8080),[hacl(dmz_3,app_7,tcp,8080),advances(dmz_3,app_7),execCode(dmz_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_2,tcp,8080),[hacl(dmz_7,app_2,tcp,8080),advances(dmz_7,app_2),execCode(dmz_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_2,tcp,8080),[hacl(dmz_2,app_2,tcp,8080),advances(dmz_2,app_2),execCode(dmz_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_2,tcp,8080),[hacl(dmz_1,app_2,tcp,8080),advances(dmz_1,app_2),execCode(dmz_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_2,tcp,8080),[hacl(dmz_11,app_2,tcp,8080),advances(dmz_11,app_2),execCode(dmz_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_2,tcp,8080),[hacl(dmz_4,app_2,tcp,8080),advances(dmz_4,app_2),execCode(dmz_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_2,tcp,8080),[hacl(dmz_8,app_2,tcp,8080),advances(dmz_8,app_2),execCode(dmz_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_2,tcp,8080),[hacl(dmz_5,app_2,tcp,8080),advances(dmz_5,app_2),execCode(dmz_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_2,tcp,8080),[hacl(dmz_0,app_2,tcp,8080),advances(dmz_0,app_2),execCode(dmz_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_2,tcp,8080),[hacl(dmz_9,app_2,tcp,8080),advances(dmz_9,app_2),execCode(dmz_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_2,tcp,8080),[hacl(dmz_6,app_2,tcp,8080),advances(dmz_6,app_2),execCode(dmz_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_2,tcp,8080),[hacl(dmz_10,app_2,tcp,8080),advances(dmz_10,app_2),execCode(dmz_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_2,tcp,8080),[hacl(dmz_3,app_2,tcp,8080),advances(dmz_3,app_2),execCode(dmz_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_13,tcp,8080),[hacl(dmz_7,app_13,tcp,8080),advances(dmz_7,app_13),execCode(dmz_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_13,tcp,8080),[hacl(dmz_2,app_13,tcp,8080),advances(dmz_2,app_13),execCode(dmz_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_13,tcp,8080),[hacl(dmz_1,app_13,tcp,8080),advances(dmz_1,app_13),execCode(dmz_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_13,tcp,8080),[hacl(dmz_11,app_13,tcp,8080),advances(dmz_11,app_13),execCode(dmz_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_13,tcp,8080),[hacl(dmz_4,app_13,tcp,8080),advances(dmz_4,app_13),execCode(dmz_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_13,tcp,8080),[hacl(dmz_8,app_13,tcp,8080),advances(dmz_8,app_13),execCode(dmz_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_13,tcp,8080),[hacl(dmz_5,app_13,tcp,8080),advances(dmz_5,app_13),execCode(dmz_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_13,tcp,8080),[hacl(dmz_0,app_13,tcp,8080),advances(dmz_0,app_13),execCode(dmz_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_13,tcp,8080),[hacl(dmz_9,app_13,tcp,8080),advances(dmz_9,app_13),execCode(dmz_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_13,tcp,8080),[hacl(dmz_6,app_13,tcp,8080),advances(dmz_6,app_13),execCode(dmz_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_13,tcp,8080),[hacl(dmz_10,app_13,tcp,8080),advances(dmz_10,app_13),execCode(dmz_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_13,tcp,8080),[hacl(dmz_3,app_13,tcp,8080),advances(dmz_3,app_13),execCode(dmz_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_19,tcp,8080),[hacl(dmz_7,app_19,tcp,8080),advances(dmz_7,app_19),execCode(dmz_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_19,tcp,8080),[hacl(dmz_2,app_19,tcp,8080),advances(dmz_2,app_19),execCode(dmz_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_19,tcp,8080),[hacl(dmz_1,app_19,tcp,8080),advances(dmz_1,app_19),execCode(dmz_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_19,tcp,8080),[hacl(dmz_11,app_19,tcp,8080),advances(dmz_11,app_19),execCode(dmz_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_19,tcp,8080),[hacl(dmz_4,app_19,tcp,8080),advances(dmz_4,app_19),execCode(dmz_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_19,tcp,8080),[hacl(dmz_8,app_19,tcp,8080),advances(dmz_8,app_19),execCode(dmz_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_19,tcp,8080),[hacl(dmz_5,app_19,tcp,8080),advances(dmz_5,app_19),execCode(dmz_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_19,tcp,8080),[hacl(dmz_0,app_19,tcp,8080),advances(dmz_0,app_19),execCode(dmz_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_19,tcp,8080),[hacl(dmz_9,app_19,tcp,8080),advances(dmz_9,app_19),execCode(dmz_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_19,tcp,8080),[hacl(dmz_6,app_19,tcp,8080),advances(dmz_6,app_19),execCode(dmz_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_19,tcp,8080),[hacl(dmz_10,app_19,tcp,8080),advances(dmz_10,app_19),execCode(dmz_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_19,tcp,8080),[hacl(dmz_3,app_19,tcp,8080),advances(dmz_3,app_19),execCode(dmz_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_6,tcp,8080),[hacl(dmz_7,app_6,tcp,8080),advances(dmz_7,app_6),execCode(dmz_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_6,tcp,8080),[hacl(dmz_2,app_6,tcp,8080),advances(dmz_2,app_6),execCode(dmz_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_6,tcp,8080),[hacl(dmz_1,app_6,tcp,8080),advances(dmz_1,app_6),execCode(dmz_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_6,tcp,8080),[hacl(dmz_11,app_6,tcp,8080),advances(dmz_11,app_6),execCode(dmz_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_6,tcp,8080),[hacl(dmz_4,app_6,tcp,8080),advances(dmz_4,app_6),execCode(dmz_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_6,tcp,8080),[hacl(dmz_8,app_6,tcp,8080),advances(dmz_8,app_6),execCode(dmz_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_6,tcp,8080),[hacl(dmz_5,app_6,tcp,8080),advances(dmz_5,app_6),execCode(dmz_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_6,tcp,8080),[hacl(dmz_0,app_6,tcp,8080),advances(dmz_0,app_6),execCode(dmz_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_6,tcp,8080),[hacl(dmz_9,app_6,tcp,8080),advances(dmz_9,app_6),execCode(dmz_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_6,tcp,8080),[hacl(dmz_6,app_6,tcp,8080),advances(dmz_6,app_6),execCode(dmz_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_6,tcp,8080),[hacl(dmz_10,app_6,tcp,8080),advances(dmz_10,app_6),execCode(dmz_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_6,tcp,8080),[hacl(dmz_3,app_6,tcp,8080),advances(dmz_3,app_6),execCode(dmz_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_1,tcp,8080),[hacl(dmz_7,app_1,tcp,8080),advances(dmz_7,app_1),execCode(dmz_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_1,tcp,8080),[hacl(dmz_2,app_1,tcp,8080),advances(dmz_2,app_1),execCode(dmz_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_1,tcp,8080),[hacl(dmz_1,app_1,tcp,8080),advances(dmz_1,app_1),execCode(dmz_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_1,tcp,8080),[hacl(dmz_11,app_1,tcp,8080),advances(dmz_11,app_1),execCode(dmz_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_1,tcp,8080),[hacl(dmz_4,app_1,tcp,8080),advances(dmz_4,app_1),execCode(dmz_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_1,tcp,8080),[hacl(dmz_8,app_1,tcp,8080),advances(dmz_8,app_1),execCode(dmz_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_1,tcp,8080),[hacl(dmz_5,app_1,tcp,8080),advances(dmz_5,app_1),execCode(dmz_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_1,tcp,8080),[hacl(dmz_0,app_1,tcp,8080),advances(dmz_0,app_1),execCode(dmz_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_1,tcp,8080),[hacl(dmz_9,app_1,tcp,8080),advances(dmz_9,app_1),execCode(dmz_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_1,tcp,8080),[hacl(dmz_6,app_1,tcp,8080),advances(dmz_6,app_1),execCode(dmz_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_1,tcp,8080),[hacl(dmz_10,app_1,tcp,8080),advances(dmz_10,app_1),execCode(dmz_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_1,tcp,8080),[hacl(dmz_3,app_1,tcp,8080),advances(dmz_3,app_1),execCode(dmz_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_12,tcp,8080),[hacl(dmz_7,app_12,tcp,8080),advances(dmz_7,app_12),execCode(dmz_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_12,tcp,8080),[hacl(dmz_2,app_12,tcp,8080),advances(dmz_2,app_12),execCode(dmz_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_12,tcp,8080),[hacl(dmz_1,app_12,tcp,8080),advances(dmz_1,app_12),execCode(dmz_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_12,tcp,8080),[hacl(dmz_11,app_12,tcp,8080),advances(dmz_11,app_12),execCode(dmz_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_12,tcp,8080),[hacl(dmz_4,app_12,tcp,8080),advances(dmz_4,app_12),execCode(dmz_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_12,tcp,8080),[hacl(dmz_8,app_12,tcp,8080),advances(dmz_8,app_12),execCode(dmz_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_12,tcp,8080),[hacl(dmz_5,app_12,tcp,8080),advances(dmz_5,app_12),execCode(dmz_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_12,tcp,8080),[hacl(dmz_0,app_12,tcp,8080),advances(dmz_0,app_12),execCode(dmz_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_12,tcp,8080),[hacl(dmz_9,app_12,tcp,8080),advances(dmz_9,app_12),execCode(dmz_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_12,tcp,8080),[hacl(dmz_6,app_12,tcp,8080),advances(dmz_6,app_12),execCode(dmz_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_12,tcp,8080),[hacl(dmz_10,app_12,tcp,8080),advances(dmz_10,app_12),execCode(dmz_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_12,tcp,8080),[hacl(dmz_3,app_12,tcp,8080),advances(dmz_3,app_12),execCode(dmz_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_18,tcp,8080),[hacl(dmz_7,app_18,tcp,8080),advances(dmz_7,app_18),execCode(dmz_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_18,tcp,8080),[hacl(dmz_2,app_18,tcp,8080),advances(dmz_2,app_18),execCode(dmz_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_18,tcp,8080),[hacl(dmz_1,app_18,tcp,8080),advances(dmz_1,app_18),execCode(dmz_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_18,tcp,8080),[hacl(dmz_11,app_18,tcp,8080),advances(dmz_11,app_18),execCode(dmz_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_18,tcp,8080),[hacl(dmz_4,app_18,tcp,8080),advances(dmz_4,app_18),execCode(dmz_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_18,tcp,8080),[hacl(dmz_8,app_18,tcp,8080),advances(dmz_8,app_18),execCode(dmz_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_18,tcp,8080),[hacl(dmz_5,app_18,tcp,8080),advances(dmz_5,app_18),execCode(dmz_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_18,tcp,8080),[hacl(dmz_0,app_18,tcp,8080),advances(dmz_0,app_18),execCode(dmz_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_18,tcp,8080),[hacl(dmz_9,app_18,tcp,8080),advances(dmz_9,app_18),execCode(dmz_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_18,tcp,8080),[hacl(dmz_6,app_18,tcp,8080),advances(dmz_6,app_18),execCode(dmz_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_18,tcp,8080),[hacl(dmz_10,app_18,tcp,8080),advances(dmz_10,app_18),execCode(dmz_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_18,tcp,8080),[hacl(dmz_3,app_18,tcp,8080),advances(dmz_3,app_18),execCode(dmz_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_24,tcp,8080),[hacl(dmz_7,app_24,tcp,8080),advances(dmz_7,app_24),execCode(dmz_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_24,tcp,8080),[hacl(dmz_2,app_24,tcp,8080),advances(dmz_2,app_24),execCode(dmz_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_24,tcp,8080),[hacl(dmz_1,app_24,tcp,8080),advances(dmz_1,app_24),execCode(dmz_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_24,tcp,8080),[hacl(dmz_11,app_24,tcp,8080),advances(dmz_11,app_24),execCode(dmz_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_24,tcp,8080),[hacl(dmz_4,app_24,tcp,8080),advances(dmz_4,app_24),execCode(dmz_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_24,tcp,8080),[hacl(dmz_8,app_24,tcp,8080),advances(dmz_8,app_24),execCode(dmz_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_24,tcp,8080),[hacl(dmz_5,app_24,tcp,8080),advances(dmz_5,app_24),execCode(dmz_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_24,tcp,8080),[hacl(dmz_0,app_24,tcp,8080),advances(dmz_0,app_24),execCode(dmz_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_24,tcp,8080),[hacl(dmz_9,app_24,tcp,8080),advances(dmz_9,app_24),execCode(dmz_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_24,tcp,8080),[hacl(dmz_6,app_24,tcp,8080),advances(dmz_6,app_24),execCode(dmz_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_24,tcp,8080),[hacl(dmz_10,app_24,tcp,8080),advances(dmz_10,app_24),execCode(dmz_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_24,tcp,8080),[hacl(dmz_3,app_24,tcp,8080),advances(dmz_3,app_24),execCode(dmz_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_11,tcp,8080),[hacl(dmz_7,app_11,tcp,8080),advances(dmz_7,app_11),execCode(dmz_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_11,tcp,8080),[hacl(dmz_2,app_11,tcp,8080),advances(dmz_2,app_11),execCode(dmz_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_11,tcp,8080),[hacl(dmz_1,app_11,tcp,8080),advances(dmz_1,app_11),execCode(dmz_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_11,tcp,8080),[hacl(dmz_11,app_11,tcp,8080),advances(dmz_11,app_11),execCode(dmz_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_11,tcp,8080),[hacl(dmz_4,app_11,tcp,8080),advances(dmz_4,app_11),execCode(dmz_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_11,tcp,8080),[hacl(dmz_8,app_11,tcp,8080),advances(dmz_8,app_11),execCode(dmz_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_11,tcp,8080),[hacl(dmz_5,app_11,tcp,8080),advances(dmz_5,app_11),execCode(dmz_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_11,tcp,8080),[hacl(dmz_0,app_11,tcp,8080),advances(dmz_0,app_11),execCode(dmz_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_11,tcp,8080),[hacl(dmz_9,app_11,tcp,8080),advances(dmz_9,app_11),execCode(dmz_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_11,tcp,8080),[hacl(dmz_6,app_11,tcp,8080),advances(dmz_6,app_11),execCode(dmz_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_11,tcp,8080),[hacl(dmz_10,app_11,tcp,8080),advances(dmz_10,app_11),execCode(dmz_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_11,tcp,8080),[hacl(dmz_3,app_11,tcp,8080),advances(dmz_3,app_11),execCode(dmz_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_0,tcp,8080),[hacl(dmz_7,app_0,tcp,8080),advances(dmz_7,app_0),execCode(dmz_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_0,tcp,8080),[hacl(dmz_2,app_0,tcp,8080),advances(dmz_2,app_0),execCode(dmz_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_0,tcp,8080),[hacl(dmz_1,app_0,tcp,8080),advances(dmz_1,app_0),execCode(dmz_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_0,tcp,8080),[hacl(dmz_11,app_0,tcp,8080),advances(dmz_11,app_0),execCode(dmz_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_0,tcp,8080),[hacl(dmz_4,app_0,tcp,8080),advances(dmz_4,app_0),execCode(dmz_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_0,tcp,8080),[hacl(dmz_8,app_0,tcp,8080),advances(dmz_8,app_0),execCode(dmz_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_0,tcp,8080),[hacl(dmz_5,app_0,tcp,8080),advances(dmz_5,app_0),execCode(dmz_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_0,tcp,8080),[hacl(dmz_0,app_0,tcp,8080),advances(dmz_0,app_0),execCode(dmz_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_0,tcp,8080),[hacl(dmz_9,app_0,tcp,8080),advances(dmz_9,app_0),execCode(dmz_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_0,tcp,8080),[hacl(dmz_6,app_0,tcp,8080),advances(dmz_6,app_0),execCode(dmz_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_0,tcp,8080),[hacl(dmz_10,app_0,tcp,8080),advances(dmz_10,app_0),execCode(dmz_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_0,tcp,8080),[hacl(dmz_3,app_0,tcp,8080),advances(dmz_3,app_0),execCode(dmz_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_17,tcp,8080),[hacl(dmz_7,app_17,tcp,8080),advances(dmz_7,app_17),execCode(dmz_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_17,tcp,8080),[hacl(dmz_2,app_17,tcp,8080),advances(dmz_2,app_17),execCode(dmz_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_17,tcp,8080),[hacl(dmz_1,app_17,tcp,8080),advances(dmz_1,app_17),execCode(dmz_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_17,tcp,8080),[hacl(dmz_11,app_17,tcp,8080),advances(dmz_11,app_17),execCode(dmz_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_17,tcp,8080),[hacl(dmz_4,app_17,tcp,8080),advances(dmz_4,app_17),execCode(dmz_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_17,tcp,8080),[hacl(dmz_8,app_17,tcp,8080),advances(dmz_8,app_17),execCode(dmz_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_17,tcp,8080),[hacl(dmz_5,app_17,tcp,8080),advances(dmz_5,app_17),execCode(dmz_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_17,tcp,8080),[hacl(dmz_0,app_17,tcp,8080),advances(dmz_0,app_17),execCode(dmz_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_17,tcp,8080),[hacl(dmz_9,app_17,tcp,8080),advances(dmz_9,app_17),execCode(dmz_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_17,tcp,8080),[hacl(dmz_6,app_17,tcp,8080),advances(dmz_6,app_17),execCode(dmz_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_17,tcp,8080),[hacl(dmz_10,app_17,tcp,8080),advances(dmz_10,app_17),execCode(dmz_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_17,tcp,8080),[hacl(dmz_3,app_17,tcp,8080),advances(dmz_3,app_17),execCode(dmz_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_23,tcp,8080),[hacl(dmz_7,app_23,tcp,8080),advances(dmz_7,app_23),execCode(dmz_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_23,tcp,8080),[hacl(dmz_2,app_23,tcp,8080),advances(dmz_2,app_23),execCode(dmz_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_23,tcp,8080),[hacl(dmz_1,app_23,tcp,8080),advances(dmz_1,app_23),execCode(dmz_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_23,tcp,8080),[hacl(dmz_11,app_23,tcp,8080),advances(dmz_11,app_23),execCode(dmz_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_23,tcp,8080),[hacl(dmz_4,app_23,tcp,8080),advances(dmz_4,app_23),execCode(dmz_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_23,tcp,8080),[hacl(dmz_8,app_23,tcp,8080),advances(dmz_8,app_23),execCode(dmz_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_23,tcp,8080),[hacl(dmz_5,app_23,tcp,8080),advances(dmz_5,app_23),execCode(dmz_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_23,tcp,8080),[hacl(dmz_0,app_23,tcp,8080),advances(dmz_0,app_23),execCode(dmz_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_23,tcp,8080),[hacl(dmz_9,app_23,tcp,8080),advances(dmz_9,app_23),execCode(dmz_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_23,tcp,8080),[hacl(dmz_6,app_23,tcp,8080),advances(dmz_6,app_23),execCode(dmz_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_23,tcp,8080),[hacl(dmz_10,app_23,tcp,8080),advances(dmz_10,app_23),execCode(dmz_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_23,tcp,8080),[hacl(dmz_3,app_23,tcp,8080),advances(dmz_3,app_23),execCode(dmz_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_10,tcp,8080),[hacl(dmz_7,app_10,tcp,8080),advances(dmz_7,app_10),execCode(dmz_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_10,tcp,8080),[hacl(dmz_2,app_10,tcp,8080),advances(dmz_2,app_10),execCode(dmz_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_10,tcp,8080),[hacl(dmz_1,app_10,tcp,8080),advances(dmz_1,app_10),execCode(dmz_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_10,tcp,8080),[hacl(dmz_11,app_10,tcp,8080),advances(dmz_11,app_10),execCode(dmz_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_10,tcp,8080),[hacl(dmz_4,app_10,tcp,8080),advances(dmz_4,app_10),execCode(dmz_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_10,tcp,8080),[hacl(dmz_8,app_10,tcp,8080),advances(dmz_8,app_10),execCode(dmz_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_10,tcp,8080),[hacl(dmz_5,app_10,tcp,8080),advances(dmz_5,app_10),execCode(dmz_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_10,tcp,8080),[hacl(dmz_0,app_10,tcp,8080),advances(dmz_0,app_10),execCode(dmz_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_10,tcp,8080),[hacl(dmz_9,app_10,tcp,8080),advances(dmz_9,app_10),execCode(dmz_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_10,tcp,8080),[hacl(dmz_6,app_10,tcp,8080),advances(dmz_6,app_10),execCode(dmz_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_10,tcp,8080),[hacl(dmz_10,app_10,tcp,8080),advances(dmz_10,app_10),execCode(dmz_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_10,tcp,8080),[hacl(dmz_3,app_10,tcp,8080),advances(dmz_3,app_10),execCode(dmz_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_5,tcp,8080),[hacl(dmz_7,app_5,tcp,8080),advances(dmz_7,app_5),execCode(dmz_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_5,tcp,8080),[hacl(dmz_2,app_5,tcp,8080),advances(dmz_2,app_5),execCode(dmz_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_5,tcp,8080),[hacl(dmz_1,app_5,tcp,8080),advances(dmz_1,app_5),execCode(dmz_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_5,tcp,8080),[hacl(dmz_11,app_5,tcp,8080),advances(dmz_11,app_5),execCode(dmz_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_5,tcp,8080),[hacl(dmz_4,app_5,tcp,8080),advances(dmz_4,app_5),execCode(dmz_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_5,tcp,8080),[hacl(dmz_8,app_5,tcp,8080),advances(dmz_8,app_5),execCode(dmz_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_5,tcp,8080),[hacl(dmz_5,app_5,tcp,8080),advances(dmz_5,app_5),execCode(dmz_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_5,tcp,8080),[hacl(dmz_0,app_5,tcp,8080),advances(dmz_0,app_5),execCode(dmz_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_5,tcp,8080),[hacl(dmz_9,app_5,tcp,8080),advances(dmz_9,app_5),execCode(dmz_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_5,tcp,8080),[hacl(dmz_6,app_5,tcp,8080),advances(dmz_6,app_5),execCode(dmz_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_5,tcp,8080),[hacl(dmz_10,app_5,tcp,8080),advances(dmz_10,app_5),execCode(dmz_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_5,tcp,8080),[hacl(dmz_3,app_5,tcp,8080),advances(dmz_3,app_5),execCode(dmz_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_16,tcp,8080),[hacl(dmz_7,app_16,tcp,8080),advances(dmz_7,app_16),execCode(dmz_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_16,tcp,8080),[hacl(dmz_2,app_16,tcp,8080),advances(dmz_2,app_16),execCode(dmz_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_16,tcp,8080),[hacl(dmz_1,app_16,tcp,8080),advances(dmz_1,app_16),execCode(dmz_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_16,tcp,8080),[hacl(dmz_11,app_16,tcp,8080),advances(dmz_11,app_16),execCode(dmz_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_16,tcp,8080),[hacl(dmz_4,app_16,tcp,8080),advances(dmz_4,app_16),execCode(dmz_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_16,tcp,8080),[hacl(dmz_8,app_16,tcp,8080),advances(dmz_8,app_16),execCode(dmz_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_16,tcp,8080),[hacl(dmz_5,app_16,tcp,8080),advances(dmz_5,app_16),execCode(dmz_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_16,tcp,8080),[hacl(dmz_0,app_16,tcp,8080),advances(dmz_0,app_16),execCode(dmz_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_16,tcp,8080),[hacl(dmz_9,app_16,tcp,8080),advances(dmz_9,app_16),execCode(dmz_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_16,tcp,8080),[hacl(dmz_6,app_16,tcp,8080),advances(dmz_6,app_16),execCode(dmz_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_16,tcp,8080),[hacl(dmz_10,app_16,tcp,8080),advances(dmz_10,app_16),execCode(dmz_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_16,tcp,8080),[hacl(dmz_3,app_16,tcp,8080),advances(dmz_3,app_16),execCode(dmz_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_22,tcp,8080),[hacl(dmz_7,app_22,tcp,8080),advances(dmz_7,app_22),execCode(dmz_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_22,tcp,8080),[hacl(dmz_2,app_22,tcp,8080),advances(dmz_2,app_22),execCode(dmz_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_22,tcp,8080),[hacl(dmz_1,app_22,tcp,8080),advances(dmz_1,app_22),execCode(dmz_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_22,tcp,8080),[hacl(dmz_11,app_22,tcp,8080),advances(dmz_11,app_22),execCode(dmz_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_22,tcp,8080),[hacl(dmz_4,app_22,tcp,8080),advances(dmz_4,app_22),execCode(dmz_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_22,tcp,8080),[hacl(dmz_8,app_22,tcp,8080),advances(dmz_8,app_22),execCode(dmz_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_22,tcp,8080),[hacl(dmz_5,app_22,tcp,8080),advances(dmz_5,app_22),execCode(dmz_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_22,tcp,8080),[hacl(dmz_0,app_22,tcp,8080),advances(dmz_0,app_22),execCode(dmz_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_22,tcp,8080),[hacl(dmz_9,app_22,tcp,8080),advances(dmz_9,app_22),execCode(dmz_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_22,tcp,8080),[hacl(dmz_6,app_22,tcp,8080),advances(dmz_6,app_22),execCode(dmz_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_22,tcp,8080),[hacl(dmz_10,app_22,tcp,8080),advances(dmz_10,app_22),execCode(dmz_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_22,tcp,8080),[hacl(dmz_3,app_22,tcp,8080),advances(dmz_3,app_22),execCode(dmz_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_9,tcp,8080),[hacl(dmz_7,app_9,tcp,8080),advances(dmz_7,app_9),execCode(dmz_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_9,tcp,8080),[hacl(dmz_2,app_9,tcp,8080),advances(dmz_2,app_9),execCode(dmz_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_9,tcp,8080),[hacl(dmz_1,app_9,tcp,8080),advances(dmz_1,app_9),execCode(dmz_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_9,tcp,8080),[hacl(dmz_11,app_9,tcp,8080),advances(dmz_11,app_9),execCode(dmz_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_9,tcp,8080),[hacl(dmz_4,app_9,tcp,8080),advances(dmz_4,app_9),execCode(dmz_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_9,tcp,8080),[hacl(dmz_8,app_9,tcp,8080),advances(dmz_8,app_9),execCode(dmz_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_9,tcp,8080),[hacl(dmz_5,app_9,tcp,8080),advances(dmz_5,app_9),execCode(dmz_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_9,tcp,8080),[hacl(dmz_0,app_9,tcp,8080),advances(dmz_0,app_9),execCode(dmz_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_9,tcp,8080),[hacl(dmz_9,app_9,tcp,8080),advances(dmz_9,app_9),execCode(dmz_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_9,tcp,8080),[hacl(dmz_6,app_9,tcp,8080),advances(dmz_6,app_9),execCode(dmz_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_9,tcp,8080),[hacl(dmz_10,app_9,tcp,8080),advances(dmz_10,app_9),execCode(dmz_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_9,tcp,8080),[hacl(dmz_3,app_9,tcp,8080),advances(dmz_3,app_9),execCode(dmz_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_4,tcp,8080),[hacl(dmz_7,app_4,tcp,8080),advances(dmz_7,app_4),execCode(dmz_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_4,tcp,8080),[hacl(dmz_2,app_4,tcp,8080),advances(dmz_2,app_4),execCode(dmz_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_4,tcp,8080),[hacl(dmz_1,app_4,tcp,8080),advances(dmz_1,app_4),execCode(dmz_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_4,tcp,8080),[hacl(dmz_11,app_4,tcp,8080),advances(dmz_11,app_4),execCode(dmz_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_4,tcp,8080),[hacl(dmz_4,app_4,tcp,8080),advances(dmz_4,app_4),execCode(dmz_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_4,tcp,8080),[hacl(dmz_8,app_4,tcp,8080),advances(dmz_8,app_4),execCode(dmz_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_4,tcp,8080),[hacl(dmz_5,app_4,tcp,8080),advances(dmz_5,app_4),execCode(dmz_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_4,tcp,8080),[hacl(dmz_0,app_4,tcp,8080),advances(dmz_0,app_4),execCode(dmz_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_4,tcp,8080),[hacl(dmz_9,app_4,tcp,8080),advances(dmz_9,app_4),execCode(dmz_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_4,tcp,8080),[hacl(dmz_6,app_4,tcp,8080),advances(dmz_6,app_4),execCode(dmz_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_4,tcp,8080),[hacl(dmz_10,app_4,tcp,8080),advances(dmz_10,app_4),execCode(dmz_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_4,tcp,8080),[hacl(dmz_3,app_4,tcp,8080),advances(dmz_3,app_4),execCode(dmz_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_15,tcp,8080),[hacl(dmz_7,app_15,tcp,8080),advances(dmz_7,app_15),execCode(dmz_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_15,tcp,8080),[hacl(dmz_2,app_15,tcp,8080),advances(dmz_2,app_15),execCode(dmz_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_15,tcp,8080),[hacl(dmz_1,app_15,tcp,8080),advances(dmz_1,app_15),execCode(dmz_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_15,tcp,8080),[hacl(dmz_11,app_15,tcp,8080),advances(dmz_11,app_15),execCode(dmz_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_15,tcp,8080),[hacl(dmz_4,app_15,tcp,8080),advances(dmz_4,app_15),execCode(dmz_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_15,tcp,8080),[hacl(dmz_8,app_15,tcp,8080),advances(dmz_8,app_15),execCode(dmz_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_15,tcp,8080),[hacl(dmz_5,app_15,tcp,8080),advances(dmz_5,app_15),execCode(dmz_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_15,tcp,8080),[hacl(dmz_0,app_15,tcp,8080),advances(dmz_0,app_15),execCode(dmz_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_15,tcp,8080),[hacl(dmz_9,app_15,tcp,8080),advances(dmz_9,app_15),execCode(dmz_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_15,tcp,8080),[hacl(dmz_6,app_15,tcp,8080),advances(dmz_6,app_15),execCode(dmz_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_15,tcp,8080),[hacl(dmz_10,app_15,tcp,8080),advances(dmz_10,app_15),execCode(dmz_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_15,tcp,8080),[hacl(dmz_3,app_15,tcp,8080),advances(dmz_3,app_15),execCode(dmz_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_21,tcp,8080),[hacl(dmz_7,app_21,tcp,8080),advances(dmz_7,app_21),execCode(dmz_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_21,tcp,8080),[hacl(dmz_2,app_21,tcp,8080),advances(dmz_2,app_21),execCode(dmz_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_21,tcp,8080),[hacl(dmz_1,app_21,tcp,8080),advances(dmz_1,app_21),execCode(dmz_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_21,tcp,8080),[hacl(dmz_11,app_21,tcp,8080),advances(dmz_11,app_21),execCode(dmz_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_21,tcp,8080),[hacl(dmz_4,app_21,tcp,8080),advances(dmz_4,app_21),execCode(dmz_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_21,tcp,8080),[hacl(dmz_8,app_21,tcp,8080),advances(dmz_8,app_21),execCode(dmz_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_21,tcp,8080),[hacl(dmz_5,app_21,tcp,8080),advances(dmz_5,app_21),execCode(dmz_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_21,tcp,8080),[hacl(dmz_0,app_21,tcp,8080),advances(dmz_0,app_21),execCode(dmz_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_21,tcp,8080),[hacl(dmz_9,app_21,tcp,8080),advances(dmz_9,app_21),execCode(dmz_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_21,tcp,8080),[hacl(dmz_6,app_21,tcp,8080),advances(dmz_6,app_21),execCode(dmz_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_21,tcp,8080),[hacl(dmz_10,app_21,tcp,8080),advances(dmz_10,app_21),execCode(dmz_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_21,tcp,8080),[hacl(dmz_3,app_21,tcp,8080),advances(dmz_3,app_21),execCode(dmz_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_8,tcp,8080),[hacl(dmz_7,app_8,tcp,8080),advances(dmz_7,app_8),execCode(dmz_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_8,tcp,8080),[hacl(dmz_2,app_8,tcp,8080),advances(dmz_2,app_8),execCode(dmz_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_8,tcp,8080),[hacl(dmz_1,app_8,tcp,8080),advances(dmz_1,app_8),execCode(dmz_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_8,tcp,8080),[hacl(dmz_11,app_8,tcp,8080),advances(dmz_11,app_8),execCode(dmz_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_8,tcp,8080),[hacl(dmz_4,app_8,tcp,8080),advances(dmz_4,app_8),execCode(dmz_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_8,tcp,8080),[hacl(dmz_8,app_8,tcp,8080),advances(dmz_8,app_8),execCode(dmz_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_8,tcp,8080),[hacl(dmz_5,app_8,tcp,8080),advances(dmz_5,app_8),execCode(dmz_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_8,tcp,8080),[hacl(dmz_0,app_8,tcp,8080),advances(dmz_0,app_8),execCode(dmz_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_8,tcp,8080),[hacl(dmz_9,app_8,tcp,8080),advances(dmz_9,app_8),execCode(dmz_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_8,tcp,8080),[hacl(dmz_6,app_8,tcp,8080),advances(dmz_6,app_8),execCode(dmz_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_8,tcp,8080),[hacl(dmz_10,app_8,tcp,8080),advances(dmz_10,app_8),execCode(dmz_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_8,tcp,8080),[hacl(dmz_3,app_8,tcp,8080),advances(dmz_3,app_8),execCode(dmz_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_3,tcp,8080),[hacl(dmz_7,app_3,tcp,8080),advances(dmz_7,app_3),execCode(dmz_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_3,tcp,8080),[hacl(dmz_2,app_3,tcp,8080),advances(dmz_2,app_3),execCode(dmz_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_3,tcp,8080),[hacl(dmz_1,app_3,tcp,8080),advances(dmz_1,app_3),execCode(dmz_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_3,tcp,8080),[hacl(dmz_11,app_3,tcp,8080),advances(dmz_11,app_3),execCode(dmz_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_3,tcp,8080),[hacl(dmz_4,app_3,tcp,8080),advances(dmz_4,app_3),execCode(dmz_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_3,tcp,8080),[hacl(dmz_8,app_3,tcp,8080),advances(dmz_8,app_3),execCode(dmz_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_3,tcp,8080),[hacl(dmz_5,app_3,tcp,8080),advances(dmz_5,app_3),execCode(dmz_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_3,tcp,8080),[hacl(dmz_0,app_3,tcp,8080),advances(dmz_0,app_3),execCode(dmz_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_3,tcp,8080),[hacl(dmz_9,app_3,tcp,8080),advances(dmz_9,app_3),execCode(dmz_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_3,tcp,8080),[hacl(dmz_6,app_3,tcp,8080),advances(dmz_6,app_3),execCode(dmz_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_3,tcp,8080),[hacl(dmz_10,app_3,tcp,8080),advances(dmz_10,app_3),execCode(dmz_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_3,tcp,8080),[hacl(dmz_3,app_3,tcp,8080),advances(dmz_3,app_3),execCode(dmz_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_14,tcp,8080),[hacl(dmz_7,app_14,tcp,8080),advances(dmz_7,app_14),execCode(dmz_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_14,tcp,8080),[hacl(dmz_2,app_14,tcp,8080),advances(dmz_2,app_14),execCode(dmz_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_14,tcp,8080),[hacl(dmz_1,app_14,tcp,8080),advances(dmz_1,app_14),execCode(dmz_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_14,tcp,8080),[hacl(dmz_11,app_14,tcp,8080),advances(dmz_11,app_14),execCode(dmz_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_14,tcp,8080),[hacl(dmz_4,app_14,tcp,8080),advances(dmz_4,app_14),execCode(dmz_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_14,tcp,8080),[hacl(dmz_8,app_14,tcp,8080),advances(dmz_8,app_14),execCode(dmz_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_14,tcp,8080),[hacl(dmz_5,app_14,tcp,8080),advances(dmz_5,app_14),execCode(dmz_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_14,tcp,8080),[hacl(dmz_0,app_14,tcp,8080),advances(dmz_0,app_14),execCode(dmz_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_14,tcp,8080),[hacl(dmz_9,app_14,tcp,8080),advances(dmz_9,app_14),execCode(dmz_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_14,tcp,8080),[hacl(dmz_6,app_14,tcp,8080),advances(dmz_6,app_14),execCode(dmz_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_14,tcp,8080),[hacl(dmz_10,app_14,tcp,8080),advances(dmz_10,app_14),execCode(dmz_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_14,tcp,8080),[hacl(dmz_3,app_14,tcp,8080),advances(dmz_3,app_14),execCode(dmz_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_20,tcp,8080),[hacl(dmz_7,app_20,tcp,8080),advances(dmz_7,app_20),execCode(dmz_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_20,tcp,8080),[hacl(dmz_2,app_20,tcp,8080),advances(dmz_2,app_20),execCode(dmz_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_20,tcp,8080),[hacl(dmz_1,app_20,tcp,8080),advances(dmz_1,app_20),execCode(dmz_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_20,tcp,8080),[hacl(dmz_11,app_20,tcp,8080),advances(dmz_11,app_20),execCode(dmz_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_20,tcp,8080),[hacl(dmz_4,app_20,tcp,8080),advances(dmz_4,app_20),execCode(dmz_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_20,tcp,8080),[hacl(dmz_8,app_20,tcp,8080),advances(dmz_8,app_20),execCode(dmz_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_20,tcp,8080),[hacl(dmz_5,app_20,tcp,8080),advances(dmz_5,app_20),execCode(dmz_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_20,tcp,8080),[hacl(dmz_0,app_20,tcp,8080),advances(dmz_0,app_20),execCode(dmz_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_20,tcp,8080),[hacl(dmz_9,app_20,tcp,8080),advances(dmz_9,app_20),execCode(dmz_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_20,tcp,8080),[hacl(dmz_6,app_20,tcp,8080),advances(dmz_6,app_20),execCode(dmz_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_20,tcp,8080),[hacl(dmz_10,app_20,tcp,8080),advances(dmz_10,app_20),execCode(dmz_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(app_20,tcp,8080),[hacl(dmz_3,app_20,tcp,8080),advances(dmz_3,app_20),execCode(dmz_3,root)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(app_7,root),[netAccess(app_7,tcp,8080),networkServiceInfo(app_7,tomcat,tcp,8080,root),vulExists(app_7,vul_app,tomcat,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(app_2,root),[netAccess(app_2,tcp,8080),networkServiceInfo(app_2,tomcat,tcp,8080,root),vulExists(app_2,vul_app,tomcat,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(app_13,root),[netAccess(app_13,tcp,8080),networkServiceInfo(app_13,tomcat,tcp,8080,root),vulExists(app_13,vul_app,tomcat,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(app_19,root),[netAccess(app_19,tcp,8080),networkServiceInfo(app_19,tomcat,tcp,8080,root),vulExists(app_19,vul_app,tomcat,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(app_6,root),[netAccess(app_6,tcp,8080),networkServiceInfo(app_6,tomcat,tcp,8080,root),vulExists(app_6,vul_app,tomcat,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(app_1,root),[netAccess(app_1,tcp,8080),networkServiceInfo(app_1,tomcat,tcp,8080,root),vulExists(app_1,vul_app,tomcat,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(app_12,root),[netAccess(app_12,tcp,8080),networkServiceInfo(app_12,tomcat,tcp,8080,root),vulExists(app_12,vul_app,tomcat,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(app_18,root),[netAccess(app_18,tcp,8080),networkServiceInfo(app_18,tomcat,tcp,8080,root),vulExists(app_18,vul_app,tomcat,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(app_24,root),[netAccess(app_24,tcp,8080),networkServiceInfo(app_24,tomcat,tcp,8080,root),vulExists(app_24,vul_app,tomcat,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(app_11,root),[netAccess(app_11,tcp,8080),networkServiceInfo(app_11,tomcat,tcp,8080,root),vulExists(app_11,vul_app,tomcat,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(app_0,root),[netAccess(app_0,tcp,8080),networkServiceInfo(app_0,tomcat,tcp,8080,root),vulExists(app_0,vul_app,tomcat,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(app_17,root),[netAccess(app_17,tcp,8080),networkServiceInfo(app_17,tomcat,tcp,8080,root),vulExists(app_17,vul_app,tomcat,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(app_23,root),[netAccess(app_23,tcp,8080),networkServiceInfo(app_23,tomcat,tcp,8080,root),vulExists(app_23,vul_app,tomcat,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(app_10,root),[netAccess(app_10,tcp,8080),networkServiceInfo(app_10,tomcat,tcp,8080,root),vulExists(app_10,vul_app,tomcat,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(app_5,root),[netAccess(app_5,tcp,8080),networkServiceInfo(app_5,tomcat,tcp,8080,root),vulExists(app_5,vul_app,tomcat,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(app_16,root),[netAccess(app_16,tcp,8080),networkServiceInfo(app_16,tomcat,tcp,8080,root),vulExists(app_16,vul_app,tomcat,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(app_22,root),[netAccess(app_22,tcp,8080),networkServiceInfo(app_22,tomcat,tcp,8080,root),vulExists(app_22,vul_app,tomcat,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(app_9,root),[netAccess(app_9,tcp,8080),networkServiceInfo(app_9,tomcat,tcp,8080,root),vulExists(app_9,vul_app,tomcat,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(app_4,root),[netAccess(app_4,tcp,8080),networkServiceInfo(app_4,tomcat,tcp,8080,root),vulExists(app_4,vul_app,tomcat,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(app_15,root),[netAccess(app_15,tcp,8080),networkServiceInfo(app_15,tomcat,tcp,8080,root),vulExists(app_15,vul_app,tomcat,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(app_21,root),[netAccess(app_21,tcp,8080),networkServiceInfo(app_21,tomcat,tcp,8080,root),vulExists(app_21,vul_app,tomcat,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(app_8,root),[netAccess(app_8,tcp,8080),networkServiceInfo(app_8,tomcat,tcp,8080,root),vulExists(app_8,vul_app,tomcat,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(app_3,root),[netAccess(app_3,tcp,8080),networkServiceInfo(app_3,tomcat,tcp,8080,root),vulExists(app_3,vul_app,tomcat,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(app_14,root),[netAccess(app_14,tcp,8080),networkServiceInfo(app_14,tomcat,tcp,8080,root),vulExists(app_14,vul_app,tomcat,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(app_20,root),[netAccess(app_20,tcp,8080),networkServiceInfo(app_20,tomcat,tcp,8080,root),vulExists(app_20,vul_app,tomcat,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_25,tcp,5432),[hacl(app_7,db_25,tcp,5432),advances(app_7,db_25),execCode(app_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_25,tcp,5432),[hacl(app_2,db_25,tcp,5432),advances(app_2,db_25),execCode(app_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_25,tcp,5432),[hacl(app_13,db_25,tcp,5432),advances(app_13,db_25),execCode(app_13,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_25,tcp,5432),[hacl(app_19,db_25,tcp,5432),advances(app_19,db_25),execCode(app_19,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_25,tcp,5432),[hacl(app_6,db_25,tcp,5432),advances(app_6,db_25),execCode(app_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_25,tcp,5432),[hacl(app_1,db_25,tcp,5432),advances(app_1,db_25),execCode(app_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_25,tcp,5432),[hacl(app_12,db_25,tcp,5432),advances(app_12,db_25),execCode(app_12,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_25,tcp,5432),[hacl(app_18,db_25,tcp,5432),advances(app_18,db_25),execCode(app_18,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_25,tcp,5432),[hacl(app_24,db_25,tcp,5432),advances(app_24,db_25),execCode(app_24,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_25,tcp,5432),[hacl(app_11,db_25,tcp,5432),advances(app_11,db_25),execCode(app_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_25,tcp,5432),[hacl(app_0,db_25,tcp,5432),advances(app_0,db_25),execCode(app_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_25,tcp,5432),[hacl(app_17,db_25,tcp,5432),advances(app_17,db_25),execCode(app_17,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_25,tcp,5432),[hacl(app_23,db_25,tcp,5432),advances(app_23,db_25),execCode(app_23,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_25,tcp,5432),[hacl(app_10,db_25,tcp,5432),advances(app_10,db_25),execCode(app_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_25,tcp,5432),[hacl(app_5,db_25,tcp,5432),advances(app_5,db_25),execCode(app_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_25,tcp,5432),[hacl(app_16,db_25,tcp,5432),advances(app_16,db_25),execCode(app_16,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_25,tcp,5432),[hacl(app_22,db_25,tcp,5432),advances(app_22,db_25),execCode(app_22,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_25,tcp,5432),[hacl(app_9,db_25,tcp,5432),advances(app_9,db_25),execCode(app_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_25,tcp,5432),[hacl(app_4,db_25,tcp,5432),advances(app_4,db_25),execCode(app_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_25,tcp,5432),[hacl(app_15,db_25,tcp,5432),advances(app_15,db_25),execCode(app_15,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_25,tcp,5432),[hacl(app_21,db_25,tcp,5432),advances(app_21,db_25),execCode(app_21,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_25,tcp,5432),[hacl(app_8,db_25,tcp,5432),advances(app_8,db_25),execCode(app_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_25,tcp,5432),[hacl(app_3,db_25,tcp,5432),advances(app_3,db_25),execCode(app_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_25,tcp,5432),[hacl(app_14,db_25,tcp,5432),advances(app_14,db_25),execCode(app_14,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_25,tcp,5432),[hacl(app_20,db_25,tcp,5432),advances(app_20,db_25),execCode(app_20,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_13,tcp,5432),[hacl(app_7,db_13,tcp,5432),advances(app_7,db_13),execCode(app_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_13,tcp,5432),[hacl(app_2,db_13,tcp,5432),advances(app_2,db_13),execCode(app_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_13,tcp,5432),[hacl(app_13,db_13,tcp,5432),advances(app_13,db_13),execCode(app_13,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_13,tcp,5432),[hacl(app_19,db_13,tcp,5432),advances(app_19,db_13),execCode(app_19,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_13,tcp,5432),[hacl(app_6,db_13,tcp,5432),advances(app_6,db_13),execCode(app_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_13,tcp,5432),[hacl(app_1,db_13,tcp,5432),advances(app_1,db_13),execCode(app_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_13,tcp,5432),[hacl(app_12,db_13,tcp,5432),advances(app_12,db_13),execCode(app_12,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_13,tcp,5432),[hacl(app_18,db_13,tcp,5432),advances(app_18,db_13),execCode(app_18,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_13,tcp,5432),[hacl(app_24,db_13,tcp,5432),advances(app_24,db_13),execCode(app_24,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_13,tcp,5432),[hacl(app_11,db_13,tcp,5432),advances(app_11,db_13),execCode(app_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_13,tcp,5432),[hacl(app_0,db_13,tcp,5432),advances(app_0,db_13),execCode(app_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_13,tcp,5432),[hacl(app_17,db_13,tcp,5432),advances(app_17,db_13),execCode(app_17,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_13,tcp,5432),[hacl(app_23,db_13,tcp,5432),advances(app_23,db_13),execCode(app_23,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_13,tcp,5432),[hacl(app_10,db_13,tcp,5432),advances(app_10,db_13),execCode(app_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_13,tcp,5432),[hacl(app_5,db_13,tcp,5432),advances(app_5,db_13),execCode(app_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_13,tcp,5432),[hacl(app_16,db_13,tcp,5432),advances(app_16,db_13),execCode(app_16,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_13,tcp,5432),[hacl(app_22,db_13,tcp,5432),advances(app_22,db_13),execCode(app_22,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_13,tcp,5432),[hacl(app_9,db_13,tcp,5432),advances(app_9,db_13),execCode(app_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_13,tcp,5432),[hacl(app_4,db_13,tcp,5432),advances(app_4,db_13),execCode(app_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_13,tcp,5432),[hacl(app_15,db_13,tcp,5432),advances(app_15,db_13),execCode(app_15,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_13,tcp,5432),[hacl(app_21,db_13,tcp,5432),advances(app_21,db_13),execCode(app_21,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_13,tcp,5432),[hacl(app_8,db_13,tcp,5432),advances(app_8,db_13),execCode(app_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_13,tcp,5432),[hacl(app_3,db_13,tcp,5432),advances(app_3,db_13),execCode(app_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_13,tcp,5432),[hacl(app_14,db_13,tcp,5432),advances(app_14,db_13),execCode(app_14,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_13,tcp,5432),[hacl(app_20,db_13,tcp,5432),advances(app_20,db_13),execCode(app_20,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_22,tcp,5432),[hacl(app_7,db_22,tcp,5432),advances(app_7,db_22),execCode(app_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_22,tcp,5432),[hacl(app_2,db_22,tcp,5432),advances(app_2,db_22),execCode(app_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_22,tcp,5432),[hacl(app_13,db_22,tcp,5432),advances(app_13,db_22),execCode(app_13,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_22,tcp,5432),[hacl(app_19,db_22,tcp,5432),advances(app_19,db_22),execCode(app_19,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_22,tcp,5432),[hacl(app_6,db_22,tcp,5432),advances(app_6,db_22),execCode(app_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_22,tcp,5432),[hacl(app_1,db_22,tcp,5432),advances(app_1,db_22),execCode(app_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_22,tcp,5432),[hacl(app_12,db_22,tcp,5432),advances(app_12,db_22),execCode(app_12,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_22,tcp,5432),[hacl(app_18,db_22,tcp,5432),advances(app_18,db_22),execCode(app_18,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_22,tcp,5432),[hacl(app_24,db_22,tcp,5432),advances(app_24,db_22),execCode(app_24,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_22,tcp,5432),[hacl(app_11,db_22,tcp,5432),advances(app_11,db_22),execCode(app_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_22,tcp,5432),[hacl(app_0,db_22,tcp,5432),advances(app_0,db_22),execCode(app_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_22,tcp,5432),[hacl(app_17,db_22,tcp,5432),advances(app_17,db_22),execCode(app_17,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_22,tcp,5432),[hacl(app_23,db_22,tcp,5432),advances(app_23,db_22),execCode(app_23,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_22,tcp,5432),[hacl(app_10,db_22,tcp,5432),advances(app_10,db_22),execCode(app_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_22,tcp,5432),[hacl(app_5,db_22,tcp,5432),advances(app_5,db_22),execCode(app_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_22,tcp,5432),[hacl(app_16,db_22,tcp,5432),advances(app_16,db_22),execCode(app_16,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_22,tcp,5432),[hacl(app_22,db_22,tcp,5432),advances(app_22,db_22),execCode(app_22,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_22,tcp,5432),[hacl(app_9,db_22,tcp,5432),advances(app_9,db_22),execCode(app_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_22,tcp,5432),[hacl(app_4,db_22,tcp,5432),advances(app_4,db_22),execCode(app_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_22,tcp,5432),[hacl(app_15,db_22,tcp,5432),advances(app_15,db_22),execCode(app_15,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_22,tcp,5432),[hacl(app_21,db_22,tcp,5432),advances(app_21,db_22),execCode(app_21,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_22,tcp,5432),[hacl(app_8,db_22,tcp,5432),advances(app_8,db_22),execCode(app_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_22,tcp,5432),[hacl(app_3,db_22,tcp,5432),advances(app_3,db_22),execCode(app_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_22,tcp,5432),[hacl(app_14,db_22,tcp,5432),advances(app_14,db_22),execCode(app_14,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_22,tcp,5432),[hacl(app_20,db_22,tcp,5432),advances(app_20,db_22),execCode(app_20,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_8,tcp,5432),[hacl(app_7,db_8,tcp,5432),advances(app_7,db_8),execCode(app_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_8,tcp,5432),[hacl(app_2,db_8,tcp,5432),advances(app_2,db_8),execCode(app_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_8,tcp,5432),[hacl(app_13,db_8,tcp,5432),advances(app_13,db_8),execCode(app_13,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_8,tcp,5432),[hacl(app_19,db_8,tcp,5432),advances(app_19,db_8),execCode(app_19,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_8,tcp,5432),[hacl(app_6,db_8,tcp,5432),advances(app_6,db_8),execCode(app_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_8,tcp,5432),[hacl(app_1,db_8,tcp,5432),advances(app_1,db_8),execCode(app_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_8,tcp,5432),[hacl(app_12,db_8,tcp,5432),advances(app_12,db_8),execCode(app_12,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_8,tcp,5432),[hacl(app_18,db_8,tcp,5432),advances(app_18,db_8),execCode(app_18,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_8,tcp,5432),[hacl(app_24,db_8,tcp,5432),advances(app_24,db_8),execCode(app_24,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_8,tcp,5432),[hacl(app_11,db_8,tcp,5432),advances(app_11,db_8),execCode(app_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_8,tcp,5432),[hacl(app_0,db_8,tcp,5432),advances(app_0,db_8),execCode(app_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_8,tcp,5432),[hacl(app_17,db_8,tcp,5432),advances(app_17,db_8),execCode(app_17,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_8,tcp,5432),[hacl(app_23,db_8,tcp,5432),advances(app_23,db_8),execCode(app_23,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_8,tcp,5432),[hacl(app_10,db_8,tcp,5432),advances(app_10,db_8),execCode(app_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_8,tcp,5432),[hacl(app_5,db_8,tcp,5432),advances(app_5,db_8),execCode(app_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_8,tcp,5432),[hacl(app_16,db_8,tcp,5432),advances(app_16,db_8),execCode(app_16,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_8,tcp,5432),[hacl(app_22,db_8,tcp,5432),advances(app_22,db_8),execCode(app_22,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_8,tcp,5432),[hacl(app_9,db_8,tcp,5432),advances(app_9,db_8),execCode(app_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_8,tcp,5432),[hacl(app_4,db_8,tcp,5432),advances(app_4,db_8),execCode(app_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_8,tcp,5432),[hacl(app_15,db_8,tcp,5432),advances(app_15,db_8),execCode(app_15,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_8,tcp,5432),[hacl(app_21,db_8,tcp,5432),advances(app_21,db_8),execCode(app_21,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_8,tcp,5432),[hacl(app_8,db_8,tcp,5432),advances(app_8,db_8),execCode(app_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_8,tcp,5432),[hacl(app_3,db_8,tcp,5432),advances(app_3,db_8),execCode(app_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_8,tcp,5432),[hacl(app_14,db_8,tcp,5432),advances(app_14,db_8),execCode(app_14,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_8,tcp,5432),[hacl(app_20,db_8,tcp,5432),advances(app_20,db_8),execCode(app_20,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_17,tcp,5432),[hacl(app_7,db_17,tcp,5432),advances(app_7,db_17),execCode(app_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_17,tcp,5432),[hacl(app_2,db_17,tcp,5432),advances(app_2,db_17),execCode(app_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_17,tcp,5432),[hacl(app_13,db_17,tcp,5432),advances(app_13,db_17),execCode(app_13,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_17,tcp,5432),[hacl(app_19,db_17,tcp,5432),advances(app_19,db_17),execCode(app_19,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_17,tcp,5432),[hacl(app_6,db_17,tcp,5432),advances(app_6,db_17),execCode(app_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_17,tcp,5432),[hacl(app_1,db_17,tcp,5432),advances(app_1,db_17),execCode(app_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_17,tcp,5432),[hacl(app_12,db_17,tcp,5432),advances(app_12,db_17),execCode(app_12,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_17,tcp,5432),[hacl(app_18,db_17,tcp,5432),advances(app_18,db_17),execCode(app_18,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_17,tcp,5432),[hacl(app_24,db_17,tcp,5432),advances(app_24,db_17),execCode(app_24,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_17,tcp,5432),[hacl(app_11,db_17,tcp,5432),advances(app_11,db_17),execCode(app_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_17,tcp,5432),[hacl(app_0,db_17,tcp,5432),advances(app_0,db_17),execCode(app_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_17,tcp,5432),[hacl(app_17,db_17,tcp,5432),advances(app_17,db_17),execCode(app_17,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_17,tcp,5432),[hacl(app_23,db_17,tcp,5432),advances(app_23,db_17),execCode(app_23,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_17,tcp,5432),[hacl(app_10,db_17,tcp,5432),advances(app_10,db_17),execCode(app_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_17,tcp,5432),[hacl(app_5,db_17,tcp,5432),advances(app_5,db_17),execCode(app_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_17,tcp,5432),[hacl(app_16,db_17,tcp,5432),advances(app_16,db_17),execCode(app_16,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_17,tcp,5432),[hacl(app_22,db_17,tcp,5432),advances(app_22,db_17),execCode(app_22,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_17,tcp,5432),[hacl(app_9,db_17,tcp,5432),advances(app_9,db_17),execCode(app_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_17,tcp,5432),[hacl(app_4,db_17,tcp,5432),advances(app_4,db_17),execCode(app_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_17,tcp,5432),[hacl(app_15,db_17,tcp,5432),advances(app_15,db_17),execCode(app_15,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_17,tcp,5432),[hacl(app_21,db_17,tcp,5432),advances(app_21,db_17),execCode(app_21,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_17,tcp,5432),[hacl(app_8,db_17,tcp,5432),advances(app_8,db_17),execCode(app_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_17,tcp,5432),[hacl(app_3,db_17,tcp,5432),advances(app_3,db_17),execCode(app_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_17,tcp,5432),[hacl(app_14,db_17,tcp,5432),advances(app_14,db_17),execCode(app_14,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_17,tcp,5432),[hacl(app_20,db_17,tcp,5432),advances(app_20,db_17),execCode(app_20,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_0,tcp,5432),[hacl(app_7,db_0,tcp,5432),advances(app_7,db_0),execCode(app_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_0,tcp,5432),[hacl(app_2,db_0,tcp,5432),advances(app_2,db_0),execCode(app_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_0,tcp,5432),[hacl(app_13,db_0,tcp,5432),advances(app_13,db_0),execCode(app_13,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_0,tcp,5432),[hacl(app_19,db_0,tcp,5432),advances(app_19,db_0),execCode(app_19,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_0,tcp,5432),[hacl(app_6,db_0,tcp,5432),advances(app_6,db_0),execCode(app_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_0,tcp,5432),[hacl(app_1,db_0,tcp,5432),advances(app_1,db_0),execCode(app_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_0,tcp,5432),[hacl(app_12,db_0,tcp,5432),advances(app_12,db_0),execCode(app_12,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_0,tcp,5432),[hacl(app_18,db_0,tcp,5432),advances(app_18,db_0),execCode(app_18,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_0,tcp,5432),[hacl(app_24,db_0,tcp,5432),advances(app_24,db_0),execCode(app_24,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_0,tcp,5432),[hacl(app_11,db_0,tcp,5432),advances(app_11,db_0),execCode(app_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_0,tcp,5432),[hacl(app_0,db_0,tcp,5432),advances(app_0,db_0),execCode(app_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_0,tcp,5432),[hacl(app_17,db_0,tcp,5432),advances(app_17,db_0),execCode(app_17,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_0,tcp,5432),[hacl(app_23,db_0,tcp,5432),advances(app_23,db_0),execCode(app_23,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_0,tcp,5432),[hacl(app_10,db_0,tcp,5432),advances(app_10,db_0),execCode(app_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_0,tcp,5432),[hacl(app_5,db_0,tcp,5432),advances(app_5,db_0),execCode(app_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_0,tcp,5432),[hacl(app_16,db_0,tcp,5432),advances(app_16,db_0),execCode(app_16,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_0,tcp,5432),[hacl(app_22,db_0,tcp,5432),advances(app_22,db_0),execCode(app_22,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_0,tcp,5432),[hacl(app_9,db_0,tcp,5432),advances(app_9,db_0),execCode(app_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_0,tcp,5432),[hacl(app_4,db_0,tcp,5432),advances(app_4,db_0),execCode(app_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_0,tcp,5432),[hacl(app_15,db_0,tcp,5432),advances(app_15,db_0),execCode(app_15,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_0,tcp,5432),[hacl(app_21,db_0,tcp,5432),advances(app_21,db_0),execCode(app_21,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_0,tcp,5432),[hacl(app_8,db_0,tcp,5432),advances(app_8,db_0),execCode(app_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_0,tcp,5432),[hacl(app_3,db_0,tcp,5432),advances(app_3,db_0),execCode(app_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_0,tcp,5432),[hacl(app_14,db_0,tcp,5432),advances(app_14,db_0),execCode(app_14,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_0,tcp,5432),[hacl(app_20,db_0,tcp,5432),advances(app_20,db_0),execCode(app_20,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_3,tcp,5432),[hacl(app_7,db_3,tcp,5432),advances(app_7,db_3),execCode(app_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_3,tcp,5432),[hacl(app_2,db_3,tcp,5432),advances(app_2,db_3),execCode(app_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_3,tcp,5432),[hacl(app_13,db_3,tcp,5432),advances(app_13,db_3),execCode(app_13,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_3,tcp,5432),[hacl(app_19,db_3,tcp,5432),advances(app_19,db_3),execCode(app_19,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_3,tcp,5432),[hacl(app_6,db_3,tcp,5432),advances(app_6,db_3),execCode(app_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_3,tcp,5432),[hacl(app_1,db_3,tcp,5432),advances(app_1,db_3),execCode(app_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_3,tcp,5432),[hacl(app_12,db_3,tcp,5432),advances(app_12,db_3),execCode(app_12,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_3,tcp,5432),[hacl(app_18,db_3,tcp,5432),advances(app_18,db_3),execCode(app_18,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_3,tcp,5432),[hacl(app_24,db_3,tcp,5432),advances(app_24,db_3),execCode(app_24,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_3,tcp,5432),[hacl(app_11,db_3,tcp,5432),advances(app_11,db_3),execCode(app_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_3,tcp,5432),[hacl(app_0,db_3,tcp,5432),advances(app_0,db_3),execCode(app_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_3,tcp,5432),[hacl(app_17,db_3,tcp,5432),advances(app_17,db_3),execCode(app_17,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_3,tcp,5432),[hacl(app_23,db_3,tcp,5432),advances(app_23,db_3),execCode(app_23,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_3,tcp,5432),[hacl(app_10,db_3,tcp,5432),advances(app_10,db_3),execCode(app_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_3,tcp,5432),[hacl(app_5,db_3,tcp,5432),advances(app_5,db_3),execCode(app_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_3,tcp,5432),[hacl(app_16,db_3,tcp,5432),advances(app_16,db_3),execCode(app_16,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_3,tcp,5432),[hacl(app_22,db_3,tcp,5432),advances(app_22,db_3),execCode(app_22,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_3,tcp,5432),[hacl(app_9,db_3,tcp,5432),advances(app_9,db_3),execCode(app_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_3,tcp,5432),[hacl(app_4,db_3,tcp,5432),advances(app_4,db_3),execCode(app_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_3,tcp,5432),[hacl(app_15,db_3,tcp,5432),advances(app_15,db_3),execCode(app_15,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_3,tcp,5432),[hacl(app_21,db_3,tcp,5432),advances(app_21,db_3),execCode(app_21,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_3,tcp,5432),[hacl(app_8,db_3,tcp,5432),advances(app_8,db_3),execCode(app_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_3,tcp,5432),[hacl(app_3,db_3,tcp,5432),advances(app_3,db_3),execCode(app_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_3,tcp,5432),[hacl(app_14,db_3,tcp,5432),advances(app_14,db_3),execCode(app_14,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_3,tcp,5432),[hacl(app_20,db_3,tcp,5432),advances(app_20,db_3),execCode(app_20,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_12,tcp,5432),[hacl(app_7,db_12,tcp,5432),advances(app_7,db_12),execCode(app_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_12,tcp,5432),[hacl(app_2,db_12,tcp,5432),advances(app_2,db_12),execCode(app_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_12,tcp,5432),[hacl(app_13,db_12,tcp,5432),advances(app_13,db_12),execCode(app_13,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_12,tcp,5432),[hacl(app_19,db_12,tcp,5432),advances(app_19,db_12),execCode(app_19,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_12,tcp,5432),[hacl(app_6,db_12,tcp,5432),advances(app_6,db_12),execCode(app_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_12,tcp,5432),[hacl(app_1,db_12,tcp,5432),advances(app_1,db_12),execCode(app_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_12,tcp,5432),[hacl(app_12,db_12,tcp,5432),advances(app_12,db_12),execCode(app_12,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_12,tcp,5432),[hacl(app_18,db_12,tcp,5432),advances(app_18,db_12),execCode(app_18,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_12,tcp,5432),[hacl(app_24,db_12,tcp,5432),advances(app_24,db_12),execCode(app_24,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_12,tcp,5432),[hacl(app_11,db_12,tcp,5432),advances(app_11,db_12),execCode(app_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_12,tcp,5432),[hacl(app_0,db_12,tcp,5432),advances(app_0,db_12),execCode(app_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_12,tcp,5432),[hacl(app_17,db_12,tcp,5432),advances(app_17,db_12),execCode(app_17,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_12,tcp,5432),[hacl(app_23,db_12,tcp,5432),advances(app_23,db_12),execCode(app_23,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_12,tcp,5432),[hacl(app_10,db_12,tcp,5432),advances(app_10,db_12),execCode(app_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_12,tcp,5432),[hacl(app_5,db_12,tcp,5432),advances(app_5,db_12),execCode(app_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_12,tcp,5432),[hacl(app_16,db_12,tcp,5432),advances(app_16,db_12),execCode(app_16,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_12,tcp,5432),[hacl(app_22,db_12,tcp,5432),advances(app_22,db_12),execCode(app_22,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_12,tcp,5432),[hacl(app_9,db_12,tcp,5432),advances(app_9,db_12),execCode(app_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_12,tcp,5432),[hacl(app_4,db_12,tcp,5432),advances(app_4,db_12),execCode(app_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_12,tcp,5432),[hacl(app_15,db_12,tcp,5432),advances(app_15,db_12),execCode(app_15,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_12,tcp,5432),[hacl(app_21,db_12,tcp,5432),advances(app_21,db_12),execCode(app_21,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_12,tcp,5432),[hacl(app_8,db_12,tcp,5432),advances(app_8,db_12),execCode(app_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_12,tcp,5432),[hacl(app_3,db_12,tcp,5432),advances(app_3,db_12),execCode(app_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_12,tcp,5432),[hacl(app_14,db_12,tcp,5432),advances(app_14,db_12),execCode(app_14,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_12,tcp,5432),[hacl(app_20,db_12,tcp,5432),advances(app_20,db_12),execCode(app_20,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_21,tcp,5432),[hacl(app_7,db_21,tcp,5432),advances(app_7,db_21),execCode(app_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_21,tcp,5432),[hacl(app_2,db_21,tcp,5432),advances(app_2,db_21),execCode(app_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_21,tcp,5432),[hacl(app_13,db_21,tcp,5432),advances(app_13,db_21),execCode(app_13,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_21,tcp,5432),[hacl(app_19,db_21,tcp,5432),advances(app_19,db_21),execCode(app_19,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_21,tcp,5432),[hacl(app_6,db_21,tcp,5432),advances(app_6,db_21),execCode(app_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_21,tcp,5432),[hacl(app_1,db_21,tcp,5432),advances(app_1,db_21),execCode(app_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_21,tcp,5432),[hacl(app_12,db_21,tcp,5432),advances(app_12,db_21),execCode(app_12,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_21,tcp,5432),[hacl(app_18,db_21,tcp,5432),advances(app_18,db_21),execCode(app_18,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_21,tcp,5432),[hacl(app_24,db_21,tcp,5432),advances(app_24,db_21),execCode(app_24,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_21,tcp,5432),[hacl(app_11,db_21,tcp,5432),advances(app_11,db_21),execCode(app_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_21,tcp,5432),[hacl(app_0,db_21,tcp,5432),advances(app_0,db_21),execCode(app_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_21,tcp,5432),[hacl(app_17,db_21,tcp,5432),advances(app_17,db_21),execCode(app_17,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_21,tcp,5432),[hacl(app_23,db_21,tcp,5432),advances(app_23,db_21),execCode(app_23,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_21,tcp,5432),[hacl(app_10,db_21,tcp,5432),advances(app_10,db_21),execCode(app_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_21,tcp,5432),[hacl(app_5,db_21,tcp,5432),advances(app_5,db_21),execCode(app_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_21,tcp,5432),[hacl(app_16,db_21,tcp,5432),advances(app_16,db_21),execCode(app_16,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_21,tcp,5432),[hacl(app_22,db_21,tcp,5432),advances(app_22,db_21),execCode(app_22,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_21,tcp,5432),[hacl(app_9,db_21,tcp,5432),advances(app_9,db_21),execCode(app_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_21,tcp,5432),[hacl(app_4,db_21,tcp,5432),advances(app_4,db_21),execCode(app_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_21,tcp,5432),[hacl(app_15,db_21,tcp,5432),advances(app_15,db_21),execCode(app_15,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_21,tcp,5432),[hacl(app_21,db_21,tcp,5432),advances(app_21,db_21),execCode(app_21,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_21,tcp,5432),[hacl(app_8,db_21,tcp,5432),advances(app_8,db_21),execCode(app_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_21,tcp,5432),[hacl(app_3,db_21,tcp,5432),advances(app_3,db_21),execCode(app_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_21,tcp,5432),[hacl(app_14,db_21,tcp,5432),advances(app_14,db_21),execCode(app_14,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_21,tcp,5432),[hacl(app_20,db_21,tcp,5432),advances(app_20,db_21),execCode(app_20,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_7,tcp,5432),[hacl(app_7,db_7,tcp,5432),advances(app_7,db_7),execCode(app_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_7,tcp,5432),[hacl(app_2,db_7,tcp,5432),advances(app_2,db_7),execCode(app_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_7,tcp,5432),[hacl(app_13,db_7,tcp,5432),advances(app_13,db_7),execCode(app_13,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_7,tcp,5432),[hacl(app_19,db_7,tcp,5432),advances(app_19,db_7),execCode(app_19,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_7,tcp,5432),[hacl(app_6,db_7,tcp,5432),advances(app_6,db_7),execCode(app_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_7,tcp,5432),[hacl(app_1,db_7,tcp,5432),advances(app_1,db_7),execCode(app_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_7,tcp,5432),[hacl(app_12,db_7,tcp,5432),advances(app_12,db_7),execCode(app_12,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_7,tcp,5432),[hacl(app_18,db_7,tcp,5432),advances(app_18,db_7),execCode(app_18,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_7,tcp,5432),[hacl(app_24,db_7,tcp,5432),advances(app_24,db_7),execCode(app_24,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_7,tcp,5432),[hacl(app_11,db_7,tcp,5432),advances(app_11,db_7),execCode(app_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_7,tcp,5432),[hacl(app_0,db_7,tcp,5432),advances(app_0,db_7),execCode(app_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_7,tcp,5432),[hacl(app_17,db_7,tcp,5432),advances(app_17,db_7),execCode(app_17,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_7,tcp,5432),[hacl(app_23,db_7,tcp,5432),advances(app_23,db_7),execCode(app_23,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_7,tcp,5432),[hacl(app_10,db_7,tcp,5432),advances(app_10,db_7),execCode(app_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_7,tcp,5432),[hacl(app_5,db_7,tcp,5432),advances(app_5,db_7),execCode(app_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_7,tcp,5432),[hacl(app_16,db_7,tcp,5432),advances(app_16,db_7),execCode(app_16,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_7,tcp,5432),[hacl(app_22,db_7,tcp,5432),advances(app_22,db_7),execCode(app_22,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_7,tcp,5432),[hacl(app_9,db_7,tcp,5432),advances(app_9,db_7),execCode(app_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_7,tcp,5432),[hacl(app_4,db_7,tcp,5432),advances(app_4,db_7),execCode(app_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_7,tcp,5432),[hacl(app_15,db_7,tcp,5432),advances(app_15,db_7),execCode(app_15,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_7,tcp,5432),[hacl(app_21,db_7,tcp,5432),advances(app_21,db_7),execCode(app_21,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_7,tcp,5432),[hacl(app_8,db_7,tcp,5432),advances(app_8,db_7),execCode(app_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_7,tcp,5432),[hacl(app_3,db_7,tcp,5432),advances(app_3,db_7),execCode(app_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_7,tcp,5432),[hacl(app_14,db_7,tcp,5432),advances(app_14,db_7),execCode(app_14,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_7,tcp,5432),[hacl(app_20,db_7,tcp,5432),advances(app_20,db_7),execCode(app_20,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_16,tcp,5432),[hacl(app_7,db_16,tcp,5432),advances(app_7,db_16),execCode(app_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_16,tcp,5432),[hacl(app_2,db_16,tcp,5432),advances(app_2,db_16),execCode(app_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_16,tcp,5432),[hacl(app_13,db_16,tcp,5432),advances(app_13,db_16),execCode(app_13,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_16,tcp,5432),[hacl(app_19,db_16,tcp,5432),advances(app_19,db_16),execCode(app_19,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_16,tcp,5432),[hacl(app_6,db_16,tcp,5432),advances(app_6,db_16),execCode(app_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_16,tcp,5432),[hacl(app_1,db_16,tcp,5432),advances(app_1,db_16),execCode(app_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_16,tcp,5432),[hacl(app_12,db_16,tcp,5432),advances(app_12,db_16),execCode(app_12,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_16,tcp,5432),[hacl(app_18,db_16,tcp,5432),advances(app_18,db_16),execCode(app_18,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_16,tcp,5432),[hacl(app_24,db_16,tcp,5432),advances(app_24,db_16),execCode(app_24,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_16,tcp,5432),[hacl(app_11,db_16,tcp,5432),advances(app_11,db_16),execCode(app_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_16,tcp,5432),[hacl(app_0,db_16,tcp,5432),advances(app_0,db_16),execCode(app_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_16,tcp,5432),[hacl(app_17,db_16,tcp,5432),advances(app_17,db_16),execCode(app_17,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_16,tcp,5432),[hacl(app_23,db_16,tcp,5432),advances(app_23,db_16),execCode(app_23,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_16,tcp,5432),[hacl(app_10,db_16,tcp,5432),advances(app_10,db_16),execCode(app_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_16,tcp,5432),[hacl(app_5,db_16,tcp,5432),advances(app_5,db_16),execCode(app_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_16,tcp,5432),[hacl(app_16,db_16,tcp,5432),advances(app_16,db_16),execCode(app_16,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_16,tcp,5432),[hacl(app_22,db_16,tcp,5432),advances(app_22,db_16),execCode(app_22,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_16,tcp,5432),[hacl(app_9,db_16,tcp,5432),advances(app_9,db_16),execCode(app_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_16,tcp,5432),[hacl(app_4,db_16,tcp,5432),advances(app_4,db_16),execCode(app_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_16,tcp,5432),[hacl(app_15,db_16,tcp,5432),advances(app_15,db_16),execCode(app_15,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_16,tcp,5432),[hacl(app_21,db_16,tcp,5432),advances(app_21,db_16),execCode(app_21,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_16,tcp,5432),[hacl(app_8,db_16,tcp,5432),advances(app_8,db_16),execCode(app_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_16,tcp,5432),[hacl(app_3,db_16,tcp,5432),advances(app_3,db_16),execCode(app_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_16,tcp,5432),[hacl(app_14,db_16,tcp,5432),advances(app_14,db_16),execCode(app_14,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_16,tcp,5432),[hacl(app_20,db_16,tcp,5432),advances(app_20,db_16),execCode(app_20,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_2,tcp,5432),[hacl(app_7,db_2,tcp,5432),advances(app_7,db_2),execCode(app_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_2,tcp,5432),[hacl(app_2,db_2,tcp,5432),advances(app_2,db_2),execCode(app_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_2,tcp,5432),[hacl(app_13,db_2,tcp,5432),advances(app_13,db_2),execCode(app_13,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_2,tcp,5432),[hacl(app_19,db_2,tcp,5432),advances(app_19,db_2),execCode(app_19,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_2,tcp,5432),[hacl(app_6,db_2,tcp,5432),advances(app_6,db_2),execCode(app_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_2,tcp,5432),[hacl(app_1,db_2,tcp,5432),advances(app_1,db_2),execCode(app_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_2,tcp,5432),[hacl(app_12,db_2,tcp,5432),advances(app_12,db_2),execCode(app_12,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_2,tcp,5432),[hacl(app_18,db_2,tcp,5432),advances(app_18,db_2),execCode(app_18,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_2,tcp,5432),[hacl(app_24,db_2,tcp,5432),advances(app_24,db_2),execCode(app_24,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_2,tcp,5432),[hacl(app_11,db_2,tcp,5432),advances(app_11,db_2),execCode(app_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_2,tcp,5432),[hacl(app_0,db_2,tcp,5432),advances(app_0,db_2),execCode(app_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_2,tcp,5432),[hacl(app_17,db_2,tcp,5432),advances(app_17,db_2),execCode(app_17,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_2,tcp,5432),[hacl(app_23,db_2,tcp,5432),advances(app_23,db_2),execCode(app_23,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_2,tcp,5432),[hacl(app_10,db_2,tcp,5432),advances(app_10,db_2),execCode(app_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_2,tcp,5432),[hacl(app_5,db_2,tcp,5432),advances(app_5,db_2),execCode(app_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_2,tcp,5432),[hacl(app_16,db_2,tcp,5432),advances(app_16,db_2),execCode(app_16,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_2,tcp,5432),[hacl(app_22,db_2,tcp,5432),advances(app_22,db_2),execCode(app_22,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_2,tcp,5432),[hacl(app_9,db_2,tcp,5432),advances(app_9,db_2),execCode(app_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_2,tcp,5432),[hacl(app_4,db_2,tcp,5432),advances(app_4,db_2),execCode(app_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_2,tcp,5432),[hacl(app_15,db_2,tcp,5432),advances(app_15,db_2),execCode(app_15,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_2,tcp,5432),[hacl(app_21,db_2,tcp,5432),advances(app_21,db_2),execCode(app_21,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_2,tcp,5432),[hacl(app_8,db_2,tcp,5432),advances(app_8,db_2),execCode(app_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_2,tcp,5432),[hacl(app_3,db_2,tcp,5432),advances(app_3,db_2),execCode(app_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_2,tcp,5432),[hacl(app_14,db_2,tcp,5432),advances(app_14,db_2),execCode(app_14,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_2,tcp,5432),[hacl(app_20,db_2,tcp,5432),advances(app_20,db_2),execCode(app_20,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_11,tcp,5432),[hacl(app_7,db_11,tcp,5432),advances(app_7,db_11),execCode(app_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_11,tcp,5432),[hacl(app_2,db_11,tcp,5432),advances(app_2,db_11),execCode(app_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_11,tcp,5432),[hacl(app_13,db_11,tcp,5432),advances(app_13,db_11),execCode(app_13,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_11,tcp,5432),[hacl(app_19,db_11,tcp,5432),advances(app_19,db_11),execCode(app_19,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_11,tcp,5432),[hacl(app_6,db_11,tcp,5432),advances(app_6,db_11),execCode(app_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_11,tcp,5432),[hacl(app_1,db_11,tcp,5432),advances(app_1,db_11),execCode(app_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_11,tcp,5432),[hacl(app_12,db_11,tcp,5432),advances(app_12,db_11),execCode(app_12,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_11,tcp,5432),[hacl(app_18,db_11,tcp,5432),advances(app_18,db_11),execCode(app_18,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_11,tcp,5432),[hacl(app_24,db_11,tcp,5432),advances(app_24,db_11),execCode(app_24,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_11,tcp,5432),[hacl(app_11,db_11,tcp,5432),advances(app_11,db_11),execCode(app_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_11,tcp,5432),[hacl(app_0,db_11,tcp,5432),advances(app_0,db_11),execCode(app_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_11,tcp,5432),[hacl(app_17,db_11,tcp,5432),advances(app_17,db_11),execCode(app_17,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_11,tcp,5432),[hacl(app_23,db_11,tcp,5432),advances(app_23,db_11),execCode(app_23,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_11,tcp,5432),[hacl(app_10,db_11,tcp,5432),advances(app_10,db_11),execCode(app_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_11,tcp,5432),[hacl(app_5,db_11,tcp,5432),advances(app_5,db_11),execCode(app_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_11,tcp,5432),[hacl(app_16,db_11,tcp,5432),advances(app_16,db_11),execCode(app_16,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_11,tcp,5432),[hacl(app_22,db_11,tcp,5432),advances(app_22,db_11),execCode(app_22,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_11,tcp,5432),[hacl(app_9,db_11,tcp,5432),advances(app_9,db_11),execCode(app_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_11,tcp,5432),[hacl(app_4,db_11,tcp,5432),advances(app_4,db_11),execCode(app_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_11,tcp,5432),[hacl(app_15,db_11,tcp,5432),advances(app_15,db_11),execCode(app_15,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_11,tcp,5432),[hacl(app_21,db_11,tcp,5432),advances(app_21,db_11),execCode(app_21,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_11,tcp,5432),[hacl(app_8,db_11,tcp,5432),advances(app_8,db_11),execCode(app_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_11,tcp,5432),[hacl(app_3,db_11,tcp,5432),advances(app_3,db_11),execCode(app_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_11,tcp,5432),[hacl(app_14,db_11,tcp,5432),advances(app_14,db_11),execCode(app_14,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_11,tcp,5432),[hacl(app_20,db_11,tcp,5432),advances(app_20,db_11),execCode(app_20,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_20,tcp,5432),[hacl(app_7,db_20,tcp,5432),advances(app_7,db_20),execCode(app_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_20,tcp,5432),[hacl(app_2,db_20,tcp,5432),advances(app_2,db_20),execCode(app_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_20,tcp,5432),[hacl(app_13,db_20,tcp,5432),advances(app_13,db_20),execCode(app_13,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_20,tcp,5432),[hacl(app_19,db_20,tcp,5432),advances(app_19,db_20),execCode(app_19,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_20,tcp,5432),[hacl(app_6,db_20,tcp,5432),advances(app_6,db_20),execCode(app_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_20,tcp,5432),[hacl(app_1,db_20,tcp,5432),advances(app_1,db_20),execCode(app_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_20,tcp,5432),[hacl(app_12,db_20,tcp,5432),advances(app_12,db_20),execCode(app_12,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_20,tcp,5432),[hacl(app_18,db_20,tcp,5432),advances(app_18,db_20),execCode(app_18,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_20,tcp,5432),[hacl(app_24,db_20,tcp,5432),advances(app_24,db_20),execCode(app_24,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_20,tcp,5432),[hacl(app_11,db_20,tcp,5432),advances(app_11,db_20),execCode(app_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_20,tcp,5432),[hacl(app_0,db_20,tcp,5432),advances(app_0,db_20),execCode(app_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_20,tcp,5432),[hacl(app_17,db_20,tcp,5432),advances(app_17,db_20),execCode(app_17,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_20,tcp,5432),[hacl(app_23,db_20,tcp,5432),advances(app_23,db_20),execCode(app_23,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_20,tcp,5432),[hacl(app_10,db_20,tcp,5432),advances(app_10,db_20),execCode(app_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_20,tcp,5432),[hacl(app_5,db_20,tcp,5432),advances(app_5,db_20),execCode(app_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_20,tcp,5432),[hacl(app_16,db_20,tcp,5432),advances(app_16,db_20),execCode(app_16,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_20,tcp,5432),[hacl(app_22,db_20,tcp,5432),advances(app_22,db_20),execCode(app_22,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_20,tcp,5432),[hacl(app_9,db_20,tcp,5432),advances(app_9,db_20),execCode(app_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_20,tcp,5432),[hacl(app_4,db_20,tcp,5432),advances(app_4,db_20),execCode(app_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_20,tcp,5432),[hacl(app_15,db_20,tcp,5432),advances(app_15,db_20),execCode(app_15,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_20,tcp,5432),[hacl(app_21,db_20,tcp,5432),advances(app_21,db_20),execCode(app_21,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_20,tcp,5432),[hacl(app_8,db_20,tcp,5432),advances(app_8,db_20),execCode(app_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_20,tcp,5432),[hacl(app_3,db_20,tcp,5432),advances(app_3,db_20),execCode(app_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_20,tcp,5432),[hacl(app_14,db_20,tcp,5432),advances(app_14,db_20),execCode(app_14,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_20,tcp,5432),[hacl(app_20,db_20,tcp,5432),advances(app_20,db_20),execCode(app_20,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_6,tcp,5432),[hacl(app_7,db_6,tcp,5432),advances(app_7,db_6),execCode(app_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_6,tcp,5432),[hacl(app_2,db_6,tcp,5432),advances(app_2,db_6),execCode(app_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_6,tcp,5432),[hacl(app_13,db_6,tcp,5432),advances(app_13,db_6),execCode(app_13,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_6,tcp,5432),[hacl(app_19,db_6,tcp,5432),advances(app_19,db_6),execCode(app_19,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_6,tcp,5432),[hacl(app_6,db_6,tcp,5432),advances(app_6,db_6),execCode(app_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_6,tcp,5432),[hacl(app_1,db_6,tcp,5432),advances(app_1,db_6),execCode(app_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_6,tcp,5432),[hacl(app_12,db_6,tcp,5432),advances(app_12,db_6),execCode(app_12,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_6,tcp,5432),[hacl(app_18,db_6,tcp,5432),advances(app_18,db_6),execCode(app_18,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_6,tcp,5432),[hacl(app_24,db_6,tcp,5432),advances(app_24,db_6),execCode(app_24,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_6,tcp,5432),[hacl(app_11,db_6,tcp,5432),advances(app_11,db_6),execCode(app_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_6,tcp,5432),[hacl(app_0,db_6,tcp,5432),advances(app_0,db_6),execCode(app_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_6,tcp,5432),[hacl(app_17,db_6,tcp,5432),advances(app_17,db_6),execCode(app_17,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_6,tcp,5432),[hacl(app_23,db_6,tcp,5432),advances(app_23,db_6),execCode(app_23,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_6,tcp,5432),[hacl(app_10,db_6,tcp,5432),advances(app_10,db_6),execCode(app_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_6,tcp,5432),[hacl(app_5,db_6,tcp,5432),advances(app_5,db_6),execCode(app_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_6,tcp,5432),[hacl(app_16,db_6,tcp,5432),advances(app_16,db_6),execCode(app_16,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_6,tcp,5432),[hacl(app_22,db_6,tcp,5432),advances(app_22,db_6),execCode(app_22,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_6,tcp,5432),[hacl(app_9,db_6,tcp,5432),advances(app_9,db_6),execCode(app_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_6,tcp,5432),[hacl(app_4,db_6,tcp,5432),advances(app_4,db_6),execCode(app_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_6,tcp,5432),[hacl(app_15,db_6,tcp,5432),advances(app_15,db_6),execCode(app_15,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_6,tcp,5432),[hacl(app_21,db_6,tcp,5432),advances(app_21,db_6),execCode(app_21,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_6,tcp,5432),[hacl(app_8,db_6,tcp,5432),advances(app_8,db_6),execCode(app_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_6,tcp,5432),[hacl(app_3,db_6,tcp,5432),advances(app_3,db_6),execCode(app_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_6,tcp,5432),[hacl(app_14,db_6,tcp,5432),advances(app_14,db_6),execCode(app_14,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_6,tcp,5432),[hacl(app_20,db_6,tcp,5432),advances(app_20,db_6),execCode(app_20,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_15,tcp,5432),[hacl(app_7,db_15,tcp,5432),advances(app_7,db_15),execCode(app_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_15,tcp,5432),[hacl(app_2,db_15,tcp,5432),advances(app_2,db_15),execCode(app_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_15,tcp,5432),[hacl(app_13,db_15,tcp,5432),advances(app_13,db_15),execCode(app_13,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_15,tcp,5432),[hacl(app_19,db_15,tcp,5432),advances(app_19,db_15),execCode(app_19,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_15,tcp,5432),[hacl(app_6,db_15,tcp,5432),advances(app_6,db_15),execCode(app_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_15,tcp,5432),[hacl(app_1,db_15,tcp,5432),advances(app_1,db_15),execCode(app_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_15,tcp,5432),[hacl(app_12,db_15,tcp,5432),advances(app_12,db_15),execCode(app_12,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_15,tcp,5432),[hacl(app_18,db_15,tcp,5432),advances(app_18,db_15),execCode(app_18,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_15,tcp,5432),[hacl(app_24,db_15,tcp,5432),advances(app_24,db_15),execCode(app_24,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_15,tcp,5432),[hacl(app_11,db_15,tcp,5432),advances(app_11,db_15),execCode(app_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_15,tcp,5432),[hacl(app_0,db_15,tcp,5432),advances(app_0,db_15),execCode(app_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_15,tcp,5432),[hacl(app_17,db_15,tcp,5432),advances(app_17,db_15),execCode(app_17,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_15,tcp,5432),[hacl(app_23,db_15,tcp,5432),advances(app_23,db_15),execCode(app_23,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_15,tcp,5432),[hacl(app_10,db_15,tcp,5432),advances(app_10,db_15),execCode(app_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_15,tcp,5432),[hacl(app_5,db_15,tcp,5432),advances(app_5,db_15),execCode(app_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_15,tcp,5432),[hacl(app_16,db_15,tcp,5432),advances(app_16,db_15),execCode(app_16,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_15,tcp,5432),[hacl(app_22,db_15,tcp,5432),advances(app_22,db_15),execCode(app_22,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_15,tcp,5432),[hacl(app_9,db_15,tcp,5432),advances(app_9,db_15),execCode(app_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_15,tcp,5432),[hacl(app_4,db_15,tcp,5432),advances(app_4,db_15),execCode(app_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_15,tcp,5432),[hacl(app_15,db_15,tcp,5432),advances(app_15,db_15),execCode(app_15,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_15,tcp,5432),[hacl(app_21,db_15,tcp,5432),advances(app_21,db_15),execCode(app_21,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_15,tcp,5432),[hacl(app_8,db_15,tcp,5432),advances(app_8,db_15),execCode(app_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_15,tcp,5432),[hacl(app_3,db_15,tcp,5432),advances(app_3,db_15),execCode(app_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_15,tcp,5432),[hacl(app_14,db_15,tcp,5432),advances(app_14,db_15),execCode(app_14,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_15,tcp,5432),[hacl(app_20,db_15,tcp,5432),advances(app_20,db_15),execCode(app_20,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_24,tcp,5432),[hacl(app_7,db_24,tcp,5432),advances(app_7,db_24),execCode(app_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_24,tcp,5432),[hacl(app_2,db_24,tcp,5432),advances(app_2,db_24),execCode(app_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_24,tcp,5432),[hacl(app_13,db_24,tcp,5432),advances(app_13,db_24),execCode(app_13,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_24,tcp,5432),[hacl(app_19,db_24,tcp,5432),advances(app_19,db_24),execCode(app_19,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_24,tcp,5432),[hacl(app_6,db_24,tcp,5432),advances(app_6,db_24),execCode(app_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_24,tcp,5432),[hacl(app_1,db_24,tcp,5432),advances(app_1,db_24),execCode(app_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_24,tcp,5432),[hacl(app_12,db_24,tcp,5432),advances(app_12,db_24),execCode(app_12,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_24,tcp,5432),[hacl(app_18,db_24,tcp,5432),advances(app_18,db_24),execCode(app_18,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_24,tcp,5432),[hacl(app_24,db_24,tcp,5432),advances(app_24,db_24),execCode(app_24,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_24,tcp,5432),[hacl(app_11,db_24,tcp,5432),advances(app_11,db_24),execCode(app_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_24,tcp,5432),[hacl(app_0,db_24,tcp,5432),advances(app_0,db_24),execCode(app_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_24,tcp,5432),[hacl(app_17,db_24,tcp,5432),advances(app_17,db_24),execCode(app_17,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_24,tcp,5432),[hacl(app_23,db_24,tcp,5432),advances(app_23,db_24),execCode(app_23,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_24,tcp,5432),[hacl(app_10,db_24,tcp,5432),advances(app_10,db_24),execCode(app_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_24,tcp,5432),[hacl(app_5,db_24,tcp,5432),advances(app_5,db_24),execCode(app_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_24,tcp,5432),[hacl(app_16,db_24,tcp,5432),advances(app_16,db_24),execCode(app_16,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_24,tcp,5432),[hacl(app_22,db_24,tcp,5432),advances(app_22,db_24),execCode(app_22,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_24,tcp,5432),[hacl(app_9,db_24,tcp,5432),advances(app_9,db_24),execCode(app_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_24,tcp,5432),[hacl(app_4,db_24,tcp,5432),advances(app_4,db_24),execCode(app_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_24,tcp,5432),[hacl(app_15,db_24,tcp,5432),advances(app_15,db_24),execCode(app_15,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_24,tcp,5432),[hacl(app_21,db_24,tcp,5432),advances(app_21,db_24),execCode(app_21,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_24,tcp,5432),[hacl(app_8,db_24,tcp,5432),advances(app_8,db_24),execCode(app_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_24,tcp,5432),[hacl(app_3,db_24,tcp,5432),advances(app_3,db_24),execCode(app_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_24,tcp,5432),[hacl(app_14,db_24,tcp,5432),advances(app_14,db_24),execCode(app_14,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_24,tcp,5432),[hacl(app_20,db_24,tcp,5432),advances(app_20,db_24),execCode(app_20,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_1,tcp,5432),[hacl(app_7,db_1,tcp,5432),advances(app_7,db_1),execCode(app_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_1,tcp,5432),[hacl(app_2,db_1,tcp,5432),advances(app_2,db_1),execCode(app_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_1,tcp,5432),[hacl(app_13,db_1,tcp,5432),advances(app_13,db_1),execCode(app_13,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_1,tcp,5432),[hacl(app_19,db_1,tcp,5432),advances(app_19,db_1),execCode(app_19,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_1,tcp,5432),[hacl(app_6,db_1,tcp,5432),advances(app_6,db_1),execCode(app_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_1,tcp,5432),[hacl(app_1,db_1,tcp,5432),advances(app_1,db_1),execCode(app_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_1,tcp,5432),[hacl(app_12,db_1,tcp,5432),advances(app_12,db_1),execCode(app_12,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_1,tcp,5432),[hacl(app_18,db_1,tcp,5432),advances(app_18,db_1),execCode(app_18,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_1,tcp,5432),[hacl(app_24,db_1,tcp,5432),advances(app_24,db_1),execCode(app_24,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_1,tcp,5432),[hacl(app_11,db_1,tcp,5432),advances(app_11,db_1),execCode(app_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_1,tcp,5432),[hacl(app_0,db_1,tcp,5432),advances(app_0,db_1),execCode(app_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_1,tcp,5432),[hacl(app_17,db_1,tcp,5432),advances(app_17,db_1),execCode(app_17,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_1,tcp,5432),[hacl(app_23,db_1,tcp,5432),advances(app_23,db_1),execCode(app_23,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_1,tcp,5432),[hacl(app_10,db_1,tcp,5432),advances(app_10,db_1),execCode(app_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_1,tcp,5432),[hacl(app_5,db_1,tcp,5432),advances(app_5,db_1),execCode(app_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_1,tcp,5432),[hacl(app_16,db_1,tcp,5432),advances(app_16,db_1),execCode(app_16,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_1,tcp,5432),[hacl(app_22,db_1,tcp,5432),advances(app_22,db_1),execCode(app_22,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_1,tcp,5432),[hacl(app_9,db_1,tcp,5432),advances(app_9,db_1),execCode(app_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_1,tcp,5432),[hacl(app_4,db_1,tcp,5432),advances(app_4,db_1),execCode(app_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_1,tcp,5432),[hacl(app_15,db_1,tcp,5432),advances(app_15,db_1),execCode(app_15,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_1,tcp,5432),[hacl(app_21,db_1,tcp,5432),advances(app_21,db_1),execCode(app_21,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_1,tcp,5432),[hacl(app_8,db_1,tcp,5432),advances(app_8,db_1),execCode(app_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_1,tcp,5432),[hacl(app_3,db_1,tcp,5432),advances(app_3,db_1),execCode(app_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_1,tcp,5432),[hacl(app_14,db_1,tcp,5432),advances(app_14,db_1),execCode(app_14,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_1,tcp,5432),[hacl(app_20,db_1,tcp,5432),advances(app_20,db_1),execCode(app_20,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_10,tcp,5432),[hacl(app_7,db_10,tcp,5432),advances(app_7,db_10),execCode(app_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_10,tcp,5432),[hacl(app_2,db_10,tcp,5432),advances(app_2,db_10),execCode(app_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_10,tcp,5432),[hacl(app_13,db_10,tcp,5432),advances(app_13,db_10),execCode(app_13,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_10,tcp,5432),[hacl(app_19,db_10,tcp,5432),advances(app_19,db_10),execCode(app_19,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_10,tcp,5432),[hacl(app_6,db_10,tcp,5432),advances(app_6,db_10),execCode(app_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_10,tcp,5432),[hacl(app_1,db_10,tcp,5432),advances(app_1,db_10),execCode(app_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_10,tcp,5432),[hacl(app_12,db_10,tcp,5432),advances(app_12,db_10),execCode(app_12,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_10,tcp,5432),[hacl(app_18,db_10,tcp,5432),advances(app_18,db_10),execCode(app_18,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_10,tcp,5432),[hacl(app_24,db_10,tcp,5432),advances(app_24,db_10),execCode(app_24,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_10,tcp,5432),[hacl(app_11,db_10,tcp,5432),advances(app_11,db_10),execCode(app_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_10,tcp,5432),[hacl(app_0,db_10,tcp,5432),advances(app_0,db_10),execCode(app_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_10,tcp,5432),[hacl(app_17,db_10,tcp,5432),advances(app_17,db_10),execCode(app_17,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_10,tcp,5432),[hacl(app_23,db_10,tcp,5432),advances(app_23,db_10),execCode(app_23,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_10,tcp,5432),[hacl(app_10,db_10,tcp,5432),advances(app_10,db_10),execCode(app_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_10,tcp,5432),[hacl(app_5,db_10,tcp,5432),advances(app_5,db_10),execCode(app_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_10,tcp,5432),[hacl(app_16,db_10,tcp,5432),advances(app_16,db_10),execCode(app_16,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_10,tcp,5432),[hacl(app_22,db_10,tcp,5432),advances(app_22,db_10),execCode(app_22,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_10,tcp,5432),[hacl(app_9,db_10,tcp,5432),advances(app_9,db_10),execCode(app_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_10,tcp,5432),[hacl(app_4,db_10,tcp,5432),advances(app_4,db_10),execCode(app_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_10,tcp,5432),[hacl(app_15,db_10,tcp,5432),advances(app_15,db_10),execCode(app_15,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_10,tcp,5432),[hacl(app_21,db_10,tcp,5432),advances(app_21,db_10),execCode(app_21,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_10,tcp,5432),[hacl(app_8,db_10,tcp,5432),advances(app_8,db_10),execCode(app_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_10,tcp,5432),[hacl(app_3,db_10,tcp,5432),advances(app_3,db_10),execCode(app_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_10,tcp,5432),[hacl(app_14,db_10,tcp,5432),advances(app_14,db_10),execCode(app_14,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_10,tcp,5432),[hacl(app_20,db_10,tcp,5432),advances(app_20,db_10),execCode(app_20,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_19,tcp,5432),[hacl(app_7,db_19,tcp,5432),advances(app_7,db_19),execCode(app_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_19,tcp,5432),[hacl(app_2,db_19,tcp,5432),advances(app_2,db_19),execCode(app_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_19,tcp,5432),[hacl(app_13,db_19,tcp,5432),advances(app_13,db_19),execCode(app_13,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_19,tcp,5432),[hacl(app_19,db_19,tcp,5432),advances(app_19,db_19),execCode(app_19,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_19,tcp,5432),[hacl(app_6,db_19,tcp,5432),advances(app_6,db_19),execCode(app_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_19,tcp,5432),[hacl(app_1,db_19,tcp,5432),advances(app_1,db_19),execCode(app_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_19,tcp,5432),[hacl(app_12,db_19,tcp,5432),advances(app_12,db_19),execCode(app_12,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_19,tcp,5432),[hacl(app_18,db_19,tcp,5432),advances(app_18,db_19),execCode(app_18,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_19,tcp,5432),[hacl(app_24,db_19,tcp,5432),advances(app_24,db_19),execCode(app_24,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_19,tcp,5432),[hacl(app_11,db_19,tcp,5432),advances(app_11,db_19),execCode(app_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_19,tcp,5432),[hacl(app_0,db_19,tcp,5432),advances(app_0,db_19),execCode(app_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_19,tcp,5432),[hacl(app_17,db_19,tcp,5432),advances(app_17,db_19),execCode(app_17,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_19,tcp,5432),[hacl(app_23,db_19,tcp,5432),advances(app_23,db_19),execCode(app_23,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_19,tcp,5432),[hacl(app_10,db_19,tcp,5432),advances(app_10,db_19),execCode(app_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_19,tcp,5432),[hacl(app_5,db_19,tcp,5432),advances(app_5,db_19),execCode(app_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_19,tcp,5432),[hacl(app_16,db_19,tcp,5432),advances(app_16,db_19),execCode(app_16,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_19,tcp,5432),[hacl(app_22,db_19,tcp,5432),advances(app_22,db_19),execCode(app_22,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_19,tcp,5432),[hacl(app_9,db_19,tcp,5432),advances(app_9,db_19),execCode(app_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_19,tcp,5432),[hacl(app_4,db_19,tcp,5432),advances(app_4,db_19),execCode(app_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_19,tcp,5432),[hacl(app_15,db_19,tcp,5432),advances(app_15,db_19),execCode(app_15,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_19,tcp,5432),[hacl(app_21,db_19,tcp,5432),advances(app_21,db_19),execCode(app_21,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_19,tcp,5432),[hacl(app_8,db_19,tcp,5432),advances(app_8,db_19),execCode(app_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_19,tcp,5432),[hacl(app_3,db_19,tcp,5432),advances(app_3,db_19),execCode(app_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_19,tcp,5432),[hacl(app_14,db_19,tcp,5432),advances(app_14,db_19),execCode(app_14,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_19,tcp,5432),[hacl(app_20,db_19,tcp,5432),advances(app_20,db_19),execCode(app_20,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_5,tcp,5432),[hacl(app_7,db_5,tcp,5432),advances(app_7,db_5),execCode(app_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_5,tcp,5432),[hacl(app_2,db_5,tcp,5432),advances(app_2,db_5),execCode(app_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_5,tcp,5432),[hacl(app_13,db_5,tcp,5432),advances(app_13,db_5),execCode(app_13,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_5,tcp,5432),[hacl(app_19,db_5,tcp,5432),advances(app_19,db_5),execCode(app_19,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_5,tcp,5432),[hacl(app_6,db_5,tcp,5432),advances(app_6,db_5),execCode(app_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_5,tcp,5432),[hacl(app_1,db_5,tcp,5432),advances(app_1,db_5),execCode(app_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_5,tcp,5432),[hacl(app_12,db_5,tcp,5432),advances(app_12,db_5),execCode(app_12,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_5,tcp,5432),[hacl(app_18,db_5,tcp,5432),advances(app_18,db_5),execCode(app_18,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_5,tcp,5432),[hacl(app_24,db_5,tcp,5432),advances(app_24,db_5),execCode(app_24,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_5,tcp,5432),[hacl(app_11,db_5,tcp,5432),advances(app_11,db_5),execCode(app_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_5,tcp,5432),[hacl(app_0,db_5,tcp,5432),advances(app_0,db_5),execCode(app_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_5,tcp,5432),[hacl(app_17,db_5,tcp,5432),advances(app_17,db_5),execCode(app_17,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_5,tcp,5432),[hacl(app_23,db_5,tcp,5432),advances(app_23,db_5),execCode(app_23,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_5,tcp,5432),[hacl(app_10,db_5,tcp,5432),advances(app_10,db_5),execCode(app_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_5,tcp,5432),[hacl(app_5,db_5,tcp,5432),advances(app_5,db_5),execCode(app_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_5,tcp,5432),[hacl(app_16,db_5,tcp,5432),advances(app_16,db_5),execCode(app_16,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_5,tcp,5432),[hacl(app_22,db_5,tcp,5432),advances(app_22,db_5),execCode(app_22,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_5,tcp,5432),[hacl(app_9,db_5,tcp,5432),advances(app_9,db_5),execCode(app_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_5,tcp,5432),[hacl(app_4,db_5,tcp,5432),advances(app_4,db_5),execCode(app_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_5,tcp,5432),[hacl(app_15,db_5,tcp,5432),advances(app_15,db_5),execCode(app_15,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_5,tcp,5432),[hacl(app_21,db_5,tcp,5432),advances(app_21,db_5),execCode(app_21,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_5,tcp,5432),[hacl(app_8,db_5,tcp,5432),advances(app_8,db_5),execCode(app_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_5,tcp,5432),[hacl(app_3,db_5,tcp,5432),advances(app_3,db_5),execCode(app_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_5,tcp,5432),[hacl(app_14,db_5,tcp,5432),advances(app_14,db_5),execCode(app_14,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_5,tcp,5432),[hacl(app_20,db_5,tcp,5432),advances(app_20,db_5),execCode(app_20,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_14,tcp,5432),[hacl(app_7,db_14,tcp,5432),advances(app_7,db_14),execCode(app_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_14,tcp,5432),[hacl(app_2,db_14,tcp,5432),advances(app_2,db_14),execCode(app_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_14,tcp,5432),[hacl(app_13,db_14,tcp,5432),advances(app_13,db_14),execCode(app_13,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_14,tcp,5432),[hacl(app_19,db_14,tcp,5432),advances(app_19,db_14),execCode(app_19,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_14,tcp,5432),[hacl(app_6,db_14,tcp,5432),advances(app_6,db_14),execCode(app_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_14,tcp,5432),[hacl(app_1,db_14,tcp,5432),advances(app_1,db_14),execCode(app_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_14,tcp,5432),[hacl(app_12,db_14,tcp,5432),advances(app_12,db_14),execCode(app_12,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_14,tcp,5432),[hacl(app_18,db_14,tcp,5432),advances(app_18,db_14),execCode(app_18,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_14,tcp,5432),[hacl(app_24,db_14,tcp,5432),advances(app_24,db_14),execCode(app_24,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_14,tcp,5432),[hacl(app_11,db_14,tcp,5432),advances(app_11,db_14),execCode(app_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_14,tcp,5432),[hacl(app_0,db_14,tcp,5432),advances(app_0,db_14),execCode(app_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_14,tcp,5432),[hacl(app_17,db_14,tcp,5432),advances(app_17,db_14),execCode(app_17,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_14,tcp,5432),[hacl(app_23,db_14,tcp,5432),advances(app_23,db_14),execCode(app_23,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_14,tcp,5432),[hacl(app_10,db_14,tcp,5432),advances(app_10,db_14),execCode(app_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_14,tcp,5432),[hacl(app_5,db_14,tcp,5432),advances(app_5,db_14),execCode(app_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_14,tcp,5432),[hacl(app_16,db_14,tcp,5432),advances(app_16,db_14),execCode(app_16,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_14,tcp,5432),[hacl(app_22,db_14,tcp,5432),advances(app_22,db_14),execCode(app_22,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_14,tcp,5432),[hacl(app_9,db_14,tcp,5432),advances(app_9,db_14),execCode(app_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_14,tcp,5432),[hacl(app_4,db_14,tcp,5432),advances(app_4,db_14),execCode(app_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_14,tcp,5432),[hacl(app_15,db_14,tcp,5432),advances(app_15,db_14),execCode(app_15,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_14,tcp,5432),[hacl(app_21,db_14,tcp,5432),advances(app_21,db_14),execCode(app_21,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_14,tcp,5432),[hacl(app_8,db_14,tcp,5432),advances(app_8,db_14),execCode(app_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_14,tcp,5432),[hacl(app_3,db_14,tcp,5432),advances(app_3,db_14),execCode(app_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_14,tcp,5432),[hacl(app_14,db_14,tcp,5432),advances(app_14,db_14),execCode(app_14,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_14,tcp,5432),[hacl(app_20,db_14,tcp,5432),advances(app_20,db_14),execCode(app_20,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_23,tcp,5432),[hacl(app_7,db_23,tcp,5432),advances(app_7,db_23),execCode(app_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_23,tcp,5432),[hacl(app_2,db_23,tcp,5432),advances(app_2,db_23),execCode(app_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_23,tcp,5432),[hacl(app_13,db_23,tcp,5432),advances(app_13,db_23),execCode(app_13,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_23,tcp,5432),[hacl(app_19,db_23,tcp,5432),advances(app_19,db_23),execCode(app_19,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_23,tcp,5432),[hacl(app_6,db_23,tcp,5432),advances(app_6,db_23),execCode(app_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_23,tcp,5432),[hacl(app_1,db_23,tcp,5432),advances(app_1,db_23),execCode(app_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_23,tcp,5432),[hacl(app_12,db_23,tcp,5432),advances(app_12,db_23),execCode(app_12,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_23,tcp,5432),[hacl(app_18,db_23,tcp,5432),advances(app_18,db_23),execCode(app_18,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_23,tcp,5432),[hacl(app_24,db_23,tcp,5432),advances(app_24,db_23),execCode(app_24,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_23,tcp,5432),[hacl(app_11,db_23,tcp,5432),advances(app_11,db_23),execCode(app_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_23,tcp,5432),[hacl(app_0,db_23,tcp,5432),advances(app_0,db_23),execCode(app_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_23,tcp,5432),[hacl(app_17,db_23,tcp,5432),advances(app_17,db_23),execCode(app_17,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_23,tcp,5432),[hacl(app_23,db_23,tcp,5432),advances(app_23,db_23),execCode(app_23,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_23,tcp,5432),[hacl(app_10,db_23,tcp,5432),advances(app_10,db_23),execCode(app_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_23,tcp,5432),[hacl(app_5,db_23,tcp,5432),advances(app_5,db_23),execCode(app_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_23,tcp,5432),[hacl(app_16,db_23,tcp,5432),advances(app_16,db_23),execCode(app_16,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_23,tcp,5432),[hacl(app_22,db_23,tcp,5432),advances(app_22,db_23),execCode(app_22,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_23,tcp,5432),[hacl(app_9,db_23,tcp,5432),advances(app_9,db_23),execCode(app_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_23,tcp,5432),[hacl(app_4,db_23,tcp,5432),advances(app_4,db_23),execCode(app_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_23,tcp,5432),[hacl(app_15,db_23,tcp,5432),advances(app_15,db_23),execCode(app_15,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_23,tcp,5432),[hacl(app_21,db_23,tcp,5432),advances(app_21,db_23),execCode(app_21,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_23,tcp,5432),[hacl(app_8,db_23,tcp,5432),advances(app_8,db_23),execCode(app_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_23,tcp,5432),[hacl(app_3,db_23,tcp,5432),advances(app_3,db_23),execCode(app_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_23,tcp,5432),[hacl(app_14,db_23,tcp,5432),advances(app_14,db_23),execCode(app_14,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_23,tcp,5432),[hacl(app_20,db_23,tcp,5432),advances(app_20,db_23),execCode(app_20,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_9,tcp,5432),[hacl(app_7,db_9,tcp,5432),advances(app_7,db_9),execCode(app_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_9,tcp,5432),[hacl(app_2,db_9,tcp,5432),advances(app_2,db_9),execCode(app_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_9,tcp,5432),[hacl(app_13,db_9,tcp,5432),advances(app_13,db_9),execCode(app_13,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_9,tcp,5432),[hacl(app_19,db_9,tcp,5432),advances(app_19,db_9),execCode(app_19,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_9,tcp,5432),[hacl(app_6,db_9,tcp,5432),advances(app_6,db_9),execCode(app_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_9,tcp,5432),[hacl(app_1,db_9,tcp,5432),advances(app_1,db_9),execCode(app_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_9,tcp,5432),[hacl(app_12,db_9,tcp,5432),advances(app_12,db_9),execCode(app_12,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_9,tcp,5432),[hacl(app_18,db_9,tcp,5432),advances(app_18,db_9),execCode(app_18,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_9,tcp,5432),[hacl(app_24,db_9,tcp,5432),advances(app_24,db_9),execCode(app_24,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_9,tcp,5432),[hacl(app_11,db_9,tcp,5432),advances(app_11,db_9),execCode(app_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_9,tcp,5432),[hacl(app_0,db_9,tcp,5432),advances(app_0,db_9),execCode(app_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_9,tcp,5432),[hacl(app_17,db_9,tcp,5432),advances(app_17,db_9),execCode(app_17,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_9,tcp,5432),[hacl(app_23,db_9,tcp,5432),advances(app_23,db_9),execCode(app_23,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_9,tcp,5432),[hacl(app_10,db_9,tcp,5432),advances(app_10,db_9),execCode(app_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_9,tcp,5432),[hacl(app_5,db_9,tcp,5432),advances(app_5,db_9),execCode(app_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_9,tcp,5432),[hacl(app_16,db_9,tcp,5432),advances(app_16,db_9),execCode(app_16,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_9,tcp,5432),[hacl(app_22,db_9,tcp,5432),advances(app_22,db_9),execCode(app_22,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_9,tcp,5432),[hacl(app_9,db_9,tcp,5432),advances(app_9,db_9),execCode(app_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_9,tcp,5432),[hacl(app_4,db_9,tcp,5432),advances(app_4,db_9),execCode(app_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_9,tcp,5432),[hacl(app_15,db_9,tcp,5432),advances(app_15,db_9),execCode(app_15,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_9,tcp,5432),[hacl(app_21,db_9,tcp,5432),advances(app_21,db_9),execCode(app_21,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_9,tcp,5432),[hacl(app_8,db_9,tcp,5432),advances(app_8,db_9),execCode(app_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_9,tcp,5432),[hacl(app_3,db_9,tcp,5432),advances(app_3,db_9),execCode(app_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_9,tcp,5432),[hacl(app_14,db_9,tcp,5432),advances(app_14,db_9),execCode(app_14,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_9,tcp,5432),[hacl(app_20,db_9,tcp,5432),advances(app_20,db_9),execCode(app_20,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_18,tcp,5432),[hacl(app_7,db_18,tcp,5432),advances(app_7,db_18),execCode(app_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_18,tcp,5432),[hacl(app_2,db_18,tcp,5432),advances(app_2,db_18),execCode(app_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_18,tcp,5432),[hacl(app_13,db_18,tcp,5432),advances(app_13,db_18),execCode(app_13,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_18,tcp,5432),[hacl(app_19,db_18,tcp,5432),advances(app_19,db_18),execCode(app_19,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_18,tcp,5432),[hacl(app_6,db_18,tcp,5432),advances(app_6,db_18),execCode(app_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_18,tcp,5432),[hacl(app_1,db_18,tcp,5432),advances(app_1,db_18),execCode(app_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_18,tcp,5432),[hacl(app_12,db_18,tcp,5432),advances(app_12,db_18),execCode(app_12,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_18,tcp,5432),[hacl(app_18,db_18,tcp,5432),advances(app_18,db_18),execCode(app_18,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_18,tcp,5432),[hacl(app_24,db_18,tcp,5432),advances(app_24,db_18),execCode(app_24,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_18,tcp,5432),[hacl(app_11,db_18,tcp,5432),advances(app_11,db_18),execCode(app_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_18,tcp,5432),[hacl(app_0,db_18,tcp,5432),advances(app_0,db_18),execCode(app_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_18,tcp,5432),[hacl(app_17,db_18,tcp,5432),advances(app_17,db_18),execCode(app_17,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_18,tcp,5432),[hacl(app_23,db_18,tcp,5432),advances(app_23,db_18),execCode(app_23,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_18,tcp,5432),[hacl(app_10,db_18,tcp,5432),advances(app_10,db_18),execCode(app_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_18,tcp,5432),[hacl(app_5,db_18,tcp,5432),advances(app_5,db_18),execCode(app_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_18,tcp,5432),[hacl(app_16,db_18,tcp,5432),advances(app_16,db_18),execCode(app_16,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_18,tcp,5432),[hacl(app_22,db_18,tcp,5432),advances(app_22,db_18),execCode(app_22,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_18,tcp,5432),[hacl(app_9,db_18,tcp,5432),advances(app_9,db_18),execCode(app_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_18,tcp,5432),[hacl(app_4,db_18,tcp,5432),advances(app_4,db_18),execCode(app_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_18,tcp,5432),[hacl(app_15,db_18,tcp,5432),advances(app_15,db_18),execCode(app_15,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_18,tcp,5432),[hacl(app_21,db_18,tcp,5432),advances(app_21,db_18),execCode(app_21,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_18,tcp,5432),[hacl(app_8,db_18,tcp,5432),advances(app_8,db_18),execCode(app_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_18,tcp,5432),[hacl(app_3,db_18,tcp,5432),advances(app_3,db_18),execCode(app_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_18,tcp,5432),[hacl(app_14,db_18,tcp,5432),advances(app_14,db_18),execCode(app_14,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_18,tcp,5432),[hacl(app_20,db_18,tcp,5432),advances(app_20,db_18),execCode(app_20,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_4,tcp,5432),[hacl(app_7,db_4,tcp,5432),advances(app_7,db_4),execCode(app_7,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_4,tcp,5432),[hacl(app_2,db_4,tcp,5432),advances(app_2,db_4),execCode(app_2,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_4,tcp,5432),[hacl(app_13,db_4,tcp,5432),advances(app_13,db_4),execCode(app_13,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_4,tcp,5432),[hacl(app_19,db_4,tcp,5432),advances(app_19,db_4),execCode(app_19,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_4,tcp,5432),[hacl(app_6,db_4,tcp,5432),advances(app_6,db_4),execCode(app_6,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_4,tcp,5432),[hacl(app_1,db_4,tcp,5432),advances(app_1,db_4),execCode(app_1,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_4,tcp,5432),[hacl(app_12,db_4,tcp,5432),advances(app_12,db_4),execCode(app_12,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_4,tcp,5432),[hacl(app_18,db_4,tcp,5432),advances(app_18,db_4),execCode(app_18,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_4,tcp,5432),[hacl(app_24,db_4,tcp,5432),advances(app_24,db_4),execCode(app_24,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_4,tcp,5432),[hacl(app_11,db_4,tcp,5432),advances(app_11,db_4),execCode(app_11,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_4,tcp,5432),[hacl(app_0,db_4,tcp,5432),advances(app_0,db_4),execCode(app_0,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_4,tcp,5432),[hacl(app_17,db_4,tcp,5432),advances(app_17,db_4),execCode(app_17,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_4,tcp,5432),[hacl(app_23,db_4,tcp,5432),advances(app_23,db_4),execCode(app_23,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_4,tcp,5432),[hacl(app_10,db_4,tcp,5432),advances(app_10,db_4),execCode(app_10,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_4,tcp,5432),[hacl(app_5,db_4,tcp,5432),advances(app_5,db_4),execCode(app_5,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_4,tcp,5432),[hacl(app_16,db_4,tcp,5432),advances(app_16,db_4),execCode(app_16,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_4,tcp,5432),[hacl(app_22,db_4,tcp,5432),advances(app_22,db_4),execCode(app_22,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_4,tcp,5432),[hacl(app_9,db_4,tcp,5432),advances(app_9,db_4),execCode(app_9,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_4,tcp,5432),[hacl(app_4,db_4,tcp,5432),advances(app_4,db_4),execCode(app_4,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_4,tcp,5432),[hacl(app_15,db_4,tcp,5432),advances(app_15,db_4),execCode(app_15,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_4,tcp,5432),[hacl(app_21,db_4,tcp,5432),advances(app_21,db_4),execCode(app_21,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_4,tcp,5432),[hacl(app_8,db_4,tcp,5432),advances(app_8,db_4),execCode(app_8,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_4,tcp,5432),[hacl(app_3,db_4,tcp,5432),advances(app_3,db_4),execCode(app_3,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_4,tcp,5432),[hacl(app_14,db_4,tcp,5432),advances(app_14,db_4),execCode(app_14,root)])).
+
+possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(db_4,tcp,5432),[hacl(app_20,db_4,tcp,5432),advances(app_20,db_4),execCode(app_20,root)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_25,root),[netAccess(db_25,tcp,5432),networkServiceInfo(db_25,postgres,tcp,5432,root),vulExists(db_25,vul_db,postgres,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_13,root),[netAccess(db_13,tcp,5432),networkServiceInfo(db_13,postgres,tcp,5432,root),vulExists(db_13,vul_db,postgres,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_22,root),[netAccess(db_22,tcp,5432),networkServiceInfo(db_22,postgres,tcp,5432,root),vulExists(db_22,vul_db,postgres,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_8,root),[netAccess(db_8,tcp,5432),networkServiceInfo(db_8,postgres,tcp,5432,root),vulExists(db_8,vul_db,postgres,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_17,root),[netAccess(db_17,tcp,5432),networkServiceInfo(db_17,postgres,tcp,5432,root),vulExists(db_17,vul_db,postgres,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_0,root),[netAccess(db_0,tcp,5432),networkServiceInfo(db_0,postgres,tcp,5432,root),vulExists(db_0,vul_db,postgres,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_3,root),[netAccess(db_3,tcp,5432),networkServiceInfo(db_3,postgres,tcp,5432,root),vulExists(db_3,vul_db,postgres,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_12,root),[netAccess(db_12,tcp,5432),networkServiceInfo(db_12,postgres,tcp,5432,root),vulExists(db_12,vul_db,postgres,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_21,root),[netAccess(db_21,tcp,5432),networkServiceInfo(db_21,postgres,tcp,5432,root),vulExists(db_21,vul_db,postgres,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_7,root),[netAccess(db_7,tcp,5432),networkServiceInfo(db_7,postgres,tcp,5432,root),vulExists(db_7,vul_db,postgres,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_16,root),[netAccess(db_16,tcp,5432),networkServiceInfo(db_16,postgres,tcp,5432,root),vulExists(db_16,vul_db,postgres,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_2,root),[netAccess(db_2,tcp,5432),networkServiceInfo(db_2,postgres,tcp,5432,root),vulExists(db_2,vul_db,postgres,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_11,root),[netAccess(db_11,tcp,5432),networkServiceInfo(db_11,postgres,tcp,5432,root),vulExists(db_11,vul_db,postgres,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_20,root),[netAccess(db_20,tcp,5432),networkServiceInfo(db_20,postgres,tcp,5432,root),vulExists(db_20,vul_db,postgres,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_6,root),[netAccess(db_6,tcp,5432),networkServiceInfo(db_6,postgres,tcp,5432,root),vulExists(db_6,vul_db,postgres,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_15,root),[netAccess(db_15,tcp,5432),networkServiceInfo(db_15,postgres,tcp,5432,root),vulExists(db_15,vul_db,postgres,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_24,root),[netAccess(db_24,tcp,5432),networkServiceInfo(db_24,postgres,tcp,5432,root),vulExists(db_24,vul_db,postgres,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_1,root),[netAccess(db_1,tcp,5432),networkServiceInfo(db_1,postgres,tcp,5432,root),vulExists(db_1,vul_db,postgres,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_10,root),[netAccess(db_10,tcp,5432),networkServiceInfo(db_10,postgres,tcp,5432,root),vulExists(db_10,vul_db,postgres,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_19,root),[netAccess(db_19,tcp,5432),networkServiceInfo(db_19,postgres,tcp,5432,root),vulExists(db_19,vul_db,postgres,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_5,root),[netAccess(db_5,tcp,5432),networkServiceInfo(db_5,postgres,tcp,5432,root),vulExists(db_5,vul_db,postgres,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_14,root),[netAccess(db_14,tcp,5432),networkServiceInfo(db_14,postgres,tcp,5432,root),vulExists(db_14,vul_db,postgres,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_23,root),[netAccess(db_23,tcp,5432),networkServiceInfo(db_23,postgres,tcp,5432,root),vulExists(db_23,vul_db,postgres,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_9,root),[netAccess(db_9,tcp,5432),networkServiceInfo(db_9,postgres,tcp,5432,root),vulExists(db_9,vul_db,postgres,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_18,root),[netAccess(db_18,tcp,5432),networkServiceInfo(db_18,postgres,tcp,5432,root),vulExists(db_18,vul_db,postgres,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_4,root),[netAccess(db_4,tcp,5432),networkServiceInfo(db_4,postgres,tcp,5432,root),vulExists(db_4,vul_db,postgres,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_25,root),[netAccess(db_25,tcp,5432),networkServiceInfo(db_25,postgres,tcp,5432,root),vulExists(db_25,vul_db,postgres,remoteExploit,privEscalation)])).
+
+possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(db_25,root),[netAccess(db_25,tcp,5432),networkServiceInfo(db_25,postgres,tcp,5432,root),vulExists(db_25,vul_db,postgres,remoteExploit,privEscalation)])).
+

@@ -1,0 +1,519 @@
+1,"execCode(db_19,root)","OR",0
+2,"RULE 2 (remote exploit of a server program)","AND",0
+3,"netAccess(db_19,tcp,5432)","OR",0
+4,"RULE 5 (multi-hop access)","AND",0
+5,"hacl(app_0,db_19,tcp,5432)","LEAF",1
+6,"execCode(app_0,root)","OR",0
+7,"RULE 2 (remote exploit of a server program)","AND",0
+8,"netAccess(app_0,tcp,8080)","OR",0
+9,"RULE 5 (multi-hop access)","AND",0
+10,"hacl(dmz_0,app_0,tcp,8080)","LEAF",1
+11,"execCode(dmz_0,root)","OR",0
+12,"RULE 2 (remote exploit of a server program)","AND",0
+13,"netAccess(dmz_0,tcp,80)","OR",0
+14,"RULE 6 (direct network access)","AND",0
+15,"hacl(internet,dmz_0,tcp,80)","LEAF",1
+16,"attackerLocated(internet)","LEAF",1
+17,"networkServiceInfo(dmz_0,httpd,tcp,80,root)","LEAF",1
+18,"vulExists(dmz_0,vul_web,httpd,remoteExploit,privEscalation)","LEAF",1
+19,"RULE 5 (multi-hop access)","AND",0
+20,"hacl(dmz_1,app_0,tcp,8080)","LEAF",1
+21,"execCode(dmz_1,root)","OR",0
+22,"RULE 2 (remote exploit of a server program)","AND",0
+23,"netAccess(dmz_1,tcp,80)","OR",0
+24,"RULE 6 (direct network access)","AND",0
+25,"hacl(internet,dmz_1,tcp,80)","LEAF",1
+26,"networkServiceInfo(dmz_1,httpd,tcp,80,root)","LEAF",1
+27,"vulExists(dmz_1,vul_web,httpd,remoteExploit,privEscalation)","LEAF",1
+28,"RULE 5 (multi-hop access)","AND",0
+29,"hacl(dmz_2,app_0,tcp,8080)","LEAF",1
+30,"execCode(dmz_2,root)","OR",0
+31,"RULE 2 (remote exploit of a server program)","AND",0
+32,"netAccess(dmz_2,tcp,80)","OR",0
+33,"RULE 6 (direct network access)","AND",0
+34,"hacl(internet,dmz_2,tcp,80)","LEAF",1
+35,"networkServiceInfo(dmz_2,httpd,tcp,80,root)","LEAF",1
+36,"vulExists(dmz_2,vul_web,httpd,remoteExploit,privEscalation)","LEAF",1
+37,"RULE 5 (multi-hop access)","AND",0
+38,"hacl(dmz_3,app_0,tcp,8080)","LEAF",1
+39,"execCode(dmz_3,root)","OR",0
+40,"RULE 2 (remote exploit of a server program)","AND",0
+41,"netAccess(dmz_3,tcp,80)","OR",0
+42,"RULE 6 (direct network access)","AND",0
+43,"hacl(internet,dmz_3,tcp,80)","LEAF",1
+44,"networkServiceInfo(dmz_3,httpd,tcp,80,root)","LEAF",1
+45,"vulExists(dmz_3,vul_web,httpd,remoteExploit,privEscalation)","LEAF",1
+46,"RULE 5 (multi-hop access)","AND",0
+47,"hacl(dmz_4,app_0,tcp,8080)","LEAF",1
+48,"execCode(dmz_4,root)","OR",0
+49,"RULE 2 (remote exploit of a server program)","AND",0
+50,"netAccess(dmz_4,tcp,80)","OR",0
+51,"RULE 6 (direct network access)","AND",0
+52,"hacl(internet,dmz_4,tcp,80)","LEAF",1
+53,"networkServiceInfo(dmz_4,httpd,tcp,80,root)","LEAF",1
+54,"vulExists(dmz_4,vul_web,httpd,remoteExploit,privEscalation)","LEAF",1
+55,"RULE 5 (multi-hop access)","AND",0
+56,"hacl(dmz_5,app_0,tcp,8080)","LEAF",1
+57,"execCode(dmz_5,root)","OR",0
+58,"RULE 2 (remote exploit of a server program)","AND",0
+59,"netAccess(dmz_5,tcp,80)","OR",0
+60,"RULE 6 (direct network access)","AND",0
+61,"hacl(internet,dmz_5,tcp,80)","LEAF",1
+62,"networkServiceInfo(dmz_5,httpd,tcp,80,root)","LEAF",1
+63,"vulExists(dmz_5,vul_web,httpd,remoteExploit,privEscalation)","LEAF",1
+64,"RULE 5 (multi-hop access)","AND",0
+65,"hacl(dmz_6,app_0,tcp,8080)","LEAF",1
+66,"execCode(dmz_6,root)","OR",0
+67,"RULE 2 (remote exploit of a server program)","AND",0
+68,"netAccess(dmz_6,tcp,80)","OR",0
+69,"RULE 6 (direct network access)","AND",0
+70,"hacl(internet,dmz_6,tcp,80)","LEAF",1
+71,"networkServiceInfo(dmz_6,httpd,tcp,80,root)","LEAF",1
+72,"vulExists(dmz_6,vul_web,httpd,remoteExploit,privEscalation)","LEAF",1
+73,"RULE 5 (multi-hop access)","AND",0
+74,"hacl(dmz_7,app_0,tcp,8080)","LEAF",1
+75,"execCode(dmz_7,root)","OR",0
+76,"RULE 2 (remote exploit of a server program)","AND",0
+77,"netAccess(dmz_7,tcp,80)","OR",0
+78,"RULE 6 (direct network access)","AND",0
+79,"hacl(internet,dmz_7,tcp,80)","LEAF",1
+80,"networkServiceInfo(dmz_7,httpd,tcp,80,root)","LEAF",1
+81,"vulExists(dmz_7,vul_web,httpd,remoteExploit,privEscalation)","LEAF",1
+82,"RULE 5 (multi-hop access)","AND",0
+83,"hacl(dmz_8,app_0,tcp,8080)","LEAF",1
+84,"execCode(dmz_8,root)","OR",0
+85,"RULE 2 (remote exploit of a server program)","AND",0
+86,"netAccess(dmz_8,tcp,80)","OR",0
+87,"RULE 6 (direct network access)","AND",0
+88,"hacl(internet,dmz_8,tcp,80)","LEAF",1
+89,"networkServiceInfo(dmz_8,httpd,tcp,80,root)","LEAF",1
+90,"vulExists(dmz_8,vul_web,httpd,remoteExploit,privEscalation)","LEAF",1
+91,"networkServiceInfo(app_0,tomcat,tcp,8080,root)","LEAF",1
+92,"vulExists(app_0,vul_app,tomcat,remoteExploit,privEscalation)","LEAF",1
+93,"RULE 5 (multi-hop access)","AND",0
+94,"hacl(app_1,db_19,tcp,5432)","LEAF",1
+95,"execCode(app_1,root)","OR",0
+96,"RULE 2 (remote exploit of a server program)","AND",0
+97,"netAccess(app_1,tcp,8080)","OR",0
+98,"RULE 5 (multi-hop access)","AND",0
+99,"hacl(dmz_0,app_1,tcp,8080)","LEAF",1
+100,"RULE 5 (multi-hop access)","AND",0
+101,"hacl(dmz_1,app_1,tcp,8080)","LEAF",1
+102,"RULE 5 (multi-hop access)","AND",0
+103,"hacl(dmz_2,app_1,tcp,8080)","LEAF",1
+104,"RULE 5 (multi-hop access)","AND",0
+105,"hacl(dmz_3,app_1,tcp,8080)","LEAF",1
+106,"RULE 5 (multi-hop access)","AND",0
+107,"hacl(dmz_4,app_1,tcp,8080)","LEAF",1
+108,"RULE 5 (multi-hop access)","AND",0
+109,"hacl(dmz_5,app_1,tcp,8080)","LEAF",1
+110,"RULE 5 (multi-hop access)","AND",0
+111,"hacl(dmz_6,app_1,tcp,8080)","LEAF",1
+112,"RULE 5 (multi-hop access)","AND",0
+113,"hacl(dmz_7,app_1,tcp,8080)","LEAF",1
+114,"RULE 5 (multi-hop access)","AND",0
+115,"hacl(dmz_8,app_1,tcp,8080)","LEAF",1
+116,"networkServiceInfo(app_1,tomcat,tcp,8080,root)","LEAF",1
+117,"vulExists(app_1,vul_app,tomcat,remoteExploit,privEscalation)","LEAF",1
+118,"RULE 5 (multi-hop access)","AND",0
+119,"hacl(app_10,db_19,tcp,5432)","LEAF",1
+120,"execCode(app_10,root)","OR",0
+121,"RULE 2 (remote exploit of a server program)","AND",0
+122,"netAccess(app_10,tcp,8080)","OR",0
+123,"RULE 5 (multi-hop access)","AND",0
+124,"hacl(dmz_0,app_10,tcp,8080)","LEAF",1
+125,"RULE 5 (multi-hop access)","AND",0
+126,"hacl(dmz_1,app_10,tcp,8080)","LEAF",1
+127,"RULE 5 (multi-hop access)","AND",0
+128,"hacl(dmz_2,app_10,tcp,8080)","LEAF",1
+129,"RULE 5 (multi-hop access)","AND",0
+130,"hacl(dmz_3,app_10,tcp,8080)","LEAF",1
+131,"RULE 5 (multi-hop access)","AND",0
+132,"hacl(dmz_4,app_10,tcp,8080)","LEAF",1
+133,"RULE 5 (multi-hop access)","AND",0
+134,"hacl(dmz_5,app_10,tcp,8080)","LEAF",1
+135,"RULE 5 (multi-hop access)","AND",0
+136,"hacl(dmz_6,app_10,tcp,8080)","LEAF",1
+137,"RULE 5 (multi-hop access)","AND",0
+138,"hacl(dmz_7,app_10,tcp,8080)","LEAF",1
+139,"RULE 5 (multi-hop access)","AND",0
+140,"hacl(dmz_8,app_10,tcp,8080)","LEAF",1
+141,"networkServiceInfo(app_10,tomcat,tcp,8080,root)","LEAF",1
+142,"vulExists(app_10,vul_app,tomcat,remoteExploit,privEscalation)","LEAF",1
+143,"RULE 5 (multi-hop access)","AND",0
+144,"hacl(app_11,db_19,tcp,5432)","LEAF",1
+145,"execCode(app_11,root)","OR",0
+146,"RULE 2 (remote exploit of a server program)","AND",0
+147,"netAccess(app_11,tcp,8080)","OR",0
+148,"RULE 5 (multi-hop access)","AND",0
+149,"hacl(dmz_0,app_11,tcp,8080)","LEAF",1
+150,"RULE 5 (multi-hop access)","AND",0
+151,"hacl(dmz_1,app_11,tcp,8080)","LEAF",1
+152,"RULE 5 (multi-hop access)","AND",0
+153,"hacl(dmz_2,app_11,tcp,8080)","LEAF",1
+154,"RULE 5 (multi-hop access)","AND",0
+155,"hacl(dmz_3,app_11,tcp,8080)","LEAF",1
+156,"RULE 5 (multi-hop access)","AND",0
+157,"hacl(dmz_4,app_11,tcp,8080)","LEAF",1
+158,"RULE 5 (multi-hop access)","AND",0
+159,"hacl(dmz_5,app_11,tcp,8080)","LEAF",1
+160,"RULE 5 (multi-hop access)","AND",0
+161,"hacl(dmz_6,app_11,tcp,8080)","LEAF",1
+162,"RULE 5 (multi-hop access)","AND",0
+163,"hacl(dmz_7,app_11,tcp,8080)","LEAF",1
+164,"RULE 5 (multi-hop access)","AND",0
+165,"hacl(dmz_8,app_11,tcp,8080)","LEAF",1
+166,"networkServiceInfo(app_11,tomcat,tcp,8080,root)","LEAF",1
+167,"vulExists(app_11,vul_app,tomcat,remoteExploit,privEscalation)","LEAF",1
+168,"RULE 5 (multi-hop access)","AND",0
+169,"hacl(app_12,db_19,tcp,5432)","LEAF",1
+170,"execCode(app_12,root)","OR",0
+171,"RULE 2 (remote exploit of a server program)","AND",0
+172,"netAccess(app_12,tcp,8080)","OR",0
+173,"RULE 5 (multi-hop access)","AND",0
+174,"hacl(dmz_0,app_12,tcp,8080)","LEAF",1
+175,"RULE 5 (multi-hop access)","AND",0
+176,"hacl(dmz_1,app_12,tcp,8080)","LEAF",1
+177,"RULE 5 (multi-hop access)","AND",0
+178,"hacl(dmz_2,app_12,tcp,8080)","LEAF",1
+179,"RULE 5 (multi-hop access)","AND",0
+180,"hacl(dmz_3,app_12,tcp,8080)","LEAF",1
+181,"RULE 5 (multi-hop access)","AND",0
+182,"hacl(dmz_4,app_12,tcp,8080)","LEAF",1
+183,"RULE 5 (multi-hop access)","AND",0
+184,"hacl(dmz_5,app_12,tcp,8080)","LEAF",1
+185,"RULE 5 (multi-hop access)","AND",0
+186,"hacl(dmz_6,app_12,tcp,8080)","LEAF",1
+187,"RULE 5 (multi-hop access)","AND",0
+188,"hacl(dmz_7,app_12,tcp,8080)","LEAF",1
+189,"RULE 5 (multi-hop access)","AND",0
+190,"hacl(dmz_8,app_12,tcp,8080)","LEAF",1
+191,"networkServiceInfo(app_12,tomcat,tcp,8080,root)","LEAF",1
+192,"vulExists(app_12,vul_app,tomcat,remoteExploit,privEscalation)","LEAF",1
+193,"RULE 5 (multi-hop access)","AND",0
+194,"hacl(app_13,db_19,tcp,5432)","LEAF",1
+195,"execCode(app_13,root)","OR",0
+196,"RULE 2 (remote exploit of a server program)","AND",0
+197,"netAccess(app_13,tcp,8080)","OR",0
+198,"RULE 5 (multi-hop access)","AND",0
+199,"hacl(dmz_0,app_13,tcp,8080)","LEAF",1
+200,"RULE 5 (multi-hop access)","AND",0
+201,"hacl(dmz_1,app_13,tcp,8080)","LEAF",1
+202,"RULE 5 (multi-hop access)","AND",0
+203,"hacl(dmz_2,app_13,tcp,8080)","LEAF",1
+204,"RULE 5 (multi-hop access)","AND",0
+205,"hacl(dmz_3,app_13,tcp,8080)","LEAF",1
+206,"RULE 5 (multi-hop access)","AND",0
+207,"hacl(dmz_4,app_13,tcp,8080)","LEAF",1
+208,"RULE 5 (multi-hop access)","AND",0
+209,"hacl(dmz_5,app_13,tcp,8080)","LEAF",1
+210,"RULE 5 (multi-hop access)","AND",0
+211,"hacl(dmz_6,app_13,tcp,8080)","LEAF",1
+212,"RULE 5 (multi-hop access)","AND",0
+213,"hacl(dmz_7,app_13,tcp,8080)","LEAF",1
+214,"RULE 5 (multi-hop access)","AND",0
+215,"hacl(dmz_8,app_13,tcp,8080)","LEAF",1
+216,"networkServiceInfo(app_13,tomcat,tcp,8080,root)","LEAF",1
+217,"vulExists(app_13,vul_app,tomcat,remoteExploit,privEscalation)","LEAF",1
+218,"RULE 5 (multi-hop access)","AND",0
+219,"hacl(app_14,db_19,tcp,5432)","LEAF",1
+220,"execCode(app_14,root)","OR",0
+221,"RULE 2 (remote exploit of a server program)","AND",0
+222,"netAccess(app_14,tcp,8080)","OR",0
+223,"RULE 5 (multi-hop access)","AND",0
+224,"hacl(dmz_0,app_14,tcp,8080)","LEAF",1
+225,"RULE 5 (multi-hop access)","AND",0
+226,"hacl(dmz_1,app_14,tcp,8080)","LEAF",1
+227,"RULE 5 (multi-hop access)","AND",0
+228,"hacl(dmz_2,app_14,tcp,8080)","LEAF",1
+229,"RULE 5 (multi-hop access)","AND",0
+230,"hacl(dmz_3,app_14,tcp,8080)","LEAF",1
+231,"RULE 5 (multi-hop access)","AND",0
+232,"hacl(dmz_4,app_14,tcp,8080)","LEAF",1
+233,"RULE 5 (multi-hop access)","AND",0
+234,"hacl(dmz_5,app_14,tcp,8080)","LEAF",1
+235,"RULE 5 (multi-hop access)","AND",0
+236,"hacl(dmz_6,app_14,tcp,8080)","LEAF",1
+237,"RULE 5 (multi-hop access)","AND",0
+238,"hacl(dmz_7,app_14,tcp,8080)","LEAF",1
+239,"RULE 5 (multi-hop access)","AND",0
+240,"hacl(dmz_8,app_14,tcp,8080)","LEAF",1
+241,"networkServiceInfo(app_14,tomcat,tcp,8080,root)","LEAF",1
+242,"vulExists(app_14,vul_app,tomcat,remoteExploit,privEscalation)","LEAF",1
+243,"RULE 5 (multi-hop access)","AND",0
+244,"hacl(app_15,db_19,tcp,5432)","LEAF",1
+245,"execCode(app_15,root)","OR",0
+246,"RULE 2 (remote exploit of a server program)","AND",0
+247,"netAccess(app_15,tcp,8080)","OR",0
+248,"RULE 5 (multi-hop access)","AND",0
+249,"hacl(dmz_0,app_15,tcp,8080)","LEAF",1
+250,"RULE 5 (multi-hop access)","AND",0
+251,"hacl(dmz_1,app_15,tcp,8080)","LEAF",1
+252,"RULE 5 (multi-hop access)","AND",0
+253,"hacl(dmz_2,app_15,tcp,8080)","LEAF",1
+254,"RULE 5 (multi-hop access)","AND",0
+255,"hacl(dmz_3,app_15,tcp,8080)","LEAF",1
+256,"RULE 5 (multi-hop access)","AND",0
+257,"hacl(dmz_4,app_15,tcp,8080)","LEAF",1
+258,"RULE 5 (multi-hop access)","AND",0
+259,"hacl(dmz_5,app_15,tcp,8080)","LEAF",1
+260,"RULE 5 (multi-hop access)","AND",0
+261,"hacl(dmz_6,app_15,tcp,8080)","LEAF",1
+262,"RULE 5 (multi-hop access)","AND",0
+263,"hacl(dmz_7,app_15,tcp,8080)","LEAF",1
+264,"RULE 5 (multi-hop access)","AND",0
+265,"hacl(dmz_8,app_15,tcp,8080)","LEAF",1
+266,"networkServiceInfo(app_15,tomcat,tcp,8080,root)","LEAF",1
+267,"vulExists(app_15,vul_app,tomcat,remoteExploit,privEscalation)","LEAF",1
+268,"RULE 5 (multi-hop access)","AND",0
+269,"hacl(app_16,db_19,tcp,5432)","LEAF",1
+270,"execCode(app_16,root)","OR",0
+271,"RULE 2 (remote exploit of a server program)","AND",0
+272,"netAccess(app_16,tcp,8080)","OR",0
+273,"RULE 5 (multi-hop access)","AND",0
+274,"hacl(dmz_0,app_16,tcp,8080)","LEAF",1
+275,"RULE 5 (multi-hop access)","AND",0
+276,"hacl(dmz_1,app_16,tcp,8080)","LEAF",1
+277,"RULE 5 (multi-hop access)","AND",0
+278,"hacl(dmz_2,app_16,tcp,8080)","LEAF",1
+279,"RULE 5 (multi-hop access)","AND",0
+280,"hacl(dmz_3,app_16,tcp,8080)","LEAF",1
+281,"RULE 5 (multi-hop access)","AND",0
+282,"hacl(dmz_4,app_16,tcp,8080)","LEAF",1
+283,"RULE 5 (multi-hop access)","AND",0
+284,"hacl(dmz_5,app_16,tcp,8080)","LEAF",1
+285,"RULE 5 (multi-hop access)","AND",0
+286,"hacl(dmz_6,app_16,tcp,8080)","LEAF",1
+287,"RULE 5 (multi-hop access)","AND",0
+288,"hacl(dmz_7,app_16,tcp,8080)","LEAF",1
+289,"RULE 5 (multi-hop access)","AND",0
+290,"hacl(dmz_8,app_16,tcp,8080)","LEAF",1
+291,"networkServiceInfo(app_16,tomcat,tcp,8080,root)","LEAF",1
+292,"vulExists(app_16,vul_app,tomcat,remoteExploit,privEscalation)","LEAF",1
+293,"RULE 5 (multi-hop access)","AND",0
+294,"hacl(app_17,db_19,tcp,5432)","LEAF",1
+295,"execCode(app_17,root)","OR",0
+296,"RULE 2 (remote exploit of a server program)","AND",0
+297,"netAccess(app_17,tcp,8080)","OR",0
+298,"RULE 5 (multi-hop access)","AND",0
+299,"hacl(dmz_0,app_17,tcp,8080)","LEAF",1
+300,"RULE 5 (multi-hop access)","AND",0
+301,"hacl(dmz_1,app_17,tcp,8080)","LEAF",1
+302,"RULE 5 (multi-hop access)","AND",0
+303,"hacl(dmz_2,app_17,tcp,8080)","LEAF",1
+304,"RULE 5 (multi-hop access)","AND",0
+305,"hacl(dmz_3,app_17,tcp,8080)","LEAF",1
+306,"RULE 5 (multi-hop access)","AND",0
+307,"hacl(dmz_4,app_17,tcp,8080)","LEAF",1
+308,"RULE 5 (multi-hop access)","AND",0
+309,"hacl(dmz_5,app_17,tcp,8080)","LEAF",1
+310,"RULE 5 (multi-hop access)","AND",0
+311,"hacl(dmz_6,app_17,tcp,8080)","LEAF",1
+312,"RULE 5 (multi-hop access)","AND",0
+313,"hacl(dmz_7,app_17,tcp,8080)","LEAF",1
+314,"RULE 5 (multi-hop access)","AND",0
+315,"hacl(dmz_8,app_17,tcp,8080)","LEAF",1
+316,"networkServiceInfo(app_17,tomcat,tcp,8080,root)","LEAF",1
+317,"vulExists(app_17,vul_app,tomcat,remoteExploit,privEscalation)","LEAF",1
+318,"RULE 5 (multi-hop access)","AND",0
+319,"hacl(app_2,db_19,tcp,5432)","LEAF",1
+320,"execCode(app_2,root)","OR",0
+321,"RULE 2 (remote exploit of a server program)","AND",0
+322,"netAccess(app_2,tcp,8080)","OR",0
+323,"RULE 5 (multi-hop access)","AND",0
+324,"hacl(dmz_0,app_2,tcp,8080)","LEAF",1
+325,"RULE 5 (multi-hop access)","AND",0
+326,"hacl(dmz_1,app_2,tcp,8080)","LEAF",1
+327,"RULE 5 (multi-hop access)","AND",0
+328,"hacl(dmz_2,app_2,tcp,8080)","LEAF",1
+329,"RULE 5 (multi-hop access)","AND",0
+330,"hacl(dmz_3,app_2,tcp,8080)","LEAF",1
+331,"RULE 5 (multi-hop access)","AND",0
+332,"hacl(dmz_4,app_2,tcp,8080)","LEAF",1
+333,"RULE 5 (multi-hop access)","AND",0
+334,"hacl(dmz_5,app_2,tcp,8080)","LEAF",1
+335,"RULE 5 (multi-hop access)","AND",0
+336,"hacl(dmz_6,app_2,tcp,8080)","LEAF",1
+337,"RULE 5 (multi-hop access)","AND",0
+338,"hacl(dmz_7,app_2,tcp,8080)","LEAF",1
+339,"RULE 5 (multi-hop access)","AND",0
+340,"hacl(dmz_8,app_2,tcp,8080)","LEAF",1
+341,"networkServiceInfo(app_2,tomcat,tcp,8080,root)","LEAF",1
+342,"vulExists(app_2,vul_app,tomcat,remoteExploit,privEscalation)","LEAF",1
+343,"RULE 5 (multi-hop access)","AND",0
+344,"hacl(app_3,db_19,tcp,5432)","LEAF",1
+345,"execCode(app_3,root)","OR",0
+346,"RULE 2 (remote exploit of a server program)","AND",0
+347,"netAccess(app_3,tcp,8080)","OR",0
+348,"RULE 5 (multi-hop access)","AND",0
+349,"hacl(dmz_0,app_3,tcp,8080)","LEAF",1
+350,"RULE 5 (multi-hop access)","AND",0
+351,"hacl(dmz_1,app_3,tcp,8080)","LEAF",1
+352,"RULE 5 (multi-hop access)","AND",0
+353,"hacl(dmz_2,app_3,tcp,8080)","LEAF",1
+354,"RULE 5 (multi-hop access)","AND",0
+355,"hacl(dmz_3,app_3,tcp,8080)","LEAF",1
+356,"RULE 5 (multi-hop access)","AND",0
+357,"hacl(dmz_4,app_3,tcp,8080)","LEAF",1
+358,"RULE 5 (multi-hop access)","AND",0
+359,"hacl(dmz_5,app_3,tcp,8080)","LEAF",1
+360,"RULE 5 (multi-hop access)","AND",0
+361,"hacl(dmz_6,app_3,tcp,8080)","LEAF",1
+362,"RULE 5 (multi-hop access)","AND",0
+363,"hacl(dmz_7,app_3,tcp,8080)","LEAF",1
+364,"RULE 5 (multi-hop access)","AND",0
+365,"hacl(dmz_8,app_3,tcp,8080)","LEAF",1
+366,"networkServiceInfo(app_3,tomcat,tcp,8080,root)","LEAF",1
+367,"vulExists(app_3,vul_app,tomcat,remoteExploit,privEscalation)","LEAF",1
+368,"RULE 5 (multi-hop access)","AND",0
+369,"hacl(app_4,db_19,tcp,5432)","LEAF",1
+370,"execCode(app_4,root)","OR",0
+371,"RULE 2 (remote exploit of a server program)","AND",0
+372,"netAccess(app_4,tcp,8080)","OR",0
+373,"RULE 5 (multi-hop access)","AND",0
+374,"hacl(dmz_0,app_4,tcp,8080)","LEAF",1
+375,"RULE 5 (multi-hop access)","AND",0
+376,"hacl(dmz_1,app_4,tcp,8080)","LEAF",1
+377,"RULE 5 (multi-hop access)","AND",0
+378,"hacl(dmz_2,app_4,tcp,8080)","LEAF",1
+379,"RULE 5 (multi-hop access)","AND",0
+380,"hacl(dmz_3,app_4,tcp,8080)","LEAF",1
+381,"RULE 5 (multi-hop access)","AND",0
+382,"hacl(dmz_4,app_4,tcp,8080)","LEAF",1
+383,"RULE 5 (multi-hop access)","AND",0
+384,"hacl(dmz_5,app_4,tcp,8080)","LEAF",1
+385,"RULE 5 (multi-hop access)","AND",0
+386,"hacl(dmz_6,app_4,tcp,8080)","LEAF",1
+387,"RULE 5 (multi-hop access)","AND",0
+388,"hacl(dmz_7,app_4,tcp,8080)","LEAF",1
+389,"RULE 5 (multi-hop access)","AND",0
+390,"hacl(dmz_8,app_4,tcp,8080)","LEAF",1
+391,"networkServiceInfo(app_4,tomcat,tcp,8080,root)","LEAF",1
+392,"vulExists(app_4,vul_app,tomcat,remoteExploit,privEscalation)","LEAF",1
+393,"RULE 5 (multi-hop access)","AND",0
+394,"hacl(app_5,db_19,tcp,5432)","LEAF",1
+395,"execCode(app_5,root)","OR",0
+396,"RULE 2 (remote exploit of a server program)","AND",0
+397,"netAccess(app_5,tcp,8080)","OR",0
+398,"RULE 5 (multi-hop access)","AND",0
+399,"hacl(dmz_0,app_5,tcp,8080)","LEAF",1
+400,"RULE 5 (multi-hop access)","AND",0
+401,"hacl(dmz_1,app_5,tcp,8080)","LEAF",1
+402,"RULE 5 (multi-hop access)","AND",0
+403,"hacl(dmz_2,app_5,tcp,8080)","LEAF",1
+404,"RULE 5 (multi-hop access)","AND",0
+405,"hacl(dmz_3,app_5,tcp,8080)","LEAF",1
+406,"RULE 5 (multi-hop access)","AND",0
+407,"hacl(dmz_4,app_5,tcp,8080)","LEAF",1
+408,"RULE 5 (multi-hop access)","AND",0
+409,"hacl(dmz_5,app_5,tcp,8080)","LEAF",1
+410,"RULE 5 (multi-hop access)","AND",0
+411,"hacl(dmz_6,app_5,tcp,8080)","LEAF",1
+412,"RULE 5 (multi-hop access)","AND",0
+413,"hacl(dmz_7,app_5,tcp,8080)","LEAF",1
+414,"RULE 5 (multi-hop access)","AND",0
+415,"hacl(dmz_8,app_5,tcp,8080)","LEAF",1
+416,"networkServiceInfo(app_5,tomcat,tcp,8080,root)","LEAF",1
+417,"vulExists(app_5,vul_app,tomcat,remoteExploit,privEscalation)","LEAF",1
+418,"RULE 5 (multi-hop access)","AND",0
+419,"hacl(app_6,db_19,tcp,5432)","LEAF",1
+420,"execCode(app_6,root)","OR",0
+421,"RULE 2 (remote exploit of a server program)","AND",0
+422,"netAccess(app_6,tcp,8080)","OR",0
+423,"RULE 5 (multi-hop access)","AND",0
+424,"hacl(dmz_0,app_6,tcp,8080)","LEAF",1
+425,"RULE 5 (multi-hop access)","AND",0
+426,"hacl(dmz_1,app_6,tcp,8080)","LEAF",1
+427,"RULE 5 (multi-hop access)","AND",0
+428,"hacl(dmz_2,app_6,tcp,8080)","LEAF",1
+429,"RULE 5 (multi-hop access)","AND",0
+430,"hacl(dmz_3,app_6,tcp,8080)","LEAF",1
+431,"RULE 5 (multi-hop access)","AND",0
+432,"hacl(dmz_4,app_6,tcp,8080)","LEAF",1
+433,"RULE 5 (multi-hop access)","AND",0
+434,"hacl(dmz_5,app_6,tcp,8080)","LEAF",1
+435,"RULE 5 (multi-hop access)","AND",0
+436,"hacl(dmz_6,app_6,tcp,8080)","LEAF",1
+437,"RULE 5 (multi-hop access)","AND",0
+438,"hacl(dmz_7,app_6,tcp,8080)","LEAF",1
+439,"RULE 5 (multi-hop access)","AND",0
+440,"hacl(dmz_8,app_6,tcp,8080)","LEAF",1
+441,"networkServiceInfo(app_6,tomcat,tcp,8080,root)","LEAF",1
+442,"vulExists(app_6,vul_app,tomcat,remoteExploit,privEscalation)","LEAF",1
+443,"RULE 5 (multi-hop access)","AND",0
+444,"hacl(app_7,db_19,tcp,5432)","LEAF",1
+445,"execCode(app_7,root)","OR",0
+446,"RULE 2 (remote exploit of a server program)","AND",0
+447,"netAccess(app_7,tcp,8080)","OR",0
+448,"RULE 5 (multi-hop access)","AND",0
+449,"hacl(dmz_0,app_7,tcp,8080)","LEAF",1
+450,"RULE 5 (multi-hop access)","AND",0
+451,"hacl(dmz_1,app_7,tcp,8080)","LEAF",1
+452,"RULE 5 (multi-hop access)","AND",0
+453,"hacl(dmz_2,app_7,tcp,8080)","LEAF",1
+454,"RULE 5 (multi-hop access)","AND",0
+455,"hacl(dmz_3,app_7,tcp,8080)","LEAF",1
+456,"RULE 5 (multi-hop access)","AND",0
+457,"hacl(dmz_4,app_7,tcp,8080)","LEAF",1
+458,"RULE 5 (multi-hop access)","AND",0
+459,"hacl(dmz_5,app_7,tcp,8080)","LEAF",1
+460,"RULE 5 (multi-hop access)","AND",0
+461,"hacl(dmz_6,app_7,tcp,8080)","LEAF",1
+462,"RULE 5 (multi-hop access)","AND",0
+463,"hacl(dmz_7,app_7,tcp,8080)","LEAF",1
+464,"RULE 5 (multi-hop access)","AND",0
+465,"hacl(dmz_8,app_7,tcp,8080)","LEAF",1
+466,"networkServiceInfo(app_7,tomcat,tcp,8080,root)","LEAF",1
+467,"vulExists(app_7,vul_app,tomcat,remoteExploit,privEscalation)","LEAF",1
+468,"RULE 5 (multi-hop access)","AND",0
+469,"hacl(app_8,db_19,tcp,5432)","LEAF",1
+470,"execCode(app_8,root)","OR",0
+471,"RULE 2 (remote exploit of a server program)","AND",0
+472,"netAccess(app_8,tcp,8080)","OR",0
+473,"RULE 5 (multi-hop access)","AND",0
+474,"hacl(dmz_0,app_8,tcp,8080)","LEAF",1
+475,"RULE 5 (multi-hop access)","AND",0
+476,"hacl(dmz_1,app_8,tcp,8080)","LEAF",1
+477,"RULE 5 (multi-hop access)","AND",0
+478,"hacl(dmz_2,app_8,tcp,8080)","LEAF",1
+479,"RULE 5 (multi-hop access)","AND",0
+480,"hacl(dmz_3,app_8,tcp,8080)","LEAF",1
+481,"RULE 5 (multi-hop access)","AND",0
+482,"hacl(dmz_4,app_8,tcp,8080)","LEAF",1
+483,"RULE 5 (multi-hop access)","AND",0
+484,"hacl(dmz_5,app_8,tcp,8080)","LEAF",1
+485,"RULE 5 (multi-hop access)","AND",0
+486,"hacl(dmz_6,app_8,tcp,8080)","LEAF",1
+487,"RULE 5 (multi-hop access)","AND",0
+488,"hacl(dmz_7,app_8,tcp,8080)","LEAF",1
+489,"RULE 5 (multi-hop access)","AND",0
+490,"hacl(dmz_8,app_8,tcp,8080)","LEAF",1
+491,"networkServiceInfo(app_8,tomcat,tcp,8080,root)","LEAF",1
+492,"vulExists(app_8,vul_app,tomcat,remoteExploit,privEscalation)","LEAF",1
+493,"RULE 5 (multi-hop access)","AND",0
+494,"hacl(app_9,db_19,tcp,5432)","LEAF",1
+495,"execCode(app_9,root)","OR",0
+496,"RULE 2 (remote exploit of a server program)","AND",0
+497,"netAccess(app_9,tcp,8080)","OR",0
+498,"RULE 5 (multi-hop access)","AND",0
+499,"hacl(dmz_0,app_9,tcp,8080)","LEAF",1
+500,"RULE 5 (multi-hop access)","AND",0
+501,"hacl(dmz_1,app_9,tcp,8080)","LEAF",1
+502,"RULE 5 (multi-hop access)","AND",0
+503,"hacl(dmz_2,app_9,tcp,8080)","LEAF",1
+504,"RULE 5 (multi-hop access)","AND",0
+505,"hacl(dmz_3,app_9,tcp,8080)","LEAF",1
+506,"RULE 5 (multi-hop access)","AND",0
+507,"hacl(dmz_4,app_9,tcp,8080)","LEAF",1
+508,"RULE 5 (multi-hop access)","AND",0
+509,"hacl(dmz_5,app_9,tcp,8080)","LEAF",1
+510,"RULE 5 (multi-hop access)","AND",0
+511,"hacl(dmz_6,app_9,tcp,8080)","LEAF",1
+512,"RULE 5 (multi-hop access)","AND",0
+513,"hacl(dmz_7,app_9,tcp,8080)","LEAF",1
+514,"RULE 5 (multi-hop access)","AND",0
+515,"hacl(dmz_8,app_9,tcp,8080)","LEAF",1
+516,"networkServiceInfo(app_9,tomcat,tcp,8080,root)","LEAF",1
+517,"vulExists(app_9,vul_app,tomcat,remoteExploit,privEscalation)","LEAF",1
+518,"networkServiceInfo(db_19,postgres,tcp,5432,root)","LEAF",1
+519,"vulExists(db_19,vul_db,postgres,remoteExploit,privEscalation)","LEAF",1

@@ -1,0 +1,64 @@
+% MulVAL input for Window 1 (N=13)
+attackerLocated(internet).
+attackGoal(execCode(db_5, root)).
+networkServiceInfo(dmz_0, httpd, tcp, 80, root).
+hacl(internet, dmz_0, tcp, 80).
+networkServiceInfo(dmz_1, httpd, tcp, 80, root).
+hacl(internet, dmz_1, tcp, 80).
+networkServiceInfo(app_0, tomcat, tcp, 8080, root).
+hacl(dmz_0, app_0, tcp, 8080).
+hacl(dmz_1, app_0, tcp, 8080).
+networkServiceInfo(app_1, tomcat, tcp, 8080, root).
+hacl(dmz_0, app_1, tcp, 8080).
+hacl(dmz_1, app_1, tcp, 8080).
+networkServiceInfo(app_2, tomcat, tcp, 8080, root).
+hacl(dmz_0, app_2, tcp, 8080).
+hacl(dmz_1, app_2, tcp, 8080).
+networkServiceInfo(app_3, tomcat, tcp, 8080, root).
+hacl(dmz_0, app_3, tcp, 8080).
+hacl(dmz_1, app_3, tcp, 8080).
+networkServiceInfo(app_4, tomcat, tcp, 8080, root).
+hacl(dmz_0, app_4, tcp, 8080).
+hacl(dmz_1, app_4, tcp, 8080).
+networkServiceInfo(db_0, postgres, tcp, 5432, root).
+hacl(app_0, db_0, tcp, 5432).
+hacl(app_1, db_0, tcp, 5432).
+hacl(app_2, db_0, tcp, 5432).
+hacl(app_3, db_0, tcp, 5432).
+hacl(app_4, db_0, tcp, 5432).
+networkServiceInfo(db_1, postgres, tcp, 5432, root).
+hacl(app_0, db_1, tcp, 5432).
+hacl(app_1, db_1, tcp, 5432).
+hacl(app_2, db_1, tcp, 5432).
+hacl(app_3, db_1, tcp, 5432).
+hacl(app_4, db_1, tcp, 5432).
+networkServiceInfo(db_2, postgres, tcp, 5432, root).
+hacl(app_0, db_2, tcp, 5432).
+hacl(app_1, db_2, tcp, 5432).
+hacl(app_2, db_2, tcp, 5432).
+hacl(app_3, db_2, tcp, 5432).
+hacl(app_4, db_2, tcp, 5432).
+networkServiceInfo(db_3, postgres, tcp, 5432, root).
+hacl(app_0, db_3, tcp, 5432).
+hacl(app_1, db_3, tcp, 5432).
+hacl(app_2, db_3, tcp, 5432).
+hacl(app_3, db_3, tcp, 5432).
+hacl(app_4, db_3, tcp, 5432).
+networkServiceInfo(db_4, postgres, tcp, 5432, root).
+hacl(app_0, db_4, tcp, 5432).
+hacl(app_1, db_4, tcp, 5432).
+hacl(app_2, db_4, tcp, 5432).
+hacl(app_3, db_4, tcp, 5432).
+hacl(app_4, db_4, tcp, 5432).
+networkServiceInfo(db_5, postgres, tcp, 5432, root).
+hacl(app_0, db_5, tcp, 5432).
+hacl(app_1, db_5, tcp, 5432).
+hacl(app_2, db_5, tcp, 5432).
+hacl(app_3, db_5, tcp, 5432).
+hacl(app_4, db_5, tcp, 5432).
+hasVuln(dmz_0, vul_web, httpd).
+vulExists(dmz_0, vul_web, httpd).
+vulProperty(vul_web, remoteExploit, privEscalation).
+hasVuln(dmz_1, vul_web, httpd).
+vulExists(dmz_1, vul_web, httpd).
+vulProperty(vul_web, remoteExploit, privEscalation).
