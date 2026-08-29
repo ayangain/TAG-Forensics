@@ -27,6 +27,8 @@
 \usepackage{algorithmic}
 \usepackage{multirow}
 \usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows, positioning}
 \def\UrlFont{\rmfamily}
 
 \begin{document}
@@ -114,7 +116,7 @@ Recognizing the limitations of static models, recent work has shifted toward tem
 
 In the security domain, Enoch et al.~\cite{ENOCH2019102448} introduced the Time-independent Hierarchical Attack Representation Model (TI-HARM), which analyzes the security of multiple network states combined while accounting for the time duration of each state and the visibility of network components. Building on this line of research, systematic evaluations of security metrics for dynamic networks~\cite{Enoch2018} established quantitative benchmarks for comparing temporal security assessment methods. Bopche and Mehtre~\cite{Bopche2017} proposed graph similarity metrics for assessing temporal changes in attack surfaces of dynamic networks. Awan et al.~\cite{Awan2016} developed a framework for identifying cyber risk hotspots by measuring temporal variance in computer network risk. Albanese et al.~\cite{6263942} introduced time-efficient network hardening algorithms using attack graphs, which addressed the scalability challenge of computing optimal defense strategies.
 
-Gain and Barik~\cite{Gain2023} formalized Temporal Attack Graph (TAG) metrics to evaluate whether attackers can reach targets along temporally feasible paths, introducing the definitions of temporal attack paths with non-decreasing window constraints. Most recently, Bhardwaj and Dave~\cite{bhardwaj2024attack} advanced the application of intelligent attack graphs in IoT forensics by coupling real-time AI path prediction with active Virtual Node Injection (VNI) to dynamically trap attackers. While their approach excels at active real-time attack mitigation, F-TAG complements this by addressing the passive retrospective challenge. Specifically, F-TAG constructs mathematical bounds on unobserved actions and probabilistically detects deliberate anti-forensic log tampering when evidence is already missing. F-TAG builds directly upon these proactive temporal models, evolving them from forward-looking risk assessment tools into a retroactive forensic engine capable of computing bounds on missing evidence and probabilistic confidence in anti-forensic tampering.
+Gain and Barik~\cite{Gain2023} formalized Temporal Attack Graph (TAG) metrics to evaluate whether attackers can reach targets along temporally feasible paths, introducing the definitions of temporal attack paths with non-decreasing window constraints. They subsequently demonstrated how these TAG-based temporal metrics can be applied to dynamically optimize Zero Trust Architecture (ZTA) micro-segmentation boundaries~\cite{gain2025augmenting}. Most recently, Bhardwaj and Dave~\cite{bhardwaj2024attack} advanced the application of intelligent attack graphs in IoT forensics by coupling real-time AI path prediction with active Virtual Node Injection (VNI) to dynamically trap attackers. While their approach excels at active real-time attack mitigation, F-TAG complements this by addressing the passive retrospective challenge. Specifically, F-TAG constructs mathematical bounds on unobserved actions and probabilistically detects deliberate anti-forensic log tampering when evidence is already missing. F-TAG builds directly upon these proactive temporal models, evolving them from forward-looking risk assessment tools into a retroactive forensic engine capable of computing bounds on missing evidence and probabilistic confidence in anti-forensic tampering.
 
 Table~\ref{tab:related-comparison} summarizes the key differentiators between F-TAG and existing approaches.
 
@@ -142,7 +144,16 @@ False-positive filtering & \texttimes & \texttimes & \texttimes & Partial & \che
 
 As Table~\ref{tab:related-comparison} summarizes, the existing literature exhibits a fundamental architectural divide. On one side, reactive forensic methods (Evidence Graphs~\cite{wang2008evidence}, alert correlation~\cite{10.1145/586110.586144,1366134}) consume digital evidence to reconstruct attack narratives, but they collapse entirely when evidence is missing or falsified, because their graph structure is derived from the evidence itself. On the other side, proactive temporal models (TI-HARM~\cite{ENOCH2019102448}, TAG~\cite{Gain2023}) capture the evolving physical topology, but they perform forward-looking risk assessment without any mechanism to incorporate retrospective forensic observations.
 
-No existing framework bridges this divide. Specifically, three capabilities remain unaddressed: (1)~computing provable bounds on unobserved attacker actions when evidence along a path is destroyed, (2)~detecting timestamp falsification through structural contradiction rather than statistical correlation, and (3)~quantifying the likelihood of deliberate anti-forensic tampering versus benign evidence loss using topological privilege distributions. F-TAG addresses this gap by treating the proactive temporal topology as a fixed structural reference frame and injecting reactive forensic evidence as strict filtering constraints upon it.
+No existing framework bridges this divide. F-TAG addresses this gap by treating the proactive temporal topology as a fixed structural reference frame and injecting reactive forensic evidence as strict filtering constraints upon it, enabling the computation of provable bounds on unobserved actions and the structural detection of falsified timestamps.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.85\linewidth]{Figures/fig_motivating_example.png}
+\caption{A motivating example of the research gap. When evidence is wiped and topology evolves, purely reactive and purely static methods fail. F-TAG successfully bridges the wiped timeline by relying on the proactive topological structure.}
+\label{fig:motivating-example}
+\end{figure}
+
+To concretely illustrate this gap, Fig.~\ref{fig:motivating-example} details a motivating temporal attack scenario where an attacker compromises a Web Server, the vulnerability is patched, logs are wiped, and the attacker subsequently pivots to a Database. Legacy reactive methods hit a dead end due to missing logs, while static proactive models blindly accept impossible backward-time timelines. F-TAG uniquely resolves this by treating the temporal topology as a fixed reference frame, mathematically proving the breach origin and bridging the evidence gap.
 
 % ================================================================
 % 3. FOUNDATIONAL THEORY
@@ -150,6 +161,12 @@ No existing framework bridges this divide. Specifically, three capabilities rema
 \section{Foundational Theory}\label{sec:theory}
 
 The foundation of F-TAG relies on rigorous complex network theory to avoid state-space explosion and causal ambiguity. We formalize the core definitions that underpin the entire framework, building upon the Temporal Attack Graph formalism introduced by Gain and Barik~\cite{Gain2023}.
+
+\subsection{Static Attack Graph Formulation}\label{sec:static-ag}
+
+According to the definition provided in \cite{6263942}, an attack graph, denoted as $G$, is a directed graph $G = (E \cup C, R_{r} \cup R_{i})$. The vertex set $E \cup C$ represents the collection of exploits and security conditions, while the edge set $R_{r} \cup R_{i}$ represents the require and imply relations. Here, $R_{r} \subseteq C \times E$ and $R_{i} \subseteq E \times C$. Exploits are represented as $v(h_{s},h_{d})$, for exploits on local hosts, they are denoted as $v(h)$. 
+
+Security conditions are predicates of the form $c(h_{s}, h_{d})$, which signify the fulfillment of a security-related condition $c$ involving the source host $h_{s}$ and the destination host $h_{d}$. In cases where the condition only pertains to a single host, it is represented as $c(h)$. Examples of security conditions include existence of vulnerabilities on a specific host or connections between two hosts etc.
 
 \subsection{Definition 1: Temporal Attack Graph}\label{sec:def1}
 
@@ -226,16 +243,9 @@ Let $(e_k, w_k)$ be the first edge in $p^*$ that is incorrectly pruned. This imp
 However, because $p^*$ is a valid temporal path, it must satisfy the non-decreasing chronological property: $w_k \ge w_{k-1}$ for all $k$. In the recursive call (Line 16), the algorithm passes $w_{min} = w_{k-1}$. Thus, the algorithm evaluates $w_k < w_{k-1}$.
 This directly contradicts the premise that $p^*$ is a valid temporal path where $w_k \ge w_{k-1}$. Therefore, no such edge in a valid path can be pruned by the temporal constraint. Since no edge in $p^*$ is pruned and the search explores all outgoing edges, $p^*$ must be discovered and added to $\mathcal{P}_{ij}$. $\square$
 
-% ================================================================
-% 4. METHODOLOGY: THE F-TAG FRAMEWORK
-% ================================================================
-\section{The F-TAG Framework}\label{sec:methodology}
+\subsection{Proactive Structural TAG Metrics}\label{sec:proactive}
 
-Building upon the foundational TAG, we introduce the Forensic Temporal Attack Graph (F-TAG) as the investigative evolution of proactive structural risk assessment. Instead of constructing graphs purely from messy forensic evidence, F-TAG begins with the proactive mathematical model of the network and injects forensic evidence as strict constraints upon it. The framework operates in two phases: proactive structural analysis and reactive forensic triage.
-
-\subsection{Proactive Structural Risk Assessment}\label{sec:proactive}
-
-Before any attack occurs, the F-TAG engine computes foundational TAG metrics on the unconstrained topology. These metrics establish the baseline structural risk profile of the network.
+Before any forensic analysis occurs, foundational TAG metrics describe the unconstrained temporal topology, establishing the baseline structural risk profile of the network.
 
 \subsubsection{Characteristic Temporal Path Length ($L^a$).}
 The average shortest temporal path length across all node pairs measures the structural speed at which vulnerabilities allow propagation through the network:
@@ -252,17 +262,22 @@ E^a = \frac{1}{N(N-1)} \sum_{j \neq k} \frac{1}{d^a(j, k)}
 Higher values of $E^a$ indicate that the network's vulnerability structure allows rapid propagation, suggesting a higher overall risk.
 
 \subsubsection{TAG Betweenness Centrality ($\mathcal{B}_i^a$).}
-This metric identifies structural bottlenecks by measuring the fraction of shortest temporal paths passing through a given node $i$:
+This metric identifies structural bottlenecks by quantifying a node's presence across the shortest temporal attack paths over time:
 \begin{equation}
-\mathcal{B}_i^a = \frac{1}{(N-1)(N-2)} \sum_{j \neq k \neq i} \frac{\sigma_{jk}(i)}{\sigma_{jk}}
+\mathcal{B}_i^a = \frac{1}{(N-1)(N-2)} \sum_{\substack{j \in V^a \\ j \neq i}} \sum_{\substack{k \in V^a \\ k \neq i \\ k \neq j}} \frac{U(i, \tau, j, k)}{|\sigma^a_{j,k}|}
 \end{equation}
-where $\sigma_{jk}$ is the total number of shortest temporal paths from $j$ to $k$, and $\sigma_{jk}(i)$ is the number that pass through $i$. High-betweenness nodes are priority candidates for preventative hardening (e.g., firewall placement, patch prioritization). This metric extends the classical betweenness centrality algorithm~\cite{Brandes2001} to the temporal domain and connects to the broader suite of network attack graph analytics~\cite{ASuiteofMetricsforNetworkAttackGraphAnalytics,NoelStevenandJajodia}.
+where $\sigma^a_{j,k}$ is the set of shortest temporal attack paths from $j$ to $k$ across all time windows, and $U(i, \tau, j, k)$ computes how many of those paths pass through node $i$. High-betweenness nodes are priority candidates for preventative hardening (e.g., firewall placement, patch prioritization). This metric extends the classical betweenness centrality algorithm~\cite{Brandes2001} to the temporal domain and connects to the broader suite of network attack graph analytics~\cite{ASuiteofMetricsforNetworkAttackGraphAnalytics,NoelStevenandJajodia}.
 
-\subsection{Reactive Forensic Metric Suite}\label{sec:reactive}
+% ================================================================
+% 4. METHODOLOGY: THE F-TAG FRAMEWORK
+% ================================================================
+\section{The F-TAG Framework}\label{sec:methodology}
 
-After an intrusion is detected, the F-TAG pivots to retrospective triage. The reactive phase consumes observed forensic evidence (IDS alerts, firewall logs, system timestamps) and applies it as strict constraints on the pre-computed temporal topology. This produces a six-tier forensic metric suite.
+Building upon the foundational TAG and its proactive structural metrics, we introduce the Forensic Temporal Attack Graph (F-TAG) as the investigative evolution of the framework. Instead of constructing graphs purely from messy, fragile forensic evidence (as in legacy Evidence Graphs), F-TAG treats the proactive physical TAG topology as a fixed mathematical reference frame and injects reactive forensic evidence as strict filtering constraints upon it. After an intrusion is detected, F-TAG consumes observed forensic evidence (IDS alerts, firewall logs, system timestamps) to produce a unified forensic triage suite.
 
-\subsubsection{Timeline Bounding.}\label{sec:tier1}
+\subsection{Path-Level Forensic Bounds}\label{sec:path-metrics}
+
+\subsubsection*{Timeline Bounding}
 
 \textbf{Forensic Window of Compromise (FWoC).} Given a temporal path $p$ with $H$ hops and a set of $N$ observed evidence timestamps $\mathcal{E} = \{t_1, t_2, \dots, t_N\}$ mapped to time windows, the FWoC is the intersection of the structural corridor with the evidence-bounded interval:
 \begin{equation}\label{eq:fwoc}
@@ -276,13 +291,7 @@ The parameter $\delta$ is a clock-skew tolerance absorbing NTP drift and timesta
 
 This correction dynamically widens the bounds when evidence is sparse ($N < H$), compensating for the statistical bias where observed evidence min/max naturally drifts inward as the sample size shrinks. When evidence is complete ($N \ge H$), $\delta_s = 0$ and the FWoC relies purely on the raw evidence bounds.
 
-\textbf{Absolute Worst-Case Boundary of $\delta_s$.} Let $p$ be an attack path with $H$ causal hops. Let $E$ be the set of observed evidence points on $p$, where $|E| = N$. The true chronological start window $t_{start}$ and end window $t_{end}$ of the attack are bounded by the observed evidence: $\min(\mathcal{E})$ and $\max(\mathcal{E})$. Correcting these bounds by $\delta_s = \max(0, H - N)$ guarantees that the FWoC encapsulates the true temporal execution window, assuming contiguous execution.
-
-Assume the attacker executed $H$ sequential actions across distinct time windows. The maximum possible temporal width of the true execution is $H$ windows (i.e., one action per window, maximizing duration without dormancy). 
-Suppose we observe $N = |E|$ events, occurring at $\{\tau_1, \dots, \tau_N\}$ where $\tau_1 = \min(\mathcal{E})$ and $\tau_N = \max(\mathcal{E})$. 
-The unobserved actions total $H - N$. In the worst-case scenario for boundary drift, all $H - N$ unobserved actions occurred \textit{before} the first observation $\tau_1$, or all occurred \textit{after} the last observation $\tau_N$.
-Since each unobserved action occupies at most one distinct chronological window, the true start window $t_{start}$ can be no earlier than $\tau_1 - (H - N)$. Similarly, the true end window $t_{end}$ can be no later than $\tau_N + (H - N)$.
-Therefore, expanding the observed bounds $[\min(\mathcal{E}), \max(\mathcal{E})]$ by $\delta_s = H - N$ ensures inclusion of $t_{start}$ and $t_{end}$ strictly under the contiguous assumption. If $N \ge H$, no expansion is necessary ($\delta_s = 0$), as the observed actions fully constrain the $H$-hop sequence. Thus, $\delta_s = \max(0, H - N)$ is the minimally sufficient worst-case expansion factor.
+\textbf{Absolute Worst-Case Boundary of $\delta_s$.} Let $p$ be an attack path with $H$ hops and $N$ evidence points. The maximum unobserved actions total $H - N$. In the worst-case boundary drift scenario, all $H - N$ unobserved actions occurred strictly \textit{before} the first observation $\min(\mathcal{E})$, or \textit{after} the last observation $\max(\mathcal{E})$. Since each action occupies at most one window, expanding the raw evidence bounds by $\delta_s = \max(0, H - N)$ mathematically guarantees the FWoC encapsulates the true start and end windows, assuming contiguous execution. If $N \ge H$, no expansion is needed ($\delta_s = 0$).
 
 \textit{Contradiction Detection:} If $\text{FWoC}(p) = \emptyset$, the evidence is temporally inconsistent with the structural corridor. This indicates either a false-positive alert, timestamp falsification, or an incorrect attack hypothesis. This native contradiction detection is impossible in static graph approaches, which have no temporal reference frame against which to validate evidence.
 
@@ -292,7 +301,7 @@ Therefore, expanding the observed bounds $[\min(\mathcal{E}), \max(\mathcal{E})]
 \end{equation}
 Values approaching 0 indicate that evidence pins the breach precisely within a narrow time window. Values near 1 indicate that the available evidence adds nothing beyond what the topology alone provides.
 
-\subsubsection{Evidence Reliability.}\label{sec:tier2}
+\subsubsection*{Evidence Reliability}
 
 \textbf{Path Alignment Score} ($A$): For each hop $(e_k, w_k)$ in a candidate path, we check whether the observed evidence window $w_k^{obs}$ (if any) matches the window used by the hop. The alignment score quantifies how well the observed evidence maps to valid topological windows:
 \begin{equation}
@@ -301,7 +310,7 @@ A(p) = \frac{|\{k : w_k^{obs} = w_k \text{ or } w_k^{obs} = \text{null}\}|}{|p|}
 
 High alignment scores indicate that the candidate path is well-supported by the available evidence, while low scores suggest the path may not represent the true attack trajectory.
 
-\subsubsection{Multi-Path Ambiguity.}\label{sec:tier3}
+\subsubsection*{Multi-Path Ambiguity}
 
 \textbf{Corridor Overlap Index} ($\Omega$): A Jaccard-style metric measuring the temporal overlap between two candidate corridors:
 \begin{equation}
@@ -310,7 +319,7 @@ High alignment scores indicate that the candidate path is well-supported by the 
 
 \textbf{Reconstruction Ambiguity} ($k$): The number of mutually non-overlapping corridor clusters among all candidate paths, computed by merging overlapping corridors. When $k = 1$, there is essentially one unambiguous timeline story. When $k > 1$, there exist $k$ genuinely distinct, mutually exclusive incident timelines that the investigator must disambiguate through additional evidence collection.
 
-\subsubsection{Attack Tempo.}\label{sec:tier4}
+\subsubsection*{Attack Tempo}
 
 \textbf{Temporal Propagation Rate} ($v$):
 \begin{equation}
@@ -326,7 +335,9 @@ Large gaps indicate dormancy or staging periods between attack stages, while $\D
 
 \textbf{Dwell Time Bounds} ($DT$): The lower bound is the sum of minimum physical execution times along the path: $DT_{lower} = \sum_k \delta_{t,min}(e_k)$. The upper bound is the TAC width converted to real time: $DT_{upper} = |\text{TAC}(p)| \times W_{duration}$, where $W_{duration}$ is the window duration in seconds.
 
-\subsubsection{Host-Level Triage.}\label{sec:tier5}
+\subsection{Topological Triage \& Scoping}\label{sec:network-metrics}
+
+\subsubsection*{Host-Level Triage}
 
 \textbf{Temporal Chokepoint Score} ($\chi$): The fraction of evidentially surviving candidate paths that pass through a given host $h$:
 \begin{equation}
@@ -340,7 +351,7 @@ This generates a prioritized hit-list of hosts for the investigator to examine, 
 W_{exposure}(h) = \bigcup_{e \in E_{all}: h \in \{e.src, e.dst\}} \mathcal{W}(e)
 \end{equation}
 
-\subsubsection{Investigation Scoping.}\label{sec:tier6}
+\subsubsection*{Investigation Scoping}
 
 \textbf{Temporal Search Radius} ($T_{min}$): The earliest window across all backward-reachable paths to the victim node $j^*$:
 \begin{equation}
@@ -433,16 +444,7 @@ To rigorously bind the static MulVAL output to the temporal domain, we define a 
 \end{equation}
 where $w$ is the specific temporal window during which the underlying network configuration (e.g., firewall rule, unpatched vulnerability) exists.
 
-For example, a static interaction rule for network exploitation is defined in MulVAL as:
-\begin{verbatim}
-interaction_rule(
-  (execCode(Host, Priv) :-
-    networkServiceInfo(Host, Protocol, Port, _, _),
-    vulExists(Host, VulID, Protocol),
-    netAccess(Attacker, Host, Protocol, Port),
-    execCode(Attacker, _))
-).
-\end{verbatim}
+For example, a static interaction rule in MulVAL (e.g., \texttt{execCode(H, P) :- vulExists(H, V), netAccess(A, H)}) is converted by our engine:
 Our engine automatically maps the existence of the vulnerability \texttt{vulExists} and the network access \texttt{netAccess} to a subset of windows $\mathcal{W}_{active} \subseteq \{0, 1, \dots, \tau\}$. When the temporal graph is compiled, the resulting edge $E = (\text{Attacker}, \text{Host})$ inherits its active window set from the union of the times these prerequisites are satisfied across the simulation sequence (as implemented via the accumulator in the generative engine):
 \begin{equation}
 \mathcal{W}(E) = \bigcup_{t=0}^{\tau} \{t : \texttt{vulExists}_t \wedge \texttt{netAccess}_t\}
@@ -473,9 +475,7 @@ To rigorously calibrate $AF_{conf}$ (Eq.~\ref{eq:afconf}), we constructed a larg
 
 The Rotation-Benign class was specifically designed as the hardest adversarial test case, as periodic rotation naturally lands on root-privilege nodes at an elevated rate compared to uniform random sampling, creating a confound that mimics deliberate wiping patterns.
 
-\subsection{Extensibility: Learned Ranking}\label{sec:ai-extensibility}
 
-While F-TAG relies on provable topological structure, its pipeline natively supports a learned ranking layer to sort ambiguous paths. We constructed a proof-of-concept Random Forest classifier to rank timelines after the mathematical filters are applied, demonstrating that F-TAG can integrate opaque heuristics (e.g., \cite{bhardwaj2024attack,milajerdi2019holmes}) as optional secondary extensions.
 
 \subsection{Falsification Detection Benchmark}\label{sec:falsification-exp}
 
@@ -561,23 +561,7 @@ The results demonstrate that static approaches completely fail (F1 = 0.00) on te
 
 The modest F1 of 0.67 on Precedence Swap reflects our method's richer temporal corridor enumeration. Because F-TAG explores 15 distinct chronological corridors (compared to the single path in static methods), it correctly identifies the swapped timestamps (maintaining a perfect Recall of 1.00) but also flags additional potential inconsistencies (dropping Precision to 0.50). The result illustrates the precision-recall trade-off introduced by multi-corridor temporal reasoning: while F-TAG is more exhaustive, the expanded search space naturally introduces more opportunities for conflict flagging.
 
-\subsubsection{Detailed Magnitude Sweep.} Table~\ref{tab:magnitude} presents a detailed sweep across falsification magnitudes (1min to 6hr) for the adversarial falsification type at 100\% evidence completeness, with $N=1$ falsified timestamp per trial. The results demonstrate that F-TAG's detection capability improves rapidly with magnitude, while the Zhang baseline remains at low F1 regardless of magnitude due to the false-positive dilution from its exhaustive flagging strategy.
-
-\begin{table}[t]
-\centering
-\caption{Falsification detection at varying magnitudes (adversarial type, N=1, 100\% completeness). F-TAG detection improves rapidly with temporal displacement.}
-\label{tab:magnitude}
-\begin{tabular}{lcccc}
-\toprule
-\textbf{Magnitude} & \textbf{Our F1} & \textbf{Zhang F1} & \textbf{Our Recall} & \textbf{Zhang Recall} \\
-\midrule
-1min  & 0.333 & 0.078 & 0.500 & 0.867 \\
-10min & 0.356 & 0.085 & 0.533 & 0.933 \\
-1hr   & 0.489 & 0.077 & 0.733 & 0.867 \\
-6hr   & 0.467 & 0.084 & 0.700 & 0.933 \\
-\bottomrule
-\end{tabular}
-\end{table}
+\subsubsection{Detailed Magnitude Sweep.} Fig.~\ref{fig:magnitude} presents a detailed sweep across falsification magnitudes (1min to 6hr) for the adversarial falsification type at 100\% evidence completeness, with $N=1$ falsified timestamp per trial. The results demonstrate that F-TAG's detection capability improves rapidly with magnitude, while the Zhang baseline remains at low F1 regardless of magnitude due to false-positive dilution from its exhaustive flagging strategy.
 
 \begin{figure}[t]
 \centering
