@@ -1,0 +1,204 @@
+======================================================================
+  TRACK A: EVIDENCE-CONDITIONED RECONSTRUCTION QUALITY
+  4 Experiments × [0.25, 0.5, 0.75, 1.0] Completeness × 100 Trials
+======================================================================
+
+[Setup] Building F-TAG for LLDOS 1.0...
+
+  Parsed 5 attack phases from LLDOS_1.0:
+    Phase 1: ipsweep                   202.77.162.213 → 172.16.115.*  [09:51:35 – 09:52:06]  (31s)  [probe]
+    Phase 2: Sadmind_Ping              202.77.162.213 → 172.16.115.*  [10:07:06 – 10:18:09]  (663s)  [probe]
+    Phase 3: Sadmind_Breakin           202.77.162.213 → 172.16.115.20  [10:33:09 – 10:35:01]  (112s)  [r2l]
+    Phase 4: Install_Mstream_Client    202.77.162.213 → 172.16.115.20  [10:50:01 – 10:50:53]  (52s)  [violation]
+    Phase 5: Launch_DDoS               202.77.162.213 → 172.16.115.20  [11:05:53 – 12:36:45]  (5452s)  [dos]
+    Phase 1: 31 network sessions parsed from tcpdump_inside
+    Phase 2: 32 network sessions parsed from tcpdump_inside
+    Phase 3: 35 network sessions parsed from tcpdump_inside
+    Phase 4: 22 network sessions parsed from tcpdump_inside
+    Phase 5: 33754 network sessions parsed from tcpdump_inside
+    Phase 1: 31 IDMEF XML alerts parsed
+    Phase 2: 32 IDMEF XML alerts parsed
+    Phase 3: 35 IDMEF XML alerts parsed
+    Phase 4: 22 IDMEF XML alerts parsed
+    Phase 5: 33754 IDMEF XML alerts parsed
+
+  TAG Nodes: 14 states
+  TAG Edges: 15 causal attack steps
+
+══════════════════════════════════════════════════════════════════════
+  TRACK A: LLDOS 1.0
+══════════════════════════════════════════════════════════════════════
+
+──────────────────────────────────────────────────────────────────────
+  EXPERIMENT 1: FWoC Validity & Tightness [LLDOS 1.0]
+──────────────────────────────────────────────────────────────────────
+  ✓ True path p* identified: ['E_ipsweep_mill', 'E_sadmind_probe_mill', 'E_sadmind_exploit_mill', 'E_mstream_install_mill', 'E_rsh_lateral_locke', 'E_ddos_launch_locke']
+    TAC(p*) = [w0, w4]
+    c=25%: Tightness = 20.0% [20.0%, 20.0%] | Soundness = 31% | Full Coverage = 0%
+    c=50%: Tightness = 56.0% [50.2%, 61.8%] | Soundness = 70% | Full Coverage = 0%
+    c=75%: Tightness = 76.4% [73.6%, 79.2%] | Soundness = 94% | Full Coverage = 0%
+    c=100%: Tightness = 80.0% [80.0%, 80.0%] | Soundness = 100% | Full Coverage = 0%
+
+──────────────────────────────────────────────────────────────────────
+  EXPERIMENT 2: Reconstruction Ambiguity [LLDOS 1.0]
+──────────────────────────────────────────────────────────────────────
+    c=25%: k = 1.00 [1.00, 1.00] | Surviving = 5.0 paths | p* retained = 100%
+    c=50%: k = 1.00 [1.00, 1.00] | Surviving = 5.0 paths | p* retained = 100%
+    c=75%: k = 1.00 [1.00, 1.00] | Surviving = 5.0 paths | p* retained = 100%
+    c=100%: k = 1.00 [1.00, 1.00] | Surviving = 5.0 paths | p* retained = 100%
+
+──────────────────────────────────────────────────────────────────────
+  EXPERIMENT 3: Chokepoint Accuracy [LLDOS 1.0]
+──────────────────────────────────────────────────────────────────────
+    c=25%: mill:mstream_master rank = 2.00 [2.00, 2.00] | chi(mill:mstream_master) = 1.000
+    c=50%: mill:mstream_master rank = 2.00 [2.00, 2.00] | chi(mill:mstream_master) = 1.000
+    c=75%: mill:mstream_master rank = 2.00 [2.00, 2.00] | chi(mill:mstream_master) = 1.000
+    c=100%: mill:mstream_master rank = 2.00 [2.00, 2.00] | chi(mill:mstream_master) = 1.000
+
+──────────────────────────────────────────────────────────────────────
+  EXPERIMENT 4: Search Radius Soundness & Efficiency [LLDOS 1.0]
+──────────────────────────────────────────────────────────────────────
+    c=25%: T_min = w0.0 | Soundness = 100% | Wang-Daniels equiv = 166 × 60s windows
+    c=50%: T_min = w0.0 | Soundness = 100% | Wang-Daniels equiv = 166 × 60s windows
+    c=75%: T_min = w0.0 | Soundness = 100% | Wang-Daniels equiv = 166 × 60s windows
+    c=100%: T_min = w0.0 | Soundness = 100% | Wang-Daniels equiv = 166 × 60s windows
+
+
+[Setup] Building F-TAG for LLDOS 2.0.2 (generalization check)...
+======================================================================
+  Building TAG from DARPA LLDOS 1.0 Ground Truth
+======================================================================
+
+  Parsed 5 attack phases from LLDOS_1.0:
+    Phase 1: ipsweep                   202.77.162.213 → 172.16.115.*  [09:51:35 – 09:52:06]  (31s)  [probe]
+    Phase 2: Sadmind_Ping              202.77.162.213 → 172.16.115.*  [10:07:06 – 10:18:09]  (663s)  [probe]
+    Phase 3: Sadmind_Breakin           202.77.162.213 → 172.16.115.20  [10:33:09 – 10:35:01]  (112s)  [r2l]
+    Phase 4: Install_Mstream_Client    202.77.162.213 → 172.16.115.20  [10:50:01 – 10:50:53]  (52s)  [violation]
+    Phase 5: Launch_DDoS               202.77.162.213 → 172.16.115.20  [11:05:53 – 12:36:45]  (5452s)  [dos]
+    Phase 1: 31 network sessions parsed from tcpdump_inside
+    Phase 2: 32 network sessions parsed from tcpdump_inside
+    Phase 3: 35 network sessions parsed from tcpdump_inside
+    Phase 4: 22 network sessions parsed from tcpdump_inside
+    Phase 5: 33754 network sessions parsed from tcpdump_inside
+    Phase 1: 31 IDMEF XML alerts parsed
+    Phase 2: 32 IDMEF XML alerts parsed
+    Phase 3: 35 IDMEF XML alerts parsed
+    Phase 4: 22 IDMEF XML alerts parsed
+    Phase 5: 33754 IDMEF XML alerts parsed
+
+  TAG Nodes: 14 states
+  TAG Edges: 15 causal attack steps
+
+======================================================================
+  Building TAG from DARPA LLDOS 2.0.2 Ground Truth
+======================================================================
+
+  Parsed 5 attack phases from LLDOS_2.0.2:
+    Phase 1: dns_query                 202.77.162.213 → 172.16.115.20  [15:05:46 – 15:05:46]  (0s)  [violation]
+    Phase 2: sadmind_exploit           202.77.162.213 → 172.16.115.20  [15:17:46 – 15:17:50]  (4s)  [r2r]
+    Phase 3: ftp_upload                202.77.162.213 → 172.16.115.20  [15:29:50 – 15:29:51]  (1s)  [r2r]
+    Phase 4: ssh_launch                202.77.162.213 → 172.16.115.20  [15:41:51 – 15:45:00]  (189s)  [r2r]
+    Phase 5: mail_receipt              202.77.162.213 → 172.16.115.20  [15:54:38 – 16:15:00]  (1222s)  [r2r]
+    Phase 1: 2 network sessions parsed from tcpdump_inside
+    Phase 2: 4 network sessions parsed from tcpdump_inside
+    Phase 3: 2 network sessions parsed from tcpdump_inside
+    Phase 4: 9 network sessions parsed from tcpdump_inside
+    Phase 5: 5 network sessions parsed from tcpdump_inside
+    Phase 1: 2 IDMEF XML alerts parsed
+    Phase 2: 4 IDMEF XML alerts parsed
+    Phase 3: 2 IDMEF XML alerts parsed
+    Phase 4: 9 IDMEF XML alerts parsed
+    Phase 5: 5 IDMEF XML alerts parsed
+
+  TAG Nodes: 6 states
+  TAG Edges: 5 causal attack steps
+
+══════════════════════════════════════════════════════════════════════
+  TRACK A: LLDOS 2.0.2
+══════════════════════════════════════════════════════════════════════
+
+──────────────────────────────────────────────────────────────────────
+  EXPERIMENT 1: FWoC Validity & Tightness [LLDOS 2.0.2]
+──────────────────────────────────────────────────────────────────────
+  ✓ True path p* identified: ['E_dns_recon', 'E_sadmind_exploit_mill', 'E_ftp_upload_mill', 'E_ssh_lateral_pascal', 'E_mail_exfil']
+    TAC(p*) = [w0, w4]
+    c=25%: Tightness = 20.0% [20.0%, 20.0%] | Soundness = 44% | Full Coverage = 0%
+    c=50%: Tightness = 20.0% [20.0%, 20.0%] | Soundness = 43% | Full Coverage = 0%
+    c=75%: Tightness = 20.0% [20.0%, 20.0%] | Soundness = 45% | Full Coverage = 0%
+    c=100%: Tightness = 80.0% [80.0%, 80.0%] | Soundness = 100% | Full Coverage = 0%
+
+──────────────────────────────────────────────────────────────────────
+  EXPERIMENT 2: Reconstruction Ambiguity [LLDOS 2.0.2]
+──────────────────────────────────────────────────────────────────────
+    c=25%: k = 1.00 [1.00, 1.00] | Surviving = 1.0 paths | p* retained = 100%
+    c=50%: k = 1.00 [1.00, 1.00] | Surviving = 1.0 paths | p* retained = 100%
+    c=75%: k = 1.00 [1.00, 1.00] | Surviving = 1.0 paths | p* retained = 100%
+    c=100%: k = 1.00 [1.00, 1.00] | Surviving = 1.0 paths | p* retained = 100%
+
+──────────────────────────────────────────────────────────────────────
+  EXPERIMENT 3: Chokepoint Accuracy [LLDOS 2.0.2]
+──────────────────────────────────────────────────────────────────────
+    c=25%: mill:ftp_uploaded rank = 2.00 [2.00, 2.00] | chi(mill:ftp_uploaded) = 1.000
+    c=50%: mill:ftp_uploaded rank = 2.00 [2.00, 2.00] | chi(mill:ftp_uploaded) = 1.000
+    c=75%: mill:ftp_uploaded rank = 2.00 [2.00, 2.00] | chi(mill:ftp_uploaded) = 1.000
+    c=100%: mill:ftp_uploaded rank = 2.00 [2.00, 2.00] | chi(mill:ftp_uploaded) = 1.000
+
+──────────────────────────────────────────────────────────────────────
+  EXPERIMENT 4: Search Radius Soundness & Efficiency [LLDOS 2.0.2]
+──────────────────────────────────────────────────────────────────────
+    c=25%: T_min = w0.0 | Soundness = 100% | Wang-Daniels equiv = 70 × 60s windows
+    c=50%: T_min = w0.0 | Soundness = 100% | Wang-Daniels equiv = 70 × 60s windows
+    c=75%: T_min = w0.0 | Soundness = 100% | Wang-Daniels equiv = 70 × 60s windows
+    c=100%: T_min = w0.0 | Soundness = 100% | Wang-Daniels equiv = 70 × 60s windows
+
+  CSV results exported to: /Users/ayangain/repos/TAG-Forensics/experiment/results/track_a_exp*.csv
+
+══════════════════════════════════════════════════════════════════════
+  SOUNDNESS REPORT: LLDOS 1.0
+══════════════════════════════════════════════════════════════════════
+  Exp 1 (FWoC Soundness@100%):    ✓ PASS (Overlap: 100.0%, Containment: 0.0%)
+         @25%: 31.0% (95% CI: 22.8% - 40.6%) sound (overlap)
+                0.0% (95% CI: 0.0% - 3.7%) containment (full_coverage)
+         @50%: 70.0% (95% CI: 60.4% - 78.1%) sound (overlap)
+                0.0% (95% CI: 0.0% - 3.7%) containment (full_coverage)
+         @75%: 94.0% (95% CI: 87.5% - 97.2%) sound (overlap)
+                0.0% (95% CI: 0.0% - 3.7%) containment (full_coverage)
+  Exp 2 (True Path@100%):     ✓ PASS
+  Exp 3 (Pivot Host Top-2):  ✓ PASS
+  Exp 4 (Search Radius):     ✓ PASS
+
+  OVERALL: ✓ ALL SOUNDNESS CHECKS PASS
+
+══════════════════════════════════════════════════════════════════════
+  SOUNDNESS REPORT: LLDOS 2.0.2
+══════════════════════════════════════════════════════════════════════
+  Exp 1 (FWoC Soundness@100%):    ✓ PASS (Overlap: 100.0%, Containment: 0.0%)
+         @25%: 44.0% (95% CI: 34.7% - 53.8%) sound (overlap)
+                0.0% (95% CI: 0.0% - 3.7%) containment (full_coverage)
+         @50%: 43.0% (95% CI: 33.7% - 52.8%) sound (overlap)
+                0.0% (95% CI: 0.0% - 3.7%) containment (full_coverage)
+         @75%: 45.0% (95% CI: 35.6% - 54.8%) sound (overlap)
+                0.0% (95% CI: 0.0% - 3.7%) containment (full_coverage)
+  Exp 2 (True Path@100%):     ✓ PASS
+  Exp 3 (Pivot Host Top-2):  ✓ PASS
+  Exp 4 (Search Radius):     ✓ PASS
+
+  OVERALL: ✓ ALL SOUNDNESS CHECKS PASS
+
+  Figure saved: /Users/ayangain/repos/TAG-Forensics/experiment/results/fwoc_tightness_and_chokepoint_rank_vs_completeness.png
+
+══════════════════════════════════════════════════════════════════════
+  SEARCH RADIUS EFFICIENCY: F-TAG vs. Wang & Daniels (2008)
+══════════════════════════════════════════════════════════════════════
+  LLDOS 1.0:
+    F-TAG T_min: w0 (9910s lookback)
+    Wang & Daniels: Would need 166 × 60s windows
+    → F-TAG provides a principled bound; fixed-window must guess N correctly
+  LLDOS 2.0.2:
+    F-TAG T_min: w0 (4154s lookback)
+    Wang & Daniels: Would need 70 × 60s windows
+    → F-TAG provides a principled bound; fixed-window must guess N correctly
+
+══════════════════════════════════════════════════════════════════════
+  TRACK A COMPLETE
+══════════════════════════════════════════════════════════════════════

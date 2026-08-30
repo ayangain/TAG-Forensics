@@ -31,7 +31,7 @@ from dataclasses import dataclass
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from experiment.mulval_engine import export_mulval_artifacts, build_ftag_from_mulval
+from experiment.mulval_engine import build_ftag_from_mulval
 from experiment.lldos_tag_builder import (
     build_tag_from_lldos, parse_labeling_info, parse_session_list,
     _attach_evidence_timestamps, build_all_lldos_tags,
@@ -52,7 +52,7 @@ from experiment.ftag_metrics import (
 # ══════════════════════════════════════════════════════════════
 
 COMPLETENESS_LEVELS = [0.25, 0.50, 0.75, 1.00]
-N_TRIALS = 30
+N_TRIALS = 100
 RANDOM_SEED = 42
 
 # LLDOS 1.0 Ground Truth
@@ -108,6 +108,19 @@ def mean_ci95(values: List[float]) -> Tuple[float, float, float]:
     ci_low = mean - t_crit * se
     ci_high = mean + t_crit * se
     return (float(mean), float(ci_low), float(ci_high))
+
+
+def wilson_score_interval(successes: int, n: int, z: float = 1.96) -> Tuple[float, float, float]:
+    """Computes the Wilson score interval for a binomial proportion."""
+    if n == 0:
+        return (0.0, 0.0, 0.0)
+    p = successes / n
+    denominator = 1 + z**2 / n
+    center = p + z**2 / (2 * n)
+    std = math.sqrt((p * (1 - p) / n) + z**2 / (4 * n**2))
+    ci_low = (center - z * std) / denominator
+    ci_high = (center + z * std) / denominator
+    return float(p), float(ci_low), float(ci_high)
 
 
 # ══════════════════════════════════════════════════════════════
@@ -220,7 +233,7 @@ def experiment_1_fwoc(
             if not ev_windows:
                 ev_windows = list(range(capture_duration_windows))
 
-            fwoc = forensic_window_of_compromise(p_star, ev_windows)
+            fwoc = forensic_window_of_compromise(p_star, ev_windows, small_sample_correction=True)
 
             if fwoc is None:
                 # FWoC empty — evidence doesn't intersect corridor
@@ -228,9 +241,19 @@ def experiment_1_fwoc(
                 fwoc_width = 0
                 tightness = 0.0
                 full_coverage = False
+                fwoc_start, fwoc_end = None, None
             else:
                 fwoc_start, fwoc_end = fwoc
                 fwoc_width = fwoc_end - fwoc_start + 1
+            
+            # User-requested debug print: Check if the correction is saturating
+            if c == 0.25 and trial < 5 and dataset_name == "LLDOS 1.0":
+                H = len(p_star.hops)
+                N = len(ev_windows)
+                delta_s = max(0, H - N) if len(ev_windows) > 0 else 0
+                print(f"  [DEBUG c=25% Trial {trial}] ev_windows={ev_windows} | δs=max(0, {H}-{N})={delta_s} | FWoC=({fwoc_start}, {fwoc_end}) | TAC={p_star.tac}")
+            
+            if fwoc is not None:
                 tightness = fwoc_width / capture_duration_windows
 
                 # Soundness: FWoC must be non-empty AND overlap with true compromise
@@ -242,6 +265,8 @@ def experiment_1_fwoc(
                 # Full coverage: does FWoC contain the entire true interval?
                 # Only expected to hold at high completeness.
                 full_coverage = (fwoc_start <= tc_start and fwoc_end >= tc_end)
+                if c == 1.0 and trial == 0:
+                    print(f"DEBUG: fwoc={fwoc_start},{fwoc_end} tc={tc_start},{tc_end} cov={full_coverage}")
 
             if not soundness_pass:
                 soundness_failures += 1
@@ -612,7 +637,8 @@ def print_soundness_report(df1, df2, df3, df4, dataset_name):
     if not df.empty:
         fwoc_sound = df["soundness_pass"].all()
         fwoc_rate = df["soundness_pass"].mean() * 100
-        status = "✓ PASS" if fwoc_sound else f"✗ FAIL ({100-fwoc_rate:.1f}% failures)"
+        fwoc_rate_full = df["full_coverage"].mean() * 100
+        status = f"✓ PASS (Overlap: {fwoc_rate:.1f}%, Containment: {fwoc_rate_full:.1f}%)" if fwoc_sound else f"✗ FAIL ({100-fwoc_rate:.1f}% overlap failures)"
     else:
         fwoc_sound = False
         status = "✗ NO DATA"
@@ -621,8 +647,14 @@ def print_soundness_report(df1, df2, df3, df4, dataset_name):
     for c in [0.25, 0.50, 0.75]:
         dfc = df1[(df1["dataset"] == dataset_name) & (df1["completeness"] == c)]
         if not dfc.empty:
-            rate = dfc["soundness_pass"].mean() * 100
-            print(f"         @{c:.0%}: {rate:.0f}% sound (degradation expected)")
+            successes = dfc["soundness_pass"].sum()
+            full_cov_successes = dfc["full_coverage"].sum()
+            n = len(dfc)
+            p, ci_low, ci_high = wilson_score_interval(successes, n)
+            p_full, ci_low_full, ci_high_full = wilson_score_interval(full_cov_successes, n)
+            print(f"         @{c:.0%}: {p*100:.1f}% (95% CI: {ci_low*100:.1f}% - {ci_high*100:.1f}%) sound (overlap)")
+            print(f"                {p_full*100:.1f}% (95% CI: {ci_low_full*100:.1f}% - {ci_high_full*100:.1f}%) containment (full_coverage)")
+
 
     # Exp 2: True path retained at 100% completeness
     df = df2[(df2["dataset"] == dataset_name) & (df2["completeness"] == 1.0)]
