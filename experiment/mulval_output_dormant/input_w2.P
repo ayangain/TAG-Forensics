@@ -1,0 +1,14 @@
+% MulVAL input for Window 2
+
+attackerLocated(internet).
+attackGoal(execCode(workstation, root)).
+hacl(internet, webserver, tcp, 80).
+hacl(webserver, appserver, tcp, 8080).
+hacl(appserver, dbserver, tcp, 5432).
+hacl(dbserver, backupserver, tcp, 22).
+hacl(backupserver, workstation, tcp, 22).
+networkServiceInfo(webserver, httpd, tcp, 80, root).
+networkServiceInfo(appserver, appd, tcp, 8080, root).
+networkServiceInfo(dbserver, postgres, tcp, 5432, root).
+networkServiceInfo(backupserver, sshd, tcp, 22, root).
+networkServiceInfo(workstation, sshd, tcp, 22, root).

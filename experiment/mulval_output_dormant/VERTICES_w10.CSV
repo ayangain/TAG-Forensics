@@ -1,0 +1,36 @@
+1,"execCode(workstation,root)","OR",0
+2,"RULE 2 (remote exploit of a server program)","AND",0
+3,"netAccess(workstation,tcp,22)","OR",0
+4,"RULE 5 (multi-hop access)","AND",0
+5,"hacl(backupserver,workstation,tcp,22)","LEAF",1
+6,"execCode(backupserver,root)","OR",0
+7,"RULE 2 (remote exploit of a server program)","AND",0
+8,"netAccess(backupserver,tcp,22)","OR",0
+9,"RULE 5 (multi-hop access)","AND",0
+10,"hacl(dbserver,backupserver,tcp,22)","LEAF",1
+11,"execCode(dbserver,root)","OR",0
+12,"RULE 2 (remote exploit of a server program)","AND",0
+13,"netAccess(dbserver,tcp,5432)","OR",0
+14,"RULE 5 (multi-hop access)","AND",0
+15,"hacl(appserver,dbserver,tcp,5432)","LEAF",1
+16,"execCode(appserver,root)","OR",0
+17,"RULE 2 (remote exploit of a server program)","AND",0
+18,"netAccess(appserver,tcp,8080)","OR",0
+19,"RULE 5 (multi-hop access)","AND",0
+20,"hacl(webserver,appserver,tcp,8080)","LEAF",1
+21,"execCode(webserver,root)","OR",0
+22,"RULE 2 (remote exploit of a server program)","AND",0
+23,"netAccess(webserver,tcp,80)","OR",0
+24,"RULE 6 (direct network access)","AND",0
+25,"hacl(internet,webserver,tcp,80)","LEAF",1
+26,"attackerLocated(internet)","LEAF",1
+27,"networkServiceInfo(webserver,httpd,tcp,80,root)","LEAF",1
+28,"vulExists(webserver,vul_web,httpd,remoteExploit,privEscalation)","LEAF",1
+29,"networkServiceInfo(appserver,appd,tcp,8080,root)","LEAF",1
+30,"vulExists(appserver,vul_app,appd,remoteExploit,privEscalation)","LEAF",1
+31,"networkServiceInfo(dbserver,postgres,tcp,5432,root)","LEAF",1
+32,"vulExists(dbserver,vul_db,postgres,remoteExploit,privEscalation)","LEAF",1
+33,"networkServiceInfo(backupserver,sshd,tcp,22,root)","LEAF",1
+34,"vulExists(backupserver,vul_backup,sshd,remoteExploit,privEscalation)","LEAF",1
+35,"networkServiceInfo(workstation,sshd,tcp,22,root)","LEAF",1
+36,"vulExists(workstation,vul_workstation,sshd,remoteExploit,privEscalation)","LEAF",1

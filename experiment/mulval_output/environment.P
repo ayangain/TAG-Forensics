@@ -7,7 +7,7 @@
 
 :-load_dyn('running_rules.P').
 
-:-load_dyn('input_w4.P').
+:-load_dyn('input_w19.P').
 
 :-assert(traceMode(completeTrace2)).
 

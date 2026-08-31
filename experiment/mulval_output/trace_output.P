@@ -29,17 +29,3 @@ meta(cvss,2).
 meta(attackGoal,1).
 meta(advances,2).
 
-attack(execCode(workstation,root)).
-
-possible_duplicate_trace_step(because(6,rule_desc('direct network access',1.0),netAccess(webserver,tcp,80),[hacl(internet,webserver,tcp,80),attackerLocated(internet)])).
-
-possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(webserver,root),[netAccess(webserver,tcp,80),networkServiceInfo(webserver,httpd,tcp,80,root),vulExists(webserver,vul_web,httpd,remoteExploit,privEscalation)])).
-
-possible_duplicate_trace_step(because(5,rule_desc('multi-hop access',0.5),netAccess(workstation,tcp,22),[hacl(webserver,workstation,tcp,22),advances(webserver,workstation),execCode(webserver,root)])).
-
-possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(workstation,root),[netAccess(workstation,tcp,22),networkServiceInfo(workstation,sshd,tcp,22,root),vulExists(workstation,vul_ssh,sshd,remoteExploit,privEscalation)])).
-
-possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(workstation,root),[netAccess(workstation,tcp,22),networkServiceInfo(workstation,sshd,tcp,22,root),vulExists(workstation,vul_ssh,sshd,remoteExploit,privEscalation)])).
-
-possible_duplicate_trace_step(because(2,rule_desc('remote exploit of a server program',1.0),execCode(workstation,root),[netAccess(workstation,tcp,22),networkServiceInfo(workstation,sshd,tcp,22,root),vulExists(workstation,vul_ssh,sshd,remoteExploit,privEscalation)])).
-

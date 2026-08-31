@@ -1,0 +1,29 @@
+% MulVAL input for Window 8
+
+attackerLocated(internet).
+attackGoal(execCode(workstation, root)).
+hacl(internet, webserver, tcp, 80).
+hacl(webserver, appserver, tcp, 8080).
+hacl(appserver, dbserver, tcp, 5432).
+hacl(dbserver, backupserver, tcp, 22).
+hacl(backupserver, workstation, tcp, 22).
+networkServiceInfo(webserver, httpd, tcp, 80, root).
+networkServiceInfo(appserver, appd, tcp, 8080, root).
+networkServiceInfo(dbserver, postgres, tcp, 5432, root).
+networkServiceInfo(backupserver, sshd, tcp, 22, root).
+networkServiceInfo(workstation, sshd, tcp, 22, root).
+hasVuln(webserver, vul_web, httpd).
+vulExists(webserver, vul_web, httpd).
+vulProperty(vul_web, remoteExploit, privEscalation).
+hasVuln(appserver, vul_app, appd).
+vulExists(appserver, vul_app, appd).
+vulProperty(vul_app, remoteExploit, privEscalation).
+hasVuln(dbserver, vul_db, postgres).
+vulExists(dbserver, vul_db, postgres).
+vulProperty(vul_db, remoteExploit, privEscalation).
+hasVuln(backupserver, vul_backup, sshd).
+vulExists(backupserver, vul_backup, sshd).
+vulProperty(vul_backup, remoteExploit, privEscalation).
+hasVuln(workstation, vul_workstation, sshd).
+vulExists(workstation, vul_workstation, sshd).
+vulProperty(vul_workstation, remoteExploit, privEscalation).

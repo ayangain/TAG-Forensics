@@ -142,8 +142,8 @@ def subsample_evidence(
     degraded = copy.deepcopy(ftag)
 
     # Identify all edges that have observed evidence
-    observed_edges = [eid for eid, e in degraded.edges.items()
-                      if e.observed_window is not None]
+    observed_edges = sorted([eid for eid, e in degraded.edges.items()
+                             if e.observed_window is not None])
 
     if completeness >= 1.0:
         # Full evidence — no subsampling
@@ -216,6 +216,9 @@ def experiment_1_fwoc(
         for i, p in enumerate(all_paths[:10]):
             print(f"      P{i+1}: {[eid for eid,_ in p.hops]} windows={[w for _,w in p.hops]}")
         return pd.DataFrame()
+
+    assert [w for _, w in p_star.hops] == true_windows, f"Matched path windows {[w for _, w in p_star.hops]} != {true_windows}"
+    print(f"  ✓ ASSERTION PASSED: matched window sequence exactly equals {true_windows}")
 
     print(f"  ✓ True path p* identified: {[eid for eid,_ in p_star.hops]}")
     print(f"    TAC(p*) = [w{p_star.W_b}, w{p_star.W_end}]")

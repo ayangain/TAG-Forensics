@@ -1,0 +1,67 @@
+Preparing MulVAL graph (Unpruned for AF_conf calibration)...
+
+================================================================================
+ GRAPH: Synthetic MulVAL (Unpruned)
+================================================================================
+
+--- Prior P(H1) = 0.05 ---
+  [Diagnostics - Aggregated Root Privilege Target Rate]
+    - Wipe:            85.4% (95% CI: [85.0, 85.9])
+    - Random-Benign:   25.2% (95% CI: [24.6, 25.8])
+    - Rotation-Benign: 25.4% (95% CI: [13.9, 37.0])
+
+  [ Wipe vs Random-Benign ]
+    - ROC AUC:     0.801 (95% CI: [0.797, 0.805])
+    - FAR @ 0.50:  0.0% (95% CI: [0.0, 0.0])
+    - FAR @ 0.70:  0.0% (95% CI: [0.0, 0.0])
+    - FAR @ 0.85:  0.0% (95% CI: [0.0, 0.0])
+    - FAR @ 0.90:  0.0% (95% CI: [0.0, 0.0])
+
+  [ Wipe vs Rotation-Benign ]
+    - ROC AUC:     0.800 (95% CI: [0.742, 0.858])
+    - FAR @ 0.50:  0.0% (95% CI: [0.0, 0.0])
+    - FAR @ 0.70:  0.0% (95% CI: [0.0, 0.0])
+    - FAR @ 0.85:  0.0% (95% CI: [0.0, 0.0])
+    - FAR @ 0.90:  0.0% (95% CI: [0.0, 0.0])
+
+--- Prior P(H1) = 0.15 ---
+  [Diagnostics - Aggregated Root Privilege Target Rate]
+    - Wipe:            85.4% (95% CI: [85.0, 85.9])
+    - Random-Benign:   25.2% (95% CI: [24.6, 25.8])
+    - Rotation-Benign: 25.4% (95% CI: [13.9, 37.0])
+
+  [ Wipe vs Random-Benign ]
+    - ROC AUC:     0.801 (95% CI: [0.797, 0.805])
+    - FAR @ 0.50:  25.2% (95% CI: [24.6, 25.8])
+    - FAR @ 0.70:  0.0% (95% CI: [0.0, 0.0])
+    - FAR @ 0.85:  0.0% (95% CI: [0.0, 0.0])
+    - FAR @ 0.90:  0.0% (95% CI: [0.0, 0.0])
+
+  [ Wipe vs Rotation-Benign ]
+    - ROC AUC:     0.800 (95% CI: [0.742, 0.858])
+    - FAR @ 0.50:  25.4% (95% CI: [13.9, 37.0])
+    - FAR @ 0.70:  0.0% (95% CI: [0.0, 0.0])
+    - FAR @ 0.85:  0.0% (95% CI: [0.0, 0.0])
+    - FAR @ 0.90:  0.0% (95% CI: [0.0, 0.0])
+
+--- Prior P(H1) = 0.30 ---
+  [Diagnostics - Aggregated Root Privilege Target Rate]
+    - Wipe:            85.4% (95% CI: [85.0, 85.9])
+    - Random-Benign:   25.2% (95% CI: [24.6, 25.8])
+    - Rotation-Benign: 25.4% (95% CI: [13.9, 37.0])
+
+  [ Wipe vs Random-Benign ]
+    - ROC AUC:     0.801 (95% CI: [0.797, 0.805])
+    - FAR @ 0.50:  25.2% (95% CI: [24.6, 25.8])
+    - FAR @ 0.70:  25.2% (95% CI: [24.6, 25.8])
+    - FAR @ 0.85:  0.0% (95% CI: [0.0, 0.0])
+    - FAR @ 0.90:  0.0% (95% CI: [0.0, 0.0])
+
+  [ Wipe vs Rotation-Benign ]
+    - ROC AUC:     0.800 (95% CI: [0.742, 0.858])
+    - FAR @ 0.50:  25.4% (95% CI: [13.9, 37.0])
+    - FAR @ 0.70:  25.4% (95% CI: [13.9, 37.0])
+    - FAR @ 0.85:  0.0% (95% CI: [0.0, 0.0])
+    - FAR @ 0.90:  0.0% (95% CI: [0.0, 0.0])
+
+  [!] Saved aggregate ROC plot to /Users/ayangain/repos/TAG-Forensics/experiment/results/afconf_roc.png

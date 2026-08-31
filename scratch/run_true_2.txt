@@ -1,0 +1,6 @@
+Preparing MulVAL graph (Unpruned for AF_conf calibration)...
+
+================================================================================
+ GRAPH: Synthetic MulVAL (Unpruned)
+================================================================================
+[ERROR] No paths found for Synthetic MulVAL (Unpruned)
