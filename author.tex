@@ -41,11 +41,11 @@
 
 % === DOUBLE-BLIND SUBMISSION VERSION ===
 % Uncomment the camera-ready block for final version
-\author{Ayan Gain\inst{1} \orcidID{0009-0009-2629-0927}\and Mridul Sankar Barik\inst{1} \orcidID{0000-0001-6322-5336}}
-\institute{Jadavpur University, Kolkata, India\\
-\email{ayan.gain2010@gmail.com, mridulsankar.barik@jadavpuruniversity.in}}
-%\author{Anonymous Author(s)}
-%\institute{Anonymous Institution}
+%\author{Ayan Gain\inst{1} \orcidID{0009-0009-2629-0927}\and Mridul Sankar Barik\inst{1} \orcidID{0000-0001-6322-5336}}
+%\institute{Jadavpur University, Kolkata, India\\
+%\email{ayan.gain2010@gmail.com, mridulsankar.barik@jadavpuruniversity.in}}
+\author{Anonymous Author(s)}
+\institute{Anonymous Institution}
 
 \maketitle
 
@@ -74,7 +74,7 @@ To overcome the fragility of reactive evidence and the temporal blindness of sta
 This paper makes the following key contributions:
 \begin{enumerate}
     \item We formalize the F-TAG framework that strictly enforces chronological sequencing on observed evidence, naturally filtering false-positive noise and causality bugs through topological contradiction detection.
-    \item We introduce the Forensic Window of Compromise (FWoC), a topology-aware continuous correction that computes provable bounds under F-TAG's execution assumptions on unobserved attacker actions when evidence is missing, maintaining unconditional soundness on both LLDOS benchmarks under the correction's contiguous-execution assumption, which we further characterize under adversarial dormancy in Section 7.4.
+    \item We introduce the Forensic Window of Compromise (FWoC), a topology-aware continuous correction that computes provable bounds under F-TAG's execution assumptions on unobserved attacker actions when evidence is missing, maintaining unconditional soundness on both LLDOS benchmarks under the correction's contiguous-execution assumption, which we further characterize under adversarial dormancy in Section~\ref{sec:adversarial-dormancy}.
     \item We present the Anti-Forensics Confidence metric ($AF_{conf}$) as a secondary, exploratory Bayesian posterior that formally quantifies the likelihood of deliberate log-wiping versus benign loss by exploiting topological privilege distributions.
     \item We provide extensive empirical validation on the DARPA LLDOS 1.0 and 2.0.2 benchmarks and MulVAL-generated enterprise-style topologies, demonstrating F-TAG's robustness against evidence degradation, calibrating its anti-forensic sensitivity, validating its scalability to 100-host networks, and confirming it detects temporally-dependent falsification scenarios where static methods fail.
 \end{enumerate}
@@ -467,22 +467,22 @@ This formal translation ensures that F-TAG's topological edges strictly adhere t
 
 \subsubsection{Causal Reversal Verification.} MulVAL natively outputs Goal $\to$ Precondition dependency edges (reflecting the logical derivation order). Our engine automatically reverses these to represent chronologically accurate Attacker $\to$ Goal causal pathways. We empirically verified that temporal constraints are preserved during this transformation by tracing individual edge reversals. For example, MulVAL Edge $4 \to 5$ in Window 2 correctly reverses to an F-TAG Edge between the corresponding hashed node identifiers while preserving its $\{2, 3, 4\}$ active windows set.
 
-\subsubsection{Static vs. Temporal Comparison.} On the 14-node MulVAL topology, we ran a direct comparison (\texttt{run\_static\_vs\_temporal\_mulval.py}) between a traditional static attack graph and our temporal attack graph. The static graph identified exactly 1 structural path to the target. The F-TAG expanded this into \textbf{15 distinct chronological corridors}, accurately mapping how the attack could span across multiple time windows (Fig.~\ref{fig:static-vs-tag}).
+\subsubsection{Static vs. Temporal Comparison.} Using a 6-node linear chain topology (built with the same generator used for the adversarial dormancy experiments in Section~\ref{sec:adversarial-dormancy}, here configured with a narrower W8--W13 active window), we ran a direct comparison (\texttt{run\_static\_vs\_temporal\_mulval.py}) between a traditional static attack graph and our temporal attack graph. The topology restricts vulnerabilities to a 6-window span (W8--W13) across 20 total time windows. The static graph identified exactly 1 structural path to the target. The F-TAG expanded this into \textbf{252 distinct chronological corridors} (representing every valid temporal instantiation of the 5 attacker hops across the active windows), accurately mapping how the attack could span across time (Fig.~\ref{fig:static-vs-tag}).
 
 \subsubsection{False-Positive Filtering Experiment.} We also ran a targeted false-positive filtering test to demonstrate how F-TAG handles alerts that violate temporal prerequisites. The full scenario and its results are detailed in Section~\ref{sec:results-scenarios}.
 
-\subsubsection{Adversarial Dormancy Topology.} To empirically test the boundary condition of contiguous execution (Section~\ref{sec:worst-case-bounds}), we generated a specialized 5-hop linear chain topology ($H=5, \tau=30$) via MulVAL. We extended the active vulnerability window across 21 windows (W8 to W28) and explicitly instantiated a dormant adversarial path: an early cluster of reconnaissance hops, an 18-window period of dormancy, and a final cluster of exfiltration hops. For this synthetic scenario, the \textit{true compromise interval} was defined as the span from the initial pivot establishment through the final exfiltration (W9 to W28), strictly mirroring the ``exploit through launch'' convention established for the LLDOS datasets.
+\subsubsection{Adversarial Dormancy Topology.}\label{sec:adversarial-dormancy} To empirically test the boundary condition of contiguous execution (Section~\ref{sec:worst-case-bounds}), we generated a specialized 5-hop linear chain topology ($H=5, \tau=30$) via MulVAL. We extended the active vulnerability window across 21 windows (W8 to W28) and explicitly instantiated a dormant adversarial path: an early cluster of reconnaissance hops, an 18-window period of dormancy, and a final cluster of exfiltration hops. For this synthetic scenario, the \textit{true compromise interval} was defined as the span from the initial pivot establishment through the final exfiltration (W9 to W28), strictly mirroring the ``exploit through launch'' convention established for the LLDOS datasets.
 
 \begin{figure}[t]
 \centering
 \includegraphics[width=\linewidth]{Figures/fig_static_vs_tag.png}
-\caption{Static graph collapses all time into a single path, while F-TAG expands into 15 distinct chronological corridors. The false alert at W0 is caught as a contradiction by F-TAG but accepted as valid by the static graph.}
+\caption{Static graph collapses all time into a single path, while F-TAG expands into 252 distinct chronological corridors. The false alert at W0 is caught as a contradiction by F-TAG (since the topology is inactive until W8) but accepted as valid by the static graph.}
 \label{fig:static-vs-tag}
 \end{figure}
 
 \subsection{Bayesian Calibration of $AF_{conf}$}\label{sec:trackc}
 
-To rigorously calibrate $AF_{conf}$ (Eq.~\ref{eq:afconf}), we constructed a large-scale Monte Carlo injection framework (\texttt{run\_af\_calibration.py}). Over 10 random seeds and three prior settings ($P(H_1) \in \{0.05, 0.15, 0.30\}$), we injected thousands of synthetic missing-evidence gaps into both the LLDOS and MulVAL topologies, testing three distinct injection classes ($\sim$45 samples per class per seed, evenly distributed across all 15 candidate paths to ensure a true topological average):
+To rigorously calibrate $AF_{conf}$ (Eq.~\ref{eq:afconf}), we constructed a large-scale Monte Carlo injection framework (\texttt{run\_af\_calibration.py}). Over 10 random seeds and three prior settings ($P(H_1) \in \{0.05, 0.15, 0.30\}$), we injected thousands of synthetic missing-evidence gaps into the MulVAL topology (evenly distributed across all 15 candidate paths to ensure a true topological average, $\sim$45 samples per class per seed) and separately into the LLDOS topologies, testing the same three distinct injection classes:
 \begin{enumerate}
     \item \textbf{Wipe-Class ($H_1$)}: Deliberate log-wiping biased toward high-privilege pivot nodes, weighted by both root status ($10\times$ weight for root nodes) and temporal chokepoint score $\chi$ (higher-$\chi$ nodes receive proportionally more wipe injections).
     \item \textbf{Random-Benign ($H_0$)}: Uniformly distributed evidence loss across all path nodes, simulating accidental data loss with no structural bias.
@@ -627,7 +627,7 @@ Fig.~\ref{fig:fwoc-afconf}(b) presents the discriminative power of $AF_{conf}$ a
 
 \subsubsection{Baseline Discriminative Power.} Across all three prior settings ($P(H_1) \in \{0.05, 0.15, 0.30\}$) on the unpruned MulVAL topology, the metric maintained a stable aggregated ROC AUC of 0.801 (95\% CI: [0.797, 0.805]) for Wipe vs. Random classification. This prior-invariance is a desirable property, as it means the metric's discriminative power is driven by topological structure rather than prior assumptions.
 
-\textit{Note on Topological Pruning:} The $AF_{conf}$ calibration was intentionally conducted on the raw, unpruned MulVAL topology. The aggressive host-to-host pruning applied for scalability in Section~\ref{sec:scalability} collapses intermediate logical states into uniform high-privilege `execCode` transitions. Because $AF_{conf}$ derives its signal from privilege variance along a path, evaluating it on a fully pruned graph artificially degrades its discriminative power. Thus, calibrating $AF_{conf}$ requires a higher topological granularity than baseline reachability checks.
+\textit{Note on Topological Pruning:} The $AF_{conf}$ calibration was intentionally conducted on the raw, unpruned MulVAL topology. The aggressive host-to-host pruning applied for scalability in Section~\ref{sec:results-scalability} collapses intermediate logical states into uniform high-privilege `execCode` transitions. Because $AF_{conf}$ derives its signal from privilege variance along a path, evaluating it on a fully pruned graph artificially degrades its discriminative power. Thus, calibrating $AF_{conf}$ requires a higher topological granularity than baseline reachability checks.
 
 \subsubsection{Rotation-Benign Variance.} When aggregated across all paths, Wipe vs. Rotation yielded an average AUC of 0.800 (95\% CI: [0.742, 0.858]), effectively identical to the Random baseline. Our diagnostic tracking confirmed that structured periodic rotation lands on root-privilege nodes at a rate mathematically equivalent to uniform noise on average (25.4\% vs. 25.2\%). However, the massive variance in the 95\% CI ([13.9\%, 37.0\%] for Rotation vs [24.6\%, 25.8\%] for Random) perfectly highlights the structural confound: because periodic rotation affects a small fixed subset of nodes globally, its intersection with any single attack path is extremely volatile. Rotation-Benign is not topologically "harder" or "easier" than random noise overall, but it serves as a highly path-dependent confound.
 
@@ -655,7 +655,7 @@ Observe that at the $0.50$ threshold, the FAR numbers (25.2\% for Random and 25.
 
 At the strict threshold of $AF_{conf} \ge 0.85$, the FAR drops to a perfect 0.0\% (95\% CI: [0.0, 0.0]) for both Random-Benign and Rotation-Benign classes across all prior configurations. This threshold represents the sweet spot where the metric confidently identifies deliberate tampering without generating false accusations. We recommend 0.85 as the default operational threshold pending real-world validation.
 
-\subsubsection{Graceful Degradation (LLDOS Safety Check).} In the legacy LLDOS 1.0 and 2.0.2 graphs, state nodes strictly model IP addresses rather than granular privileges, artificially forcing the root-privilege signal to zero. In this scenario, $AF_{conf}$ safely degenerates to AUC = 0.50 (random chance) and 0.0\% FAR. This is the correct behavior: rather than generating false accusations on sparse data, the metric demonstrates its dependence on granular privilege tracking and yields only conservative ambiguity.
+\subsubsection{Graceful Degradation (LLDOS Safety Check).} Because the LLDOS ground-truth parser models hosts by IP address rather than privilege level, no root/non-root variance exists to calibrate against, artificially forcing the root-privilege signal to zero. In this scenario, $AF_{conf}$ safely degenerates to AUC = 0.500 (random chance) and 0.0\% FAR. This is the correct behavior: rather than generating false accusations on sparse data, the metric yields only conservative ambiguity when the requisite topological granularity is absent.
 
 \subsection{Illustrative Forensic Scenarios}\label{sec:results-scenarios}
 
@@ -789,7 +789,7 @@ The worst-case $\delta_s$ correction (Section~\ref{sec:worst-case-bounds}) is pr
 % 8. CONCLUSION
 % ================================================================
 \section{Conclusion}\label{sec:conclusion}
-We presented the Forensic Temporal Attack Graph (F-TAG), a framework fusing proactive structural risk assessment with reactive digital evidence. Our expanded Monte Carlo validation demonstrates that the Forensic Window of Compromise computes provable bounds on unobserved attacker actions, maintaining 100\% soundness across all evidence degradation levels on both real-world LLDOS benchmarks, under the correction's proven contiguous-execution assumption (Section 4.1); we further show this guarantee is bounded under deliberate long-dormancy adversarial behavior (Section 7.4). The topology-derived $T_{min}$ remains unconditionally stable regardless of evidence loss, serving as a fail-safe investigative anchor. F-TAG successfully detects temporally-dependent falsification scenarios where static methods fail, and the Anti-Forensics Confidence metric achieves a 0.0\% false-accusation rate at the operational threshold of 0.85, pending real-world validation. By shifting from bottom-up evidence reconstruction to top-down structural filtering, F-TAG provides a mathematically grounded approach to network investigation resilient to evidence degradation.
+We presented the Forensic Temporal Attack Graph (F-TAG), a framework fusing proactive structural risk assessment with reactive digital evidence. Our expanded Monte Carlo validation demonstrates that the Forensic Window of Compromise computes provable bounds on unobserved attacker actions, maintaining 100\% soundness across all evidence degradation levels on both real-world LLDOS benchmarks, under the correction's proven contiguous-execution assumption (Section~\ref{sec:worst-case-bounds}); we further show this guarantee is bounded under deliberate long-dormancy adversarial behavior (Section~\ref{sec:adversarial-dormancy}). The topology-derived $T_{min}$ remains unconditionally stable regardless of evidence loss, serving as a fail-safe investigative anchor. F-TAG successfully detects temporally-dependent falsification scenarios where static methods fail, and the Anti-Forensics Confidence metric achieves a 0.0\% false-accusation rate at the operational threshold of 0.85, pending real-world validation. By shifting from bottom-up evidence reconstruction to top-down structural filtering, F-TAG provides a mathematically grounded approach to network investigation resilient to evidence degradation.
 
 % ================================================================
 % 9. FUTURE WORK

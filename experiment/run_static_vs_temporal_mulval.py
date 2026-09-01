@@ -116,10 +116,10 @@ def static_betweenness_centrality(ftag: ForensicTemporalAttackGraph) -> Dict[str
 
 def run():
     print("\n" + "═" * 70)
-    print(" MULVAL 14-NODE TOPOLOGY: STATIC vs. TEMPORAL ATTACK GRAPH COMPARISON")
+    print(" MULVAL 6-NODE TOPOLOGY (DORMANCY BASELINE): STATIC vs. TEMPORAL ATTACK GRAPH COMPARISON")
     print("═" * 70)
 
-    # Build the MulVAL 14-node FTAG
+    # Build the MulVAL 6-node FTAG
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     output_dir = os.path.join(base_dir, "experiment", "mulval_output")
     try:
@@ -185,10 +185,10 @@ def run():
         print(f"     The Temporal graph correctly identified '{ftag.nodes[top_temporal[0][0]].state_name}' as the true chronological bridge.")
 
     print("\n[3] FALSE POSITIVE FILTERING (The Background Noise Insight)")
-    # Case: An IDS alert fires on the workstation at Window 0. But workstation isn't reachable until Window 2.
+    # Case: An IDS alert fires on the workstation at Window 0. But workstation isn't reachable until Window 8.
     print("  -> Setup: IDS alert fires on Workstation at Time Window 0.")
     print("  -> Static Attack Graph Triage: VALID ALERT.")
-    print("     (Reason: The static graph sees a structural path exists, ignoring the fact that it's closed in W0).")
+    print("     (Reason: The static graph sees a structural path exists, ignoring the fact that it's closed in W0 (inactive until W8)).")
     
     # Temporal FWoC Evaluation
     valid_corridors = []
