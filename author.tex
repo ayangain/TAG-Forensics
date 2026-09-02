@@ -39,6 +39,7 @@
 \setlength{\intextsep}{8pt plus 2pt minus 2pt}
 
 \title{F-TAG: Forensic Temporal Attack Graphs for Evidence-Resilient Network Investigation}
+\titlerunning{F-TAG: Forensic Temporal Attack Graphs}
 
 % === DOUBLE-BLIND SUBMISSION VERSION ===
 % Uncomment the camera-ready block for final version
@@ -387,7 +388,7 @@ We validated the core forensic metrics against the DARPA 2000 LLDOS 1.0 and 2.0.
 
 \subsubsection{Parser and Graph Construction.} We built a custom parser (\texttt{lldos\_tag\_builder.py}, 700 lines) to strip away the massive background noise of the DARPA network, isolating the verified causal capability paths for both campaign scenarios:
 \begin{align*}
-\text{LLDOS 1.0 (Distributed DDoS):} & \quad \text{Attacker} \to \text{mill} \to \{ \text{mill}, \text{pascal}, \text{locke} \} \to \text{ddos\_target} \\
+\text{LLDOS 1.0 (Distributed DDoS):} & \quad \text{Attacker} \to \text{mill} \to \{ \text{pascal}, \text{locke} \}\text{, with mill, pascal, and locke each independently reaching } \text{ddos\_target} \\
 \text{LLDOS 2.0.2 (Linear Exfil):} & \quad \text{Attacker} \to \text{mill} \to \text{pascal} \to \text{mail\_exfil}
 \end{align*}
 
@@ -419,11 +420,11 @@ This formal translation ensures that F-TAG's topological edges strictly adhere t
 
 \subsubsection{Causal Reversal Verification.} MulVAL natively outputs Goal $\to$ Precondition dependency edges (reflecting the logical derivation order). Our engine automatically reverses these to represent chronologically accurate Attacker $\to$ Goal causal pathways. We empirically verified that temporal constraints are preserved during this transformation by tracing individual edge reversals. For example, MulVAL Edge $4 \to 5$ in Window 2 correctly reverses to an F-TAG Edge between the corresponding hashed node identifiers while preserving its $\{2, 3, 4\}$ active windows set.
 
-\subsubsection{Static vs. Temporal Comparison.} Using a 6-node linear chain topology (built with the same generator used for the adversarial dormancy experiments in Section~\ref{sec:adversarial-dormancy}, here configured with a narrower W8--W13 active window), we ran a direct comparison (\texttt{run\_static\_vs\_temporal\_mulval.py}) between a traditional static attack graph and our temporal attack graph. The topology restricts vulnerabilities to a 6-window span (W8--W13) across 20 total time windows. The static graph identified exactly 1 structural path to the target. The F-TAG expanded this into \textbf{252 distinct chronological corridors} (representing every valid temporal instantiation of the 5 attacker hops across the active windows), accurately mapping how the attack could span across time (Fig.~\ref{fig:static-vs-tag}).
+\subsubsection{Adversarial Dormancy Topology.}\label{sec:adversarial-dormancy} To empirically test the boundary condition of contiguous execution (Section~\ref{sec:worst-case-bounds}), we generated a specialized 5-hop linear chain topology ($H=5, \tau=30$) via MulVAL. We extended the active vulnerability window across 21 windows (W8 to W28) and explicitly instantiated a dormant adversarial path: an early cluster of reconnaissance hops, an 18-window period of dormancy, and a final cluster of exfiltration hops. For this synthetic scenario, the \textit{true compromise interval} was defined as the span from the initial pivot establishment through the final exfiltration (W9 to W28), strictly mirroring the ``exploit through launch'' convention established for the LLDOS datasets.
+
+\subsubsection{Static vs. Temporal Comparison.} Using a 6-node linear chain topology (built with the same generator used for the adversarial dormancy experiments introduced above, here configured with a narrower W8--W13 active window), we ran a direct comparison (\texttt{run\_static\_vs\_temporal\_mulval.py}) between a traditional static attack graph and our temporal attack graph. The topology restricts vulnerabilities to a 6-window span (W8--W13) across 20 total time windows. The static graph identified exactly 1 structural path to the target. The F-TAG expanded this into \textbf{252 distinct chronological corridors} (representing every valid temporal instantiation of the 5 attacker hops across the active windows), accurately mapping how the attack could span across time (Fig.~\ref{fig:static-vs-tag}).
 
 \subsubsection{False-Positive Filtering Experiment.} We also ran a targeted false-positive filtering test to demonstrate how F-TAG handles alerts that violate temporal prerequisites. The full scenario and its results are detailed in Section~\ref{sec:results-scenarios}.
-
-\subsubsection{Adversarial Dormancy Topology.}\label{sec:adversarial-dormancy} To empirically test the boundary condition of contiguous execution (Section~\ref{sec:worst-case-bounds}), we generated a specialized 5-hop linear chain topology ($H=5, \tau=30$) via MulVAL. We extended the active vulnerability window across 21 windows (W8 to W28) and explicitly instantiated a dormant adversarial path: an early cluster of reconnaissance hops, an 18-window period of dormancy, and a final cluster of exfiltration hops. For this synthetic scenario, the \textit{true compromise interval} was defined as the span from the initial pivot establishment through the final exfiltration (W9 to W28), strictly mirroring the ``exploit through launch'' convention established for the LLDOS datasets.
 
 \begin{figure}[t]
 \centering
