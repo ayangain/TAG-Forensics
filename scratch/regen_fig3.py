@@ -8,11 +8,9 @@ matplotlib.rcParams['font.size'] = 12
 scenarios = ['Precedence\nSwap', 'State\nRevocation', 'Window\nClosure']
 
 # F1 scores: Zhang (Static) and F-TAG (Ours)
-# Precedence Swap: Zhang P=1.0 R=1.0 F1=1.0, F-TAG P=0.50 R=1.0 F1=0.67
-# State Revocation: Zhang P=0 R=0 F1=0.0, F-TAG P=1.0 R=1.0 F1=1.0
-# Window Closure: Zhang P=0 R=0 F1=0.0, F-TAG P=1.0 R=1.0 F1=1.0
+# Derived from Table 3 - Full Infrastructure Wipe (Measures Detection)
 zhang_f1 = [1.0, 0.0, 0.0]
-ftag_f1 = [0.67, 1.0, 1.0]
+ftag_f1 = [0.94, 0.88, 0.94]
 
 x = np.arange(len(scenarios))
 width = 0.30

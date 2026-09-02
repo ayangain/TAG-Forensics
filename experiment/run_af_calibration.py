@@ -220,7 +220,7 @@ def run_experiment_for_graph(graph_name, ftag, src_node, dst_node):
             plt.legend(loc="lower right")
             out_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "experiment", "results")
             os.makedirs(out_dir, exist_ok=True)
-            out_path = os.path.join(out_dir, "afconf_roc.png")
+            out_path = os.path.join(out_dir, f"afconf_roc_{graph_name.replace(' ', '_').replace('(', '').replace(')', '').lower()}.png")
             plt.savefig(out_path, dpi=300, bbox_inches="tight")
             print(f"\n  [!] Saved aggregate ROC plot to {out_path}")
             plt.close()
