@@ -21,34 +21,14 @@ df_choke = pd.read_csv("experiment/results/track_a_exp3_chokepoint.csv")
 dataset_name = "LLDOS 1.0"
 output_path = "Figures/fig_chokepoint_tmin.png"
 
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
-fig.suptitle(f"Track A: Evidence-Conditioned Metric Quality — {dataset_name}",
-             fontsize=13, fontweight="bold", y=1.02)
+fig, ax2 = plt.subplots(1, 1, figsize=(6, 5))
 
 df_f = df_fwoc[df_fwoc["dataset"] == dataset_name]
 df_c = df_choke[df_choke["dataset"] == dataset_name]
 
 comp_levels = sorted(df_f["completeness"].unique())
-means_t, ci_lo_t, ci_hi_t = [], [], []
-for c in comp_levels:
-    vals = df_f[df_f["completeness"] == c]["tightness_pct"].values
-    m, lo, hi = mean_ci95(list(vals))
-    means_t.append(m)
-    ci_lo_t.append(m - lo)
-    ci_hi_t.append(hi - m)
 
 x_pct = [c * 100 for c in comp_levels]
-ax1.errorbar(x_pct, means_t, yerr=[ci_lo_t, ci_hi_t],
-             fmt='o-', capsize=5, color='#1d3557', linewidth=2,
-             markersize=8, markerfacecolor='#457b9d')
-ax1.set_xlabel("Evidence Completeness (%)", fontsize=11)
-ax1.set_ylabel("|FWoC| / |Capture Duration| (%)", fontsize=11)
-ax1.set_title("FWoC Tightness vs. Evidence Completeness", fontsize=11, fontweight="bold")
-ax1.set_xticks(x_pct)
-ax1.set_ylim(0, 110)
-ax1.grid(True, alpha=0.3)
-ax1.axhline(y=100, color='red', linestyle='--', alpha=0.5, label="No narrowing (100%)")
-ax1.legend(fontsize=9)
 
 means_r, ci_lo_r, ci_hi_r = [], [], []
 for c in comp_levels:
