@@ -207,7 +207,7 @@ The TAC encapsulates the full structural lifespan of a specific attack narrative
 
 \subsection{Path Enumeration Algorithm}\label{sec:enumeration}
 
-The temporal path enumeration follows a depth-first search (Algorithm~\ref{alg:enumerate}). The chronological pruning at Line 14 restricts traversal to $w \ge w_{min}$, preventing the generation of impossible ``Frankenstein'' paths stitched across non-overlapping vulnerability windows. While traditional correlation relies on local prerequisite-consequence matching without global temporal consistency, one could theoretically achieve correctness by enumerating all paths in a static graph and filtering post-hoc. However, this is combinatorially intractable. Algorithm~\ref{alg:enumerate} integrates temporal constraints directly into the traversal, providing an efficient mechanism without sacrificing correctness.
+The temporal path enumeration follows a depth-first search (Algorithm~\ref{alg:enumerate}). The chronological pruning at Line 14 restricts traversal to $w \ge w_{min}$, preventing the generation of impossible ``Frankenstein'' paths stitched across non-overlapping vulnerability windows. Because this pruning rule mirrors Definition 2's non-decreasing constraint exactly --- an edge is only pruned when using it would violate the same monotonicity condition a valid path must already satisfy --- no structurally feasible path is ever discarded, and the search is complete for all paths of length $\le H_{max}$. While traditional correlation relies on local prerequisite-consequence matching without global temporal consistency, one could theoretically achieve correctness by enumerating all paths in a static graph and filtering post-hoc. However, this is combinatorially intractable. Algorithm~\ref{alg:enumerate} integrates temporal constraints directly into the traversal, providing an efficient mechanism without sacrificing correctness.
 
 \begin{algorithm}[t]
 \caption{Temporal Path Enumeration ($Q^a_{ij}$)}
@@ -236,14 +236,6 @@ The temporal path enumeration follows a depth-first search (Algorithm~\ref{alg:e
 \RETURN $\mathcal{P}_{ij}$
 \end{algorithmic}
 \end{algorithm}
-
-\subsubsection{Completeness of Path Enumeration.}
-We formally prove that Algorithm 1 is complete, i.e., it discovers all valid temporal attack paths without missing any structurally feasible corridors.
-
-\textit{Theorem 1 (Completeness of Temporal Enumeration):} Let $\mathcal{P}_{ij}$ be the set of all paths from $i$ to $j$ returned by Algorithm 1. If there exists a temporal path $p^*$ from $i$ to $j$ satisfying the non-decreasing chronological constraints of Definition 2 with length $|p^*| \le H_{max}$, then $p^* \in \mathcal{P}_{ij}$.
-
-\textit{Proof (sketch):}
-Suppose a valid path $p^* = ((e_1,w_1),\dots,(e_n,w_n))$ with $n \le H_{max}$ is not returned. Since the DFS explores all outgoing edges up to depth $H_{max}$ (with revisits permitted), the only mechanism for missing $p^*$ is if the chronological filter at Line~12 prunes some edge $(e_k,w_k)$, meaning the algorithm holds $w_{min} > w_k$ at that step. But the algorithm sets $w_{min} = w_{k-1}$ on arrival at $e_k.\text{src}$, so $w_{min} > w_k$ implies $w_{k-1} > w_k$, contradicting the non-decreasing constraint that $p^*$ must satisfy by Definition~2. Therefore no valid edge is ever pruned, and $p^*$ must be discovered. $\square$
 
 \subsection{Proactive Structural TAG Metrics}\label{sec:proactive}
 
