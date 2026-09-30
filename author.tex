@@ -46,42 +46,41 @@ Jadavpur University, Kolkata, India \\
 \maketitle
 
 \begin{abstract}
-Modern network forensics depends on reconstructing digital evidence, such as intrusion detection alerts and system logs, yet that evidence is fundamentally fragile. It is prone to accidental loss and vulnerable to deliberate anti-forensic tampering. Traditional evidence graphs reconstruct attack paths purely from observed logs, breaking down completely when evidence is missing. Correlating alerts over legacy static attack graphs ignores the physical reality of evolving network topologies, producing causality bugs and false positives. This paper addresses a fundamental question: can a temporally evolving attack topology serve as a strict structural constraint for forensic reconstruction when evidence is incomplete or contradictory? To answer this, the Forensic Temporal Attack Graph (F-TAG) is formalized. By injecting digital evidence as constraints upon the physical topology, F-TAG natively detects temporal contradictions. The Forensic Window of Compromise (FWoC) is introduced as a provable interval bounding when an intrusion must have occurred, even when intermediate logs are missing, by intersecting surviving evidence timestamps with the hard physical limits of the network topology. The mathematical conditions under which this bound can be tightened or may widen, specifically under long-dormancy adversarial behavior where an attacker remains inactive for extended periods, are formally characterized. An Anti-Forensics Confidence ($AF_{conf}$) metric is further introduced to probabilistically distinguish deliberate log-wiping from routine evidence loss. F-TAG is evaluated on the DARPA LLDOS 1.0 and 2.0.2 benchmarks and MulVAL-generated enterprise topologies, successfully recovering complete attack narratives despite severe evidence degradation.
+Modern network forensics depends on reconstructing digital evidence, such as intrusion detection alerts and system logs, yet that evidence is fundamentally fragile. It is prone to accidental loss and vulnerable to deliberate anti-forensic tampering. Traditional evidence graphs reconstruct attack paths purely from observed logs, breaking down completely when evidence is missing. Correlating alerts over legacy static attack graphs ignores the physical reality of evolving network topologies, producing causality bugs and false positives. This paper addresses a fundamental question: can a temporally evolving network topology serve as a strict structural constraint for forensic reconstruction when evidence is incomplete or contradictory? To answer this, the Forensic Temporal Attack Graph (F-TAG) is introduced. By injecting digital evidence as constraints upon the physical topology, F-TAG natively detects temporal contradictions. The Forensic Window of Compromise (FWoC) is introduced as a provable interval bounding when an intrusion must have occurred, even when intermediate logs are missing, by intersecting surviving evidence timestamps with the hard physical limits of the network topology. The mathematical conditions under which this bound can be tightened or may widen, specifically under long-dormancy adversarial behavior where an attacker remains inactive for extended periods, are formally characterized. An Anti-Forensics Confidence ($AF_{conf}$) metric is further introduced to probabilistically distinguish deliberate log-wiping from routine evidence loss. F-TAG is evaluated on the DARPA LLDOS 1.0 and 2.0.2 benchmarks and synthetic attack graphs, successfully recovering complete attack narratives despite severe evidence degradation.
 
 \textbf{Keywords:} Network Forensics, Temporal Attack Graphs, Anti-Forensics, Bayesian Analysis
 \end{abstract}
 
 \section{Introduction}\label{sec:introduction}
 
-Imagine an investigator responding to a breach whose only visible trace is a single IDS alert on the database, the upstream web server's logs are gone. Did the attacker exploit a vulnerability patched last week, or a different one entirely? Was the log wiped on purpose? Without answers, the investigation stalls~\cite{khan2022digital}. Two separate problems are tangled together here: the evidence itself may be missing or falsified, and even the evidence that survives must be checked against whether the attack it implies could ever have actually happened, given how the network changed over time.
+Imagine an investigator responding to a breach whose only visible trace is a single IDS alert on the database, the upstream web server's logs are lost. Did the attacker exploit a vulnerability patched last week, or a different one entirely? Was the log wiped on purpose? Without these answers, the investigation stalls~\cite{khan2022digital}. Two separate problems are tangled together here: the evidence itself may be missing or falsified, and even the evidence that survives must be checked against whether the attack it implies could ever have actually happened, given how the network changed over time.
 
-Existing tools solve one problem or the other, never both. Evidence graphs~\cite{wang2008evidence} reconstruct causal chains directly from logs and alerts. They work well when evidence is complete, but the chain simply breaks wherever a log is wiped. Conversely, static attack graphs~\cite{1004377,Lallie2020} are often used to bridge these gaps by correlating alerts against known vulnerability paths~\cite{10.1145/586110.586144,ning2004building}. While they successfully map every path the network has ever permitted, they collapse that history into a single timeless snapshot, offering no notion of when each path was actually usable.
+Existing tools solve one problem or the other, never both. Evidence graphs~\cite{wang2008evidence} reconstruct causal chains directly from logs and alerts. They work well when evidence is complete, but the chain simply breaks wherever a log is wiped. Conversely, static attack graphs~\cite{1004377,Lallie2020} are often used to bridge these gaps by correlating alerts against known vulnerability paths~\cite{10.1145/586110.586144,ning2004building}. While static attack graphs successfully map every path the network has ever permitted, they collapse that history into a single timeless snapshot, offering no notion of when each path was actually usable.
 
-\textbf{Why a static attack graph is not enough.} A static attack graph only asks about reachability, ``can these vulnerabilities be chained across the network?'', while forensics must also account for time and order, ``could this sequence of actions have actually happened in this order, given how the network and its vulnerabilities changed over time?''
+\textbf{Why a static attack graph is not enough.} A static attack graph models assets and vulnerabilities from a single network snapshot. It evaluates reachability (``can these vulnerabilities be chained?''), whereas forensics must evaluate time and order (``could this sequence of actions have occurred, given how the network changed?'').
 
-For example, suppose a vulnerability is patched on Tuesday. Because a static attack graph does not track time, it still treats that path as open on Wednesday. If an alert fires on Wednesday, the graph will accept an impossible route through a vulnerability that was already closed. This problem becomes even worse across multi-step attacks. Without checking whether a path remained open over time, a static graph can easily stitch an exploit from Week~1 to an alert in Week~3 through a server patched in Week~2. The result is an impossible ``Frankenstein path'', an attack narrative assembled from steps that were each valid at different moments in the past, but could never have happened together in reality.
+For example, if a static graph built on Monday ignores a Tuesday patch, it accepts impossible Wednesday alerts through closed routes. Across multi-step attacks, it can stitch a Week~1 exploit to a Week~3 alert via a server patched in Week~2. The result is a ``Frankenstein path''\footnote{An attack sequence assembled from steps that were individually valid but at non-overlapping points in time, making the combined path physically impossible.}: an attack assembled from steps valid at different past moments, but physically impossible in sequence.
 
-This absence of end-to-end temporal enforcement produces three distinct forensic failure modes. \textbf{Temporal feasibility errors} occur when the topology itself is internally inconsistent. An edge existed, but not at the moment the preceding hop required it. \textbf{Topology transition errors} occur when an enabling vulnerability disappears mid-attack, between one stage and the next. Unlike the preceding structural errors, \textbf{Evidence stitching errors} occur at the forensic evidence layer. Individual alerts each match some static edge, but no single chronological sequence can accommodate all of them together. In every case, the underlying cause is the same, the graph has no way to ask whether a sequence, not just its individual steps, was ever physically realizable.
+This lack of temporal enforcement causes three forensic failures. \textbf{Temporal feasibility errors} occur when an edge did not exist when required by the preceding hop. \textbf{Topology transition errors} occur when vulnerabilities disappear mid-attack. \textbf{Evidence stitching errors} occur when individual alerts match static edges, but no chronological sequence can accommodate all alerts together. In all cases, the graph fails to verify if a multi-step sequence was ever physically realizable.
 
 Temporal attack graphs (TAGs)~\cite{Gain2023} resolve the first two failure modes structurally, by requiring that the window in which each hop is used never precede the window used by the hop before it. This is the key difference from simply stamping timestamps onto static edges: a TAG enforces the ordering constraint jointly across the entire path during traversal, not edge by edge after the fact, so a Frankenstein path is never assembled in the first place. What a TAG alone cannot do is the third failure mode. It has no mechanism for taking in observed evidence and checking it against that structure, or for reasoning about what must have happened during a gap where evidence is missing. Forensic investigation needs precisely that, a way to inject retrospective evidence as a constraint on a temporally consistent topology, and to draw sound conclusions when the evidence is incomplete or contradictory.
 
-This is the gap F-TAG closes. The relevant object for forensic correlation is therefore not a static attack path, but a temporally feasible attack corridor constrained by whatever evidence survives. Rather than building the attack graph from the evidence itself, F-TAG first enumerates every temporally feasible attack corridor from the topology alone, then uses observed alerts and timestamps to constrain those corridors retrospectively (Figure~\ref{fig:motivating-example}). This lets F-TAG reject evidence that is temporally impossible outright, while still bounding the unobserved portions of an otherwise-feasible attack through the Forensic Window of Compromise.
+This is the gap F-TAG closes. The relevant object for forensic correlation is therefore not a static attack path, but a temporally feasible attack path constrained by whatever evidence survives. Rather than building the attack graph from the evidence itself, F-TAG first enumerates every temporally feasible attack path from the network topology alone, then uses observed alerts and timestamps to constrain those paths retrospectively (Figure~\ref{fig:motivating-example}). This lets F-TAG reject evidence that is temporally impossible outright, while still bounding the unobserved portions of an otherwise-feasible attack through the Forensic Window of Compromise.
 
 This paper makes the following contributions:
 \begin{enumerate}
-    \item Formalizing temporal forensic reconstruction by injecting reactive evidence as strict structural constraints upon proactive, time-aware attack topologies.
+    \item Formalizing temporal forensic reconstruction by injecting observed evidence (IDS alerts and system logs) as strict structural constraints upon time-aware network topologies.
     \item Deriving the Forensic Window of Compromise (FWoC) to establish conditional soundness guarantees that bound unobserved attacker actions when evidence is missing.
-    \item Demonstrating temporal contradiction detection to natively identify and filter false-positive alerts and falsified evidence where static methods fail.
+    \item Demonstrating temporal contradiction detection to natively identify and filter false-positive alerts and falsified evidence where methods that rely on static attack graphs fail.
     \item Introducing Anti-Forensics Confidence ($AF_{conf}$), a Bayesian metric to quantify the likelihood of deliberate log-wiping versus routine evidence loss.
-    \item Conducting extensive empirical evaluation and scalability validation across DARPA LLDOS benchmarks~\cite{haines2001extending,darpa2000lldos} and MulVAL enterprise topologies~\cite{mulval} up to 100 hosts, demonstrating robust narrative recovery under severe evidence degradation.
+    \item Conducting extensive empirical evaluation and scalability validation across DARPA LLDOS benchmarks~\cite{haines2001extending,darpa2000lldos} and synthetic enterprise topologies up to 100 hosts, demonstrating robust narrative recovery under severe evidence degradation.
 \end{enumerate}
 
-The remainder of this paper is organized as follows. Section~\ref{sec:related-work} reviews related work. Section~\ref{sec:theory} presents the foundational theory. Section~\ref{sec:methodology} describes the F-TAG methodology and its metrics. Section~\ref{sec:evaluation} details the experimental setup and presents results. Section~\ref{sec:discussion} discusses implications. Section~\ref{sec:conclusion} concludes, and Section~\ref{sec:future-work} outlines future directions.
 \section{Related Work}\label{sec:related-work}
 
 \subsection{Attack Graphs and Alert Correlation}\label{sec:static-ag}
 
-Attack graphs proactively map how vulnerabilities can be chained across a network~\cite{Noel2018,Lallie2020}. Formally, a static attack graph $G = (E \cup C, R_{r} \cup R_{i})$ is a directed graph mapping exploits and security conditions as edges, as formulated in logic-based models like MulVAL~\cite{mulval,6263942}. Alert correlation techniques match IDS alerts against these prerequisite-consequence relationships to trace attacks~\cite{10.1145/586110.586144,ning2004building,husak2019survey}. However, because $G$ carries no notion of time, it cannot model patches, configuration changes, or causal ordering constraints across windows. Alert correlation systems relying on these static graphs can therefore accept alerts on closed paths or construct physically impossible backward-time causal chains, the core limitation motivating F-TAG.
+Attack graphs proactively map vulnerability chains~\cite{Noel2018,Lallie2020}. Formally, a static attack graph $G = (E \cup C, R_{r} \cup R_{i})$ consists of exploits ($E$), conditions ($C$), prerequisites ($R_{r}$), and implications ($R_{i}$), as formalized in MulVAL~\cite{mulval,6263942}. Alert correlation matches IDS alerts against these relationships~\cite{10.1145/586110.586144,ning2004building,husak2019survey}. Because $G$ lacks time, it cannot model patches, configuration changes, or causal ordering. Thus, alert correlation systems relying on static graphs can construct physically impossible, backward-time causal chains---the core limitation motivating F-TAG.
 
 \subsection{Evidence Graphs and Network Forensics}
 
@@ -124,17 +123,17 @@ False-positive filtering & \texttimes & \texttimes & \texttimes & Partial & \che
 
 \section{Foundational Theory}\label{sec:theory}
 
-To model enterprise network forensics without state-space explosion or causal ambiguity, F-TAG formalizes how time-varying physical topologies constrain reactive digital evidence.
+To model enterprise network forensics without state-space explosion or causal ambiguity, F-TAG formalizes how time-varying physical topologies constrain observed digital evidence.
 
 \subsection{Definition 1: Forensic Temporal Attack Graph (F-TAG)}\label{sec:def1}
 
-F-TAG executes a reconstruction phase to collapse the discrete snapshots of a TAG into a unified structure where each edge $e$ carries a set of active windows $\mathcal{W}(e) \subseteq \{0, 1, \dots, \tau-1\}$, where $\tau$ denotes the total number of discrete time windows spanning the observation period (e.g., $\tau = 4$ for a four-week investigation). This representation captures the physical reality that network edges (vulnerability exploitation paths) appear and disappear over time as configurations change, patches are applied, and firewall rules are modified. The unified representation enables efficient algorithmic traversal without redundant duplication of shared topology across windows.
+F-TAG executes a reconstruction phase to collapse the discrete snapshots of a TAG into a unified structure where each edge $e$ carries a set of active windows $\mathcal{W}(e) \subseteq \{0, 1, \dots, \tau-1\}$, where $\tau$ denotes the total number of discrete time windows spanning the observation period (e.g., $\tau = 4$ for a four-week investigation). Throughout this paper, F-TAG operates at the host level: intermediate logical deduction states are collapsed into direct host-to-host transitions, so each vertex in $V_{all}$ corresponds to a physical network host. This representation captures the physical reality that vulnerability exploitation paths between hosts appear and disappear over time as configurations change, patches are applied, and firewall rules are modified, without redundant duplication of shared topology across windows.
 
 \textbf{Definition 1 (Forensic Temporal Attack Graph).} Formally, Forensic Temporal Attack Graph (F-TAG) is defined as:
 \begin{equation}
 \mathcal{G}^a_{unified} = \left(V_{all},\ E_{all},\ \mathcal{W}\right)
 \end{equation}
-where $V_{all} = \bigcup_{t=0}^{\tau-1} V_t$ is the cumulative set of all vertices, $E_{all} = \bigcup_{t=0}^{\tau-1} E_t$ is the cumulative set of all directed attack edges, and $\mathcal{W}: E_{all} \to 2^{\{0, 1, \dots, \tau-1\}}$ maps each edge to the set of discrete time windows in which it was physically active and traversable (where the exponential notation denotes the power set, indicating an edge may be active in any arbitrary subset of windows).
+where $V_{all} = \bigcup_{t=0}^{\tau-1} V_t$ is the cumulative set of all vertices, $E_{all} = \bigcup_{t=0}^{\tau-1} E_t$ is the cumulative set of all directed attack edges, and $\mathcal{W}: E_{all} \to 2^{\{0, 1, \dots, \tau-1\}}$ maps each edge to the set of discrete time windows in which the vulnerability it represents was present and exploitable (i.e., not yet patched or revoked). The notation $2^{\{0,1,\dots,\tau-1\}}$ denotes the power set of all window indices, meaning an edge may be active in any subset of windows, including non-contiguous ones such as $\{0, 3\}$.
 
 \paragraph{Physical Walkthrough Example.} 
 Consider an investigation spanning four weeks: $w_0, w_1, w_2, w_3$, where the time windows are indexed $\{0, 1, 2, 3\}$. Suppose directed edge $e$ represents the exploitation of a critical web vulnerability:
@@ -148,7 +147,7 @@ Under F-TAG, the temporal lifespan for this attack edge is simply $\mathcal{W}(e
 
 \subsection{Definition 2: Forensic Temporal Attack Path}\label{sec:def2}
 
-\textbf{Definition 2.} A Forensic Temporal Attack Path $p^f_{ij}$ from node $i$ to node $j$ is a sequence of hops $\langle (e_0, \sigma_0), (e_1, \sigma_1), \dots, (e_{\eta-1}, \sigma_{\eta-1}) \rangle$, where each $\sigma_k \in \{0, 1, \dots, \tau-1\}$ is the index of the time window in which hop $k$ is executed (i.e., $\sigma_k$ refers to time window $w_{\sigma_k}$). This sequence must satisfy three strict constraints:
+\textbf{Definition 2.} A Forensic Temporal Attack Path $p^f_{ij}$ from host $i$ to host $j$ is a sequence of hops $\langle (e_0, \sigma_0), (e_1, \sigma_1), \dots, (e_{\eta-1}, \sigma_{\eta-1}) \rangle$, where each $\sigma_k \in \{0, 1, \dots, \tau-1\}$ is the index of the time window in which hop $k$ is executed (i.e., $\sigma_k$ refers to time window $w_{\sigma_k}$). This sequence must satisfy three strict constraints:
 \begin{enumerate}
     \item \textbf{Existence Constraint:} Each edge $e_k$ must be traversed in a time window where it was actually active, i.e., $\sigma_k \in \mathcal{W}(e_k)$. This ensures the exploitation path physically existed at the time it was used.
     \item \textbf{Chronological Constraint:} The time window sequence is strictly non-decreasing: $\sigma_0 \le \sigma_1 \le \dots \le \sigma_{\eta-1}$, ensuring the attacker cannot travel backward in time.
@@ -163,7 +162,7 @@ Because each edge carries its own window set $\mathcal{W}(e)$ in a single combin
 \begin{equation}
 \text{TAC}(p^f_{ij}) = [\sigma_0(p^f_{ij}),\ \sigma_{\eta-1}(p^f_{ij})]
 \end{equation}
-where $\sigma_0(p^f_{ij})$ is the time window in which the initial hop was executed (e.g., initial compromise at entry node $i$), and $\sigma_{\eta-1}(p^f_{ij})$ is the time window of the final hop (e.g., reaching the target objective at node $j$).
+where $\sigma_0(p^f_{ij})$ is the time window in which the initial hop was executed (e.g., initial compromise at entry host $i$), and $\sigma_{\eta-1}(p^f_{ij})$ is the time window of the final hop (e.g., reaching the target objective at host $j$).
 
 For example, if an attacker executes the first hop in Week~5 ($\sigma_0 = 5$) and concludes the final hop in Week~8 ($\sigma_{\eta-1} = 8$), the corridor is the interval $[w_5, w_8]$, covering all windows $\{5, 6, 7, 8\}$. Note that unlike $\mathcal{W}(e)$, which is a set of specific active windows for a single edge (and may contain gaps), the TAC is a continuous interval bounding the entire multi-hop attack from start to finish.
 
@@ -174,10 +173,10 @@ The TAC encapsulates the physical lifespan of a specific attack sequence, struct
 Given a suspect entry host $i$ (such as an external web server) and a target asset $j$ (such as an internal database), a forensic investigator must discover all structurally feasible attack paths between them. Algorithm~\ref{alg:enumerate} solves this by executing a time-constrained depth-first search over the unified graph $\mathcal{G}^a_{unified}$.
 
 \paragraph{Computational Intractability of Static Filtering.}
-As established in Section 1, simply generating all paths on a static graph and filtering out impossible ``Frankenstein paths'' after the fact is computationally intractable. In enterprise networks, the number of static paths grows combinatorially, quickly overwhelming system memory. By enforcing the temporal condition $\sigma \ge \sigma_{min}$ directly during traversal, Algorithm~\ref{alg:enumerate} cuts off invalid branches at the root, ensuring the search scales efficiently.
+As established in Section 1, simply generating all paths on a static graph and filtering out impossible ``Frankenstein paths'' after the fact is computationally intractable. In enterprise networks, the total number of simple paths between two hosts grows exponentially with network size, making full enumeration followed by post-hoc temporal filtering impractical at scale. By enforcing the temporal condition $\sigma \ge \sigma_{min}$ directly during traversal, Algorithm~\ref{alg:enumerate} prunes invalid branches as they are encountered, ensuring the search remains tractable.
 
 \paragraph{Guaranteed Completeness.}
-Because this temporal condition discards only those transitions where $\sigma < \sigma_{min}$, it eliminates exclusively those sequences that violate the physical arrow of time. No chronologically feasible attack path is ever skipped. Consequently, the search is mathematically guaranteed to recover every valid attack path of length $\le H_{max}$ (where $H_{max}$ is the maximum number of hops permitted in a single attack path) between node $i$ and node $j$.
+Because this temporal condition discards only those transitions where $\sigma < \sigma_{min}$, it eliminates exclusively those sequences that violate the physical arrow of time. No chronologically feasible attack path is ever skipped. Consequently, the search is mathematically guaranteed to recover every valid attack path of length $\le H_{max}$ (where $H_{max}$ is the maximum number of hops permitted in a single attack path) between host $i$ and host $j$.
 
 \begin{algorithm}[t]
 \caption{Temporal Path Enumeration ($Q^a_{ij}$)}
@@ -209,23 +208,23 @@ Because this temporal condition discards only those transitions where $\sigma < 
 
 \section{The F-TAG Methodology}\label{sec:methodology}
 
-The F-TAG methodology bridges physical network evolution with reactive digital evidence (such as IDS alerts, firewall logs, and authentication records) to reconstruct attack narratives when evidence is incomplete or contradictory.
+The F-TAG methodology integrates physical network evolution with observed digital evidence (such as IDS alerts, firewall logs, and authentication records) to reconstruct attack sequences when evidence is incomplete or contradictory.
 
 \subsection{Path-Level Forensic Bounds}\label{sec:path-metrics}
 
-When reconstructing an incident, relying solely on raw log timestamps artificially narrows the perceived timeline. Missing or wiped logs at the edges of an attack make the intrusion appear to have started later and ended earlier than it truly did. The \textbf{Forensic Window of Compromise (FWoC)} bounds the true incident timeline by combining surviving forensic evidence with the physical constraints of the network topology.
+When reconstructing an incident, relying solely on raw log timestamps artificially narrows the perceived timeline. Missing or wiped logs at the edges of an attack make the intrusion appear to have started later and ended earlier than it truly did. The \textbf{Forensic Window of Compromise (FWoC)} establishes the true incident timeline by intersecting what surviving evidence directly supports with what the physical network topology permits.
 
-Given an attack path $p$ consisting of $H$ hops and a set of $N$ observed evidence timestamps $\mathcal{E} = \{t_1, t_2, \dots, t_N\}$ mapped to discrete time windows. Intuitively, FWoC asks: given whatever evidence survived and how the network was actually configured, what is the tightest window in which the intrusion could have started and ended? It is the overlap between what the surviving evidence directly supports and what the Temporal Attack Corridor (TAC) physically permits:
+Given an attack path $p$ consisting of $H$ hops and a set of $N$ observed evidence timestamps $\mathcal{E} = \{t_1, t_2, \dots, t_N\}$ mapped to discrete time windows. Intuitively, FWoC asks: given whatever evidence survived and how the network was actually configured, what is the provable time interval within which the intrusion must have started and ended? It is the overlap between what the surviving evidence directly supports and what the Temporal Attack Corridor (TAC) physically permits:
 \begin{equation}\label{eq:fwoc}
 \text{FWoC}(p) = \text{TAC}(p) \;\cap\; \left[\min(\mathcal{E}) - \delta - \delta_s,\;\;\max(\mathcal{E}) + \delta + \delta_s\right]
 \end{equation}
-Equation~\eqref{eq:fwoc} balances two complementary components, namely an evidence-bounded interval derived from surviving telemetry, and a structural corridor enforced by network topology.
+Equation~\eqref{eq:fwoc} is an intersection of two sets of discrete time window indices, both expressed in interval notation. TAC(p) $= [\sigma_0(p), \sigma_{\eta-1}(p)]$ denotes the set $\{\sigma_0, \sigma_0+1, \dots, \sigma_{\eta-1}\}$ of all windows within the structural corridor. The right-hand term $[\min(\mathcal{E}) - \delta - \delta_s,\ \max(\mathcal{E}) + \delta + \delta_s]$ denotes the set of windows within the expanded evidence span. Their intersection produces the set of windows that are simultaneously supported by surviving evidence and permitted by the physical network topology.
 
 The raw evidence span $[\min(\mathcal{E}), \max(\mathcal{E})]$ captures the earliest and latest timestamps recorded in surviving logs or alerts. To absorb network transit latency, clock synchronization errors between hosts, and timestamp discretization errors across diverse logging hosts, the tolerance parameter $\delta$ (typically 0 or 1 window) provides a small clock-skew margin.
 
 To mathematically guarantee that the true intrusion boundaries are captured even when evidence is missing, the topology-aware correction term $\delta_s = \max(0, H - N)$ expands the raw evidence bounds outward.\label{sec:worst-case-bounds} This accounts for the worst-case scenario where up to $H - N$ unobserved contiguous actions occurred entirely before the first recorded alert or entirely after the last one. When evidence is complete ($N \ge H$), $\delta_s = 0$ and the bound tightens purely around the observed timestamps.
 
-Finally, the intersection ($\cap$) with the Temporal Attack Corridor $\text{TAC}(p) = [\sigma_0(p), \sigma_{\eta-1}(p)]$ acts as a physical ceiling and floor. Physical network topology imposes hard constraints: an attacker cannot exploit a vulnerability before it was introduced, nor after it was patched. The TAC clamp thus confines the evidence interval strictly to windows where the path was physically traversable, preventing arbitrary outward expansion. For example, if an attack path has $H=5$ total hops but evidence survives for only $N=2$ of those hops, the correction term $\delta_s=3$ expands the evidence bounds outward by 3 time windows, while the TAC clamp securely confines it to the physically feasible corridor.
+Finally, the intersection ($\cap$) with the Temporal Attack Corridor $\text{TAC}(p) = [\sigma_0(p), \sigma_{\eta-1}(p)]$ enforces a hard structural bound derived from the network topology: an attacker cannot exploit a vulnerability before it was introduced, nor after it was patched. The TAC therefore confines the evidence interval strictly to windows where the attack path was physically traversable, preventing the bounds from expanding beyond what the topology permits. For example, if an attack path has $H=5$ total hops but evidence survives for only $N=2$ of those hops, the correction term $\delta_s=3$ expands the evidence bounds outward by 3 time windows, while the TAC intersection restricts the result to the physically feasible range.
 
 \paragraph{Structural Contradiction Detection.}
 If the intersection in Equation~\eqref{eq:fwoc} yields an empty set:
@@ -236,17 +235,17 @@ the evidence timestamps are physically incompatible with the network topology. F
 
 \subsection{Topological Triage \& Scoping}\label{sec:network-metrics}
 
-While path-level metrics evaluate individual candidate routes, incident response teams require network-wide prioritization to identify which hosts must be isolated and imaged first, and how far back into historical log archives an investigation must reach. To support operational scoping without manual inspection of hundreds of hosts, F-TAG aggregates surviving attack paths across the entire topology to compute three structural metrics.
+While path-level metrics evaluate individual candidate routes, a real incident may involve hundreds of hosts and dozens of plausible attack paths. Forensic resources — investigator time, tooling, and log archive retrieval — are finite, so investigating all hosts simultaneously is impractical. Incident response teams therefore require network-wide prioritization to identify which hosts must be isolated and examined first, and how far back into historical log archives an investigation must reach. To support operational scoping without manual inspection of hundreds of hosts, F-TAG aggregates surviving attack paths across the entire topology to compute three structural metrics.
 
-To pinpoint mandatory forensic chokepoints, hosts that the adversary was forced to traverse regardless of the specific route executed, making them the highest-priority targets for memory acquisition, the temporal chokepoint score $\chi(h)$ measures the fraction of evidentially surviving attack paths traversing each host $h$:
+To pinpoint mandatory forensic chokepoints, hosts that the adversary was forced to traverse regardless of the specific route executed, making them the highest-priority targets for forensic examination, the temporal chokepoint score $\chi(h)$ measures the fraction of evidentially surviving attack paths traversing each host $h$:
 \begin{equation}\label{eq:chokepoint}
 \chi(h) = \frac{|\{p \in \mathcal{P}_{surviving} : h \in V(p)\}|}{|\mathcal{P}_{surviving}|}
 \end{equation}
-where $\mathcal{P}_{surviving}$ denotes the set of candidate attack paths that remain valid after applying temporal and evidence constraints, and $V(p)$ is the set of hosts visited along path $p$. A score of $\chi(h) = 1.0$ confirms that host $h$ lies on every structurally plausible narrative.
+where $\mathcal{P}_{surviving}$ denotes the set of candidate attack paths that remain valid after applying temporal and evidence constraints, and $V(p)$ is the set of hosts visited along path $p$. A score of $\chi(h) = 1.0$ confirms that host $h$ lies on every structurally plausible attack path.
 
 
 
-Finally, to provide an immutable structural anchor for how deep into cold storage investigators must search, proving that any external activity prior to this point is physically disconnected from the observed compromise, even under total perimeter log deletion, the temporal search radius $T_{min}(j_{tgt})$ bounds the earliest possible breach window:
+Finally, $T_{min}(j_{tgt})$ identifies the earliest time window in which an attacker could have first entered the network on any path leading to a target asset $j_{tgt}$. This is derived purely from the network topology, so it remains fixed regardless of how much log evidence has been deleted. It tells investigators how far back in time their log search must reach: any activity before $T_{min}$ cannot be part of the observed compromise. Formally:
 \begin{equation}\label{eq:tmin}
 T_{min}(j_{tgt}) = \min_{p \in \mathcal{P}_{\to j_{tgt}}} \sigma_0(p)
 \end{equation}
@@ -254,7 +253,7 @@ where $\mathcal{P}_{\to j_{tgt}}$ is the set of topologically feasible backward-
 
 \subsection{Anti-Forensics Confidence (\texorpdfstring{$AF_{conf}$}{AF\_conf})}\label{sec:afconf}
 
-When an attack path contains an unobserved hop, investigators must distinguish routine logging failure (log rotation, network packet drops) from deliberate anti-forensic wiping. The Anti-Forensics Confidence metric ($AF_{conf}$) provides a secondary, Bayesian assessment that estimates the likelihood of deliberate tampering without triggering misleading false accusations.
+When an attack path contains an unobserved hop, investigators must distinguish routine logging failure (log rotation, network packet drops) from deliberate anti-forensic wiping. The Anti-Forensics Confidence metric ($AF_{conf}$) provides a Bayesian estimate of the probability that a missing log entry results from deliberate tampering rather than accidental loss.
 
 \paragraph{The Bayesian Formulation.}
 To help investigators formally distinguish whether missing evidence is due to routine logging failure or a deliberate anti-forensic cover-up, the posterior probability of deliberate log-wiping given an evidence gap $G$ at node $n$ with acquired privilege level $x$ is defined as:
@@ -273,15 +272,15 @@ The likelihood terms in Equation~\eqref{eq:afconf} are grounded directly in oper
 \begin{equation}
 P(\text{root} \mid H_1) = 0.75, \quad P(\text{user} \mid H_1) = 0.25
 \end{equation}
-Grounding likelihood in operating system permissions provides robust discrimination that avoids reliance on brittle anti-forensic tool signatures, which sophisticated adversaries routinely evade.
+For the purposes of this model, we assume these representative heuristic values: they reflect the overwhelming likelihood that log tampering requires administrative privileges (0.75), while preserving a non-zero probability (0.25) to account for edge cases such as user-level application log deletion, misconfigured directory permissions, or lateral movement covering tracks in user-space before privilege escalation. Grounding likelihood in operating system permissions provides robust discrimination that avoids reliance on brittle anti-forensic tool signatures, which sophisticated adversaries routinely evade.
 
-Conversely, benign logging failures (e.g., buffer overflows or network packet drops) happen indiscriminately across infrastructure regardless of host privilege. Under $H_0$, the probability of observing a missing record at a root-privileged node simply equals the empirical proportion of root nodes across the target network topology:
+Conversely, benign logging failures (e.g., buffer overflows or network packet drops) happen indiscriminately across infrastructure regardless of host privilege. Under $H_0$, the probability of observing a missing record at a root-privileged node simply equals the empirical proportion of root nodes across the generated F-TAG:
 \begin{equation}\label{eq:base-rate}
 P(\text{root} \mid H_0) = P_{root,H_0} = \frac{|\{n \in V_{all} : \text{priv}(n) = \text{root}\}|}{|V_{all}|}
 \end{equation}
 Because F-TAG computes $P_{root,H_0}$ directly from the network topology under investigation, $AF_{conf}$ automatically calibrates itself to any environment (such as high-privilege server clusters versus locked-down workstation subnets).
 
-Two analytical properties characterize the mathematical behavior of $AF_{conf}$:
+Two analytical properties govern $AF_{conf}$:
 
 \begin{lemma}[Monotonicity under Uniform Base Rates]
 When structural base rates are uniform across privilege levels, $AF_{conf}(G)$ is strictly non-decreasing with respect to the attacker's privilege level at the point of evidence loss.
@@ -295,7 +294,10 @@ When structural base rates are uniform across privilege levels, $AF_{conf}(G)$ i
 As the network becomes saturated with root-level nodes ($P(x \mid H_0) \to 1$), the $AF_{conf}$ score for root nodes drops strictly below the prior $P(H_1)$.
 \end{lemma}
 
-\textit{Proof:} Let $P(x \mid H_0) \to 1$. With operational setting $P(x \mid H_1) = \alpha = 0.75$, the limit is $\frac{0.75 P(H_1)}{0.75 P(H_1) + P(H_0)}$. Because $P(H_1) < 1$ and $P(H_0) > 0$, this is strictly less than the prior $P(H_1)$. The limit only approaches $P(H_1)$ if we assume deliberate wiping \textit{always} occurs at root nodes ($\alpha \to 1$).
+\textit{Proof:} Let $P(x \mid H_0) \to 1$. With operational setting $P(x \mid H_1) = \alpha = 0.75$, the limit is $\frac{0.75 P(H_1)}{0.75 P(H_1) + P(H_0)}$. Because $P(H_1) < 1$ and $P(H_0) > 0$, this is strictly less than the prior $P(H_1)$. The limit only approaches $P(H_1)$ if we assume deliberate wiping \textit{always} occurs at root nodes ($\alpha \to 1$). $\square$
+
+\paragraph{Significance of Analytical Properties.}
+Together, these lemmas demonstrate that $AF_{conf}$ behaves predictably across different network environments. Lemma~1 provides a formal sanity check: it guarantees that in standard networks where privileges are well-distributed, the metric successfully encodes the domain intuition that missing evidence at a root node is inherently more suspicious. Lemma~2 addresses the edge case of poorly-designed, root-saturated networks where benign failures are mathematically guaranteed to happen on root nodes. Rather than producing false accusations in these environments, Lemma~2 proves that $AF_{conf}$ degrades gracefully: the score becomes strictly conservative, dropping below the baseline prior. This ensures the metric is safe to deploy even in poorly-configured environments, systematically refusing to confidently accuse an attacker when the environment makes benign failures indistinguishable from deliberate wiping.
 
 \section{Evaluation}\label{sec:evaluation}
 
@@ -311,7 +313,7 @@ To evaluate F-TAG, we assess its performance across two complementary environmen
 We mapped the verified capability paths from both LLDOS scenarios into F-TAGs, using the real, historical packet captures and IDS alerts from the dataset as our evidence base. LLDOS 1.0 represents an attacker executing a multi-stage distributed denial-of-service (DDoS) attack across multiple hosts (\texttt{mill}, \texttt{pascal}, \texttt{locke}), exhibiting topological path redundancy. In contrast, LLDOS 2.0.2 models a stealthy, serial intrusion executing without topological redundancy.
 
 \paragraph{Enterprise Topology Generation.} 
-We used MulVAL~\cite{mulval} to generate synthetic multi-tier enterprise network topologies and attack graphs across discrete time windows, modeling time-varying vulnerability lifespans and configuration changes. Because these network structures are synthetic, log evidence across these paths was simulated mathematically via a Monte Carlo injection pipeline to rigorously test our metrics at scale.
+We procedurally generated synthetic multi-tier enterprise network topologies and used MulVAL~\cite{mulval} to generate the corresponding attack graphs across discrete time windows, modeling time-varying vulnerability lifespans and configuration changes. Because these network structures are synthetic, log evidence across these paths was generated probabilistically via a Monte Carlo injection pipeline to rigorously test our metrics at scale.
 
 \paragraph{Static vs. Temporal Attack Feasibility.} 
 To highlight how temporal structure constrains forensic analysis, we evaluated a 5-hop attack path (across 6 hosts) over an observation timeline of $\tau=20$ discrete time windows, where the required vulnerabilities coexisted only during the window span $[w_8, w_{13}]$. While a static graph collapses this history into a single timeless path, blind to when vulnerabilities actually existed, F-TAG identifies the 252 valid temporal execution paths (all non-decreasing hop sequences satisfying $\sigma_0 \le \dots \le \sigma_4$ within $[w_8, w_{13}]$, Figure~\ref{fig:static-vs-tag}). Crucially, an alert observed outside this active window (such as a false alarm at $w_0$) produces an empty intersection ($\text{FWoC} = \emptyset$), allowing F-TAG to natively filter impossible false positives that static attack graphs accept as valid.
@@ -368,8 +370,8 @@ Because $T_{min}$ is derived from topology rather than surviving evidence, it st
 We evaluated F-TAG's ability to expose tampered evidence against the static attack graph baseline (Zhang et al.~\cite{zhang2015detecting}), using identical node-edge topologies without temporal ordering constraints. We tested 50-trial Monte Carlo sweeps across three adversarial falsification strategies (Table~\ref{tab:falsification}, Figure~\ref{fig:falsification}):
 \begin{itemize}
     \item \textbf{Precedence Swap}: Exchanging the chronological timestamps of two sequential attack hops.
-    \item \textbf{State Revocation}: Submitting an alert for an exploit hop after a permanent patch removed the vulnerability.
-    \item \textbf{Window Closure}: Submitting an alert after a scheduled, time-bounded connectivity window expired.
+    \item \textbf{Vulnerability Patching}: Submitting an alert for an exploit hop after a permanent patch removed the vulnerability.
+    \item \textbf{Connectivity Expiration}: Submitting an alert after a scheduled, time-bounded connectivity window expired.
 \end{itemize}
 
 \begin{table}[t]
@@ -385,18 +387,18 @@ We evaluated F-TAG's ability to expose tampered evidence against the static atta
 \midrule
 \multicolumn{5}{l}{\textbf{LLDOS 1.0 (Single-Zombie Wipe: Measures Resilience)}} \\
 Precedence Swap    & 1.00 $\pm$ 0.00 & 1.00 $\pm$ 0.00 & 0.92 $\pm$ 0.06 & 0.66 $\pm$ 0.13 \\
-State Revocation   & 1.00 $\pm$ 0.00 & 0.00 $\pm$ 0.00 & 0.93 $\pm$ 0.06 & 0.76 $\pm$ 0.12 \\
-Window Closure     & 1.00 $\pm$ 0.00 & 0.00 $\pm$ 0.00 & 0.88 $\pm$ 0.09 & 0.00 $\pm$ 0.00 \\
+Vulnerability Patching & 1.00 $\pm$ 0.00 & 0.00 $\pm$ 0.00 & 0.93 $\pm$ 0.06 & 0.76 $\pm$ 0.12 \\
+Connectivity Expiration & 1.00 $\pm$ 0.00 & 0.00 $\pm$ 0.00 & 0.88 $\pm$ 0.09 & 0.00 $\pm$ 0.00 \\
 \midrule
 \multicolumn{5}{l}{\textbf{LLDOS 1.0 (Full Infrastructure Wipe: Measures Detection)}} \\
 Precedence Swap    & 1.00 $\pm$ 0.00 & 1.00 $\pm$ 0.00 & 0.88 $\pm$ 0.06 & 1.00 $\pm$ 0.00 \\
-State Revocation   & 1.00 $\pm$ 0.00 & 0.00 $\pm$ 0.00 & 0.86 $\pm$ 0.07 & 0.90 $\pm$ 0.08\tablefootnote{Recall is $\approx 0.90$ because randomly revoking an interior step has a 1-in-5 chance of hitting the lateral-movement edges into \texttt{locke}/\texttt{pascal}, \texttt{mill} lacks this step and survives.} \\
-Window Closure     & 1.00 $\pm$ 0.00 & 0.00 $\pm$ 0.00 & 0.88 $\pm$ 0.06 & 1.00 $\pm$ 0.00 \\
+Vulnerability Patching & 1.00 $\pm$ 0.00 & 0.00 $\pm$ 0.00 & 0.86 $\pm$ 0.07 & 0.90 $\pm$ 0.08\tablefootnote{Recall is $\approx 0.90$ because randomly revoking an interior step has a 1-in-5 chance of hitting the lateral-movement edges into \texttt{locke}/\texttt{pascal}, \texttt{mill} lacks this step and survives.} \\
+Connectivity Expiration & 1.00 $\pm$ 0.00 & 0.00 $\pm$ 0.00 & 0.88 $\pm$ 0.06 & 1.00 $\pm$ 0.00 \\
 \midrule
 \multicolumn{5}{l}{\textbf{LLDOS 2.0.2 (Stealth, Zero Redundancy)}} \\
 Precedence Swap    & 1.00 $\pm$ 0.00 & 1.00 $\pm$ 0.00 & 0.70 $\pm$ 0.07 & 1.00 $\pm$ 0.00 \\
-State Revocation   & 1.00 $\pm$ 0.00 & 0.00 $\pm$ 0.00 & 0.70 $\pm$ 0.07 & 1.00 $\pm$ 0.00 \\
-Window Closure     & 1.00 $\pm$ 0.00 & 0.00 $\pm$ 0.00 & 0.70 $\pm$ 0.07 & 1.00 $\pm$ 0.00 \\
+Vulnerability Patching & 1.00 $\pm$ 0.00 & 0.00 $\pm$ 0.00 & 0.70 $\pm$ 0.07 & 1.00 $\pm$ 0.00 \\
+Connectivity Expiration & 1.00 $\pm$ 0.00 & 0.00 $\pm$ 0.00 & 0.70 $\pm$ 0.07 & 1.00 $\pm$ 0.00 \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -409,7 +411,7 @@ Window Closure     & 1.00 $\pm$ 0.00 & 0.00 $\pm$ 0.00 & 0.70 $\pm$ 0.07 & 1.00 
 \end{figure}
 
 \paragraph{Static Graphs Miss Both Falsifications, F-TAG Catches Both.}
-A static graph has no concept of time, so it scores 0.00 recall on both state revocation and window closure (Table~\ref{tab:falsification}, Figure~\ref{fig:falsification}), it simply cannot tell a closed path from an open one. F-TAG detects both via structural contradiction ($\text{FWoC} = \emptyset$), reaching perfect recall under a full infrastructure wipe.
+A static attack graph has no concept of time, so it scores 0.00 recall on both vulnerability patching and connectivity expiration (Table~\ref{tab:falsification}, Figure~\ref{fig:falsification}); it simply cannot tell a closed path from an open one. F-TAG detects both via structural contradiction ($\text{FWoC} = \emptyset$), reaching perfect recall under a full infrastructure wipe.
 
 The one tradeoff is precision, and it tracks network redundancy directly. LLDOS 1.0 has parallel attack routes, so benign timestamp inaccuracies (e.g., clock skew or network logging delays) on one path are absorbed by the others (0.88 to 0.93 precision). LLDOS 2.0.2 is a single serial path with no redundancy, so these same inaccuracies have nowhere to go and precision drops to 0.70, roughly 3 false contradiction flags per 10. That is a reasonable price for never missing a real falsification.
 
@@ -417,7 +419,7 @@ The one tradeoff is precision, and it tracks network redundancy directly. LLDOS 
 
 The central operational question is whether $AF_{conf}$ can reliably tell deliberate log-wiping apart from routine telemetry loss, and whether that discrimination depends on how suspicious we start out (the prior $P(H_1)$).
 
-To evaluate this, we calibrated $AF_{conf}$ using a Monte Carlo injection pipeline across 10 random seeds and three prior settings ($P(H_1) \in \{0.05, 0.15, 0.30\}$) on the MulVAL enterprise topology (15 candidate paths, $\sim$45 samples per class per seed), testing three distinct evidence-loss classes:
+To evaluate this, we calibrated $AF_{conf}$ using a Monte Carlo injection pipeline across 10 random seeds and three prior settings ($P(H_1) \in \{0.05, 0.15, 0.30\}$) on the synthetic F-TAG generated using MulVAL (15 candidate paths, $\sim$45 samples per class per seed), testing three distinct evidence-loss classes:
 \begin{enumerate}
     \item \textbf{Wipe-Class ($H_1$)}: Deliberate log-wiping biased toward high-privilege pivot nodes ($10\times$ weight for root status) and scaled by temporal chokepoint score $\chi$.
     \item \textbf{Random-Benign ($H_0$)}: Uniformly distributed evidence loss across all path nodes, modeling accidental failure.
@@ -435,16 +437,18 @@ To evaluate this, we calibrated $AF_{conf}$ using a Monte Carlo injection pipeli
 Lemma~\ref{lemma:prior-invariance} proves that the ranking $AF_{conf}$ induces is strictly prior-invariant, Figure~\ref{fig:fwoc-afconf} (b) confirms this empirically, with the AUC remaining at 0.801 (Wipe vs. Random loss) across every prior tested.
 
 \begin{lemma}[Prior-Invariance of Ranking]\label{lemma:prior-invariance}
-For fixed $x \in \{\text{root}, \text{non-root}\}$, the posterior $AF_{conf}(x) = \frac{P(x \mid H_1)P(H_1)}{P(x \mid H_1)P(H_1) + P(x \mid H_0)P(H_0)}$ is a strictly increasing function of the likelihood ratio $LR(x) = \frac{P(x \mid H_1)}{P(x \mid H_0)}$ for any $P(H_1) \in (0,1)$. Since the set of achievable $LR$ values (and hence the induced ranking over samples) is independent of $P(H_1)$, the ROC curve, and therefore AUC, is invariant to the choice of prior.
+For fixed $x \in \{\text{root}, \text{user}\}$, the posterior $AF_{conf}(x) = \frac{P(x \mid H_1)P(H_1)}{P(x \mid H_1)P(H_1) + P(x \mid H_0)P(H_0)}$ is a strictly increasing function of the likelihood ratio $LR(x) = \frac{P(x \mid H_1)}{P(x \mid H_0)}$ for any $P(H_1) \in (0,1)$. Since the set of achievable $LR$ values (and hence the induced ranking over samples) is independent of $P(H_1)$, the ROC curve, and therefore AUC, is invariant to the choice of prior.
 \end{lemma}
 
 \textit{Proof:} Write $AF_{conf}(x) = \frac{LR(x)P(H_1)}{LR(x)P(H_1) + (1-P(H_1))}$, which is strictly increasing in $LR(x)$ for any fixed $P(H_1) \in (0,1)$ since $\frac{\partial AF_{conf}}{\partial LR} = \frac{P(H_1)(1-P(H_1))}{(\cdot)^2} > 0$. As $LR(x)$ does not depend on $P(H_1)$, the ordering of $AF_{conf}$ across the two values of $x$ is preserved for every $P(H_1)$, so the ROC curve (which depends only on this ordering) is unchanged. $\square$
 
+\textbf{Implication:} This lemma provides an objectivity guarantee against a common critique of Bayesian methods: that performance metrics like AUC can be artificially inflated by cherry-picking a favorable prior. Lemma~3 proves structurally that the ROC curve (and thus AUC) is entirely independent of the prior. The consistent AUC shown in Figure~\ref{fig:fwoc-afconf}(b) is not an empirical coincidence, but a mathematical certainty. An investigator can therefore confidently use $AF_{conf}$ to rank hosts by suspicion (for triage) regardless of what prior they initially set.
+
 \paragraph{It Discriminates Well, but Not Perfectly.}
 An AUC of $\approx 0.80$ means $AF_{conf}$ reliably separates deliberate wiping from accidental loss, but with real overlap, which is expected, since our only signal is a binary root/non-root privilege flag. Rotation-triggered loss is slightly noisier ($\text{AUC} = 0.800$, wider 95\% CI: [0.742, 0.858]) because scheduled rotation only ever touches a fixed subset of hosts.
 
-\paragraph{A Threshold Cutoff Eliminates False Accusations.}
-Treating $AF_{conf} \ge 0.85$ as the accusation cutoff drives the false-accusation rate (FAR) to 0.0\% against both benign-loss classes (Table~\ref{tab:far}), at the cost of only flagging the clearest cases. Below 0.70, FAR sits around 25\%, too high for an accusation, which is why we recommend the higher threshold operationally.
+\paragraph{A Threshold Cutoff Eliminates False Accusations, but Requires Calibration.}
+Treating $AF_{conf} \ge 0.85$ as the accusation cutoff drives the false-accusation rate (FAR) to 0.0\% against both benign-loss classes (Table~\ref{tab:far}), at the cost of only flagging the clearest cases. Below 0.70, FAR sits around 25\%, too high for an accusation, which is why we recommend the higher threshold operationally. Crucially, while Lemma~\ref{lemma:prior-invariance} guarantees that the \textit{ranking} of hosts is prior-invariant, the \textit{absolute score} used for an accusation threshold is not. An incident response team must deliberately calibrate this threshold based on their operational prior $P(H_1)$; a higher baseline suspicion of tampering will naturally push more scores above a fixed cutoff.
 
 \begin{table}[t]
 \centering
@@ -467,7 +471,7 @@ On datasets without privilege metadata (such as raw LLDOS), $AF_{conf}$ cannot d
 
 \subsection{Computational Scalability}\label{sec:results-scalability}
 
-We evaluated the computational performance of F-TAG on procedurally generated three-tier enterprise architectures (DMZ, Application, Database) scaled from 9 to 99 physical hosts across five temporal windows. Intermediate logical deduction rules were collapsed into host-to-host physical transitions (\texttt{execCode}) to reflect realistic triage overhead.
+We evaluated the computational performance of F-TAG on synthetic F-TAGs representing three-tier enterprise architectures (DMZ, Application, Database) scaled from 9 to 99 physical hosts across five temporal windows. Intermediate logical deduction rules were collapsed into host-to-host physical transitions to reflect realistic triage overhead.
 
 \begin{table}[t]
 \centering
@@ -501,9 +505,9 @@ Algorithm~\ref{alg:enumerate}'s constraint eliminates static graphs' three struc
 
 \subsection{Threats to Validity}\label{sec:threats}
 
-F-TAG's guarantees hold within a specific, stated scope, and we characterize that scope precisely rather than leaving it implicit. First, $AF_{conf}$'s discriminative thresholds are calibrated on synthetic MulVAL topologies; validating them against live SIEM telemetry with confirmed anti-forensic ground truth is the natural next step before operational deployment, and we treat it as such. Second, $AF_{conf}$'s privilege model is deliberately binary (root vs. non-root)---this is a floor, not a ceiling. It establishes that even minimal privilege metadata yields useful discrimination, and richer models (SELinux, AD hierarchies) will only improve on it. Third, dense enterprise topologies benefit from standard hierarchical decomposition (subnet aggregation) to sustain real-time triage---a scaling technique, not a workaround. Finally, F-TAG treats network topology as tamper-resistant ground truth by design. If that assumption is violated---if topology or scan data is collected from infrastructure the attacker already controls---the structural reference frame itself is compromised, and F-TAG's guarantees no longer apply. This is the same trust boundary every attack-graph method inherits from its input data, made explicit rather than assumed.
+F-TAG's guarantees hold within a specific, stated scope, and we characterize that scope precisely rather than leaving it implicit. First, $AF_{conf}$'s discriminative thresholds are calibrated on synthetic MulVAL topologies; validating them against live SIEM telemetry with confirmed anti-forensic ground truth is the natural next step before operational deployment, and we treat it as such. Second, $AF_{conf}$'s privilege model is deliberately binary (root vs. non-root)---this is a floor, not a ceiling. It establishes that even minimal privilege metadata yields useful discrimination, and richer models (SELinux, AD hierarchies) will only improve on it. Third, dense enterprise topologies benefit from standard hierarchical decomposition (subnet aggregation) to sustain real-time triage---a scaling technique, not a workaround. Finally, F-TAG treats the historical configuration state and vulnerability scan data as tamper-resistant ground truth by design. If that assumption is violated---if configuration logs or scan data are collected from infrastructure the attacker already controls---the structural reference frame itself is compromised, and F-TAG's guarantees no longer apply. This is the same trust boundary every attack-graph method inherits from its input data, made explicit rather than assumed.
 
-\paragraph{Adversarial Dormancy Boundary.}\label{sec:adversarial-dormancy} The worst-case $\delta_s$ correction mathematically guarantees containment under a contiguous-execution assumption. To understand the operational limits of this bound, we stress-tested it against a simulated dormant Advanced Persistent Threat (APT) exhibiting an extreme 18-window gap between reconnaissance and exploitation (Table~\ref{tab:dormant-apt}). As expected under severe dormancy with sparse evidence ($N=1$), the standard bound prioritizes tightness (17.9\% width) over absolute containment. As evidence completeness increases, soundness reliably recovers to 100\%. This demonstrates that while the bounds are highly robust for typical intrusions, analysts investigating suspected long-dormancy campaigns can simply widen the $\delta_s$ tolerance parameter to safely absorb extended inter-hop delays.
+\paragraph{Adversarial Dormancy Boundary.}\label{sec:adversarial-dormancy} The worst-case $\delta_s$ correction mathematically guarantees containment under a contiguous-execution assumption. To understand the operational limits of this bound, we stress-tested it against a simulated dormant Advanced Persistent Threat (APT) exhibiting an extreme 18-window gap between reconnaissance and exploitation (Table~\ref{tab:dormant-apt}). As expected under severe dormancy with sparse evidence ($N=1$), the standard bound prioritizes tightness (17.9\% width) over absolute containment. As evidence completeness increases, soundness reliably converges to 100\%. This demonstrates that while the bounds are highly robust for typical intrusions, analysts investigating suspected long-dormancy campaigns can simply widen the $\delta_s$ tolerance parameter to safely absorb extended inter-hop delays.
 
 \begin{table}[tb]
 \centering
@@ -523,7 +527,7 @@ F-TAG's guarantees hold within a specific, stated scope, and we characterize tha
 \end{table}
 
 \section{Conclusion}\label{sec:conclusion}
-This work addressed the core question of whether a temporally evolving attack topology can serve as a structural constraint for forensic reconstruction. By formalizing F-TAG, it was demonstrated that fusing reactive evidence with proactive topologies provides robust narrative recovery. The Forensic Window of Compromise (FWoC) was derived to establish conditional soundness guarantees on unobserved actions (under a contiguous-execution assumption), proving that strict temporal enforcement naturally filters causality bugs and falsified timestamps. The limits of these bounds were mathematically characterized under long-dormancy adversarial behavior, and the approach was validated extensively across LLDOS benchmarks and scaled enterprise topologies. (Secondary explorations into Bayesian log-wiping probabilities achieved a 0.0\% false-accusation rate, pending real-world validation). 
+This work addressed the core question of whether a temporally evolving network topology can serve as a structural constraint for forensic reconstruction. By formalizing F-TAG, it was demonstrated that fusing observed evidence with time-aware network topologies provides robust attack sequence recovery. The Forensic Window of Compromise (FWoC) was derived to establish conditional soundness guarantees on unobserved actions (under a contiguous-execution assumption), proving that strict temporal enforcement naturally filters causality bugs and falsified timestamps. The limits of these bounds were mathematically characterized under long-dormancy adversarial behavior, and the approach was validated extensively across LLDOS benchmarks and scaled enterprise topologies. (Secondary explorations into Bayesian log-wiping probabilities achieved a 0.0\% false-accusation rate, pending real-world validation). 
 \section{Future Work}\label{sec:future-work}
 
 Future work will focus on multi-level privilege modeling (e.g., SELinux) to improve $AF_{conf}$ discriminative power. Additionally, while the worst-case bound correctness was validated here under $H \approx \tau$, future experiments will empirically demonstrate FWoC narrowing under the $H \ll \tau$ regime (short attack paths embedded in long capture windows). Operational deployment necessitates cross-topology testing and calibration against live SIEM data with verified anti-forensic ground truth. Finally, integrating F-TAG with live SIEM pipelines would allow the FWoC to dynamically narrow during active incident triage.
