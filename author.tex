@@ -46,7 +46,7 @@ Jadavpur University, Kolkata, India \\
 \maketitle
 
 \begin{abstract}
-Modern network forensics must reconstruct multi-step attack sequences from digital evidence that is incomplete, prone to accidental logging failure, and vulnerable to deliberate anti-forensic tampering. Traditional evidence graphs stall when records are missing, while static attack graphs ignore time-varying configurations and admit physically impossible sequence reconstructions. We investigate whether temporally evolving network topologies can serve as strict structural constraints for retrospective forensic analysis. We formalize Forensic Temporal Attack Graphs (F-TAG), which bind temporal reachability directly to physical graph edges and enforce chronological consistency during traversal. We derive the Forensic Window of Compromise (FWoC) to bound intrusion timelines by intersecting surviving evidence with the topological attack corridor (TAC), proving conditional soundness under contiguous execution while characterizing its breakdown under adversarial dormancy. To distinguish deliberate log wiping from routine operational loss, we formulate the Bayesian Anti-Forensics Confidence ($AF_{conf}$) metric based on host-level privilege metadata. Evaluating across DARPA LLDOS benchmarks and synthetic enterprise topologies shows that F-TAG eliminates timeless path assembly and detects structural falsifications (patched or expired edges) that static attack graphs miss, while trading away adjacent-window swaps under operational tolerance. FWoC bounds achieve 100\% containment under contiguous execution, while $AF_{conf}$ achieves an Area Under the Curve (AUC) of 0.80 under administrative privilege-targeting, falling to 0.56 under unbiased wiping, exposing the reliance of binary privilege models on attacker operational bias.
+Modern network forensics must reconstruct multi-step attack sequences from digital evidence that is incomplete, prone to accidental logging failure, and vulnerable to deliberate anti-forensic tampering. Traditional evidence graphs stall when records are missing, while static attack graphs ignore time-varying configurations and admit physically impossible sequence reconstructions. We investigate whether temporally evolving network topologies can serve as strict structural constraints for retrospective forensic analysis. We formalize Forensic Temporal Attack Graphs (F-TAG), which bind temporal reachability directly to physical graph edges and enforce chronological consistency during traversal. We derive the Forensic Window of Compromise (FWoC) to bound intrusion timelines by intersecting surviving evidence with the topological attack corridor (TAC), proving conditional soundness under contiguous execution while characterizing its breakdown under adversarial dormancy. To distinguish deliberate log wiping from routine operational loss, we formulate the Bayesian Anti-Forensics Confidence ($AF_{conf}$) metric based on host-level privilege metadata. Evaluating across DARPA LLDOS benchmarks and synthetic enterprise topologies shows that F-TAG eliminates timeless path assembly and detects structural falsifications (patched or expired edges) that static attack graphs miss, while trading away adjacent-window swaps under operational tolerance. FWoC contains the intrusion window under contiguous execution (proved and confirmed empirically) and narrows a 13-window corridor to 8.4 windows from one surviving alert, while $AF_{conf}$ achieves an Area Under the Curve (AUC) of 0.80 under administrative privilege-targeting, falling to 0.56 as the wipe generator's privilege bias weakens (0.5 if privilege-blind), so binary privilege metadata discriminates only as far as attackers target privileged hosts.
 
 \textbf{Keywords:} Network Forensics, Temporal Attack Graphs, Anti-Forensics, Bayesian Analysis
 \end{abstract}
@@ -276,7 +276,7 @@ Conversely, benign logging failures (e.g., buffer overflows or network packet dr
 \begin{equation}\label{eq:base-rate}
 P(\text{root} \mid H_0) = P_{root,H_0} = \frac{|\{n \in V_{all} : \text{priv}(n) = \text{root}\}|}{|V_{all}|}
 \end{equation}
-Since F-TAG computes $P_{root,H_0}$ directly from the network topology under investigation, $AF_{conf}$ automatically calibrates itself to any environment (such as high-privilege server clusters versus locked-down workstation subnets). This formulation yields two analytical properties that govern the behavior of $AF_{conf}$.
+F-TAG estimates $P_{root,H_0}$ from the topology, which adapts $AF_{conf}$ to an environment's privilege mix. This assumes benign loss is spread uniformly over hosts. If it concentrates on path nodes, whose root share can differ from the network-wide share, the score is miscalibrated in Section~\ref{sec:results-afconf}. This formulation yields two analytical properties that govern the behavior of $AF_{conf}$.
 
 \begin{lemma}[Monotonicity under Equal Base Rates]
 If $P(x_{root} \mid H_0) = P(x_{user} \mid H_0)$ (i.e.\ the base rate of missing evidence is the same across privilege levels), then $AF_{conf}$ is strictly higher at root nodes than at user nodes.
@@ -325,11 +325,11 @@ To illustrate temporal constraints, we evaluated a 5-hop path (6 hosts) across $
 
 \subsection{Timeline Reconstruction and FWoC Bounds}\label{sec:results-fwoc}
 
-We evaluated FWoC performance under systematic evidence degradation across both DARPA LLDOS datasets~\cite{haines2001extending} using 100-trial Monte Carlo sweeps at 25\%, 50\%, and 100\% evidence completeness, with results presented in Table~\ref{tab:fwoc-degradation}.
+Table~\ref{tab:fwoc-degradation} checks Proposition 1 on both LLDOS datasets under evidence degradation (100 Monte Carlo trials at 25\%, 50\% and 100\% completeness). Containment is guaranteed under Assumption A, so 100\% here confirms the implementation rather than measuring performance. FWoC's empirical contribution is narrowing, which LLDOS cannot show because $\tau=5\le H$, so we measure it on a synthetic chain reported in Table~\ref{tab:dormant-apt}.
 
 \begin{table}[t]
 \centering
-\caption{FWoC performance under evidence degradation for LLDOS 1.0 and 2.0.2 (100 Monte Carlo trials each). Soundness reports 95\% Wilson score confidence intervals. Tightness represents the mean FWoC width as a percentage of observation duration $\tau$. Ambiguity $k = |\mathcal{P}_{surviving}|$ denotes surviving candidate paths. *For LLDOS, overlap and containment soundness coincide due to tight true execution spans.}
+\caption{Consistency check of Proposition 1 on LLDOS under evidence degradation for LLDOS 1.0 and 2.0.2 (100 Monte Carlo trials each). Soundness reports 95\% Wilson score confidence intervals. Tightness represents the mean FWoC width as a percentage of observation duration $\tau$. Ambiguity $k = |\mathcal{P}_{surviving}|$ denotes surviving candidate paths. *For LLDOS, overlap and containment soundness coincide due to tight true execution spans.}
 \label{tab:fwoc-degradation}
 \resizebox{0.95\columnwidth}{!}{%
 \begin{tabular}{lccccc}
@@ -348,10 +348,8 @@ We evaluated FWoC performance under systematic evidence degradation across both 
 }
 \end{table}
 
-\paragraph{FWoC Soundness and Narrowing in Extended Captures ($H \ll \tau$).}
-Across both LLDOS datasets, the 100\% tightness is an artifact of short capture duration ($\tau = 5$ windows $\le H$), so the bound trivially spans the entire observation timeline. To assess where FWoC narrowing originates when the capture duration exceeds attack path length ($H \ll \tau$), we evaluated a 5-hop path embedded in an extended capture window of $\tau = 50$ windows on the synthetic MulVAL enterprise topology (30 independent seeds $\times$ 100 trials = 3,000 trials per completeness level), conducting a three-way ablation across evidence-only intervals $[\min(\mathcal{E})-\delta_s, \max(\mathcal{E})+\delta_s]$, TAC-only bounds, and full FWoC ($\text{TAC} \cap \text{Evidence}$).
-
-In the raw snapshot where vulnerabilities exist only during windows 8--13, $\text{TAC}(p) = [8, 13]$ (width 6.00 windows, 12.0\% of the 50-window timeline) produces the entire 88\% search-space reduction ($1 - 6/50$) purely from structural topology. Because the realized attack $[8, 13]$ spans the full corridor, evidence cannot narrow the bound beyond TAC without violating containment. To evaluate evidence-driven narrowing where vulnerabilities outlive the intrusion, we tested persistent edge lifespans yielding $\text{TAC}(p) = [6, 18]$ (width 13 windows, 26\% of timeline) with a contiguous 5-hop breach executed at $[8, 12]$ (width 5 windows). Here, evidence progressively narrows the bound from TAC's 13.0 windows down to $8.39 \pm 0.04$ at $N=1$, reaching the exact 5.00-window true span at $N=5$ (100.0\% containment across all $N$). Under gapped execution ($[8, 9, 10, 11, 13]$ with a 2-window dormancy gap prior to objective execution, violating Assumption~A), containment soundness evaluates to exactly 60.0\% ($N=1$), 90.0\% ($N=2$), 90.0\% ($N=3$), 80.0\% ($N=4$), and 100.0\% ($N=5$). Crucially, under dormancy, additional evidence can paradoxically reduce containment (dropping from 90.0\% at $N=3$ to 80.0\% at $N=4$), because each extra observed hop shrinks expansion tolerance $\delta_s = H - N$ by one window, contracting the bound before the unobserved dormancy gap is directly pinned. Overlap soundness remains 100.0\% across all conditions.
+\paragraph{FWoC Narrowing and Dormancy.}
+We embed a 5-hop MulVAL path in $\tau=50$ windows (30 seeds $\times$ 100 trials). With vulnerabilities present only in windows 8--13, TAC $=[8,13]$ equals the intrusion span, so TAC alone gives the whole 88\% reduction ($1-6/50$) and evidence adds nothing. Where vulnerabilities outlive the intrusion (TAC $=[6,18]$, breach at $[8,12]$), evidence narrows the bound below the corridor, reported in Table~\ref{tab:dormant-apt} (Block A), where containment is 100\% for every $N$ under Assumption A. Under a 2-window gap that violates Assumption A (Block B), containment falls to 60\% at $N=1$, and more evidence can lower it (90\% at $N=3$, 80\% at $N=4$), because each extra observed hop shrinks $\delta_s=H-N$ before the gap is pinned. Block C repeats the test with an 18-window dormancy gap ($\tau=30$), where containment is 0\% at $N=1$. Overlap soundness stays 100\% in blocks A and B.
 
 \paragraph{The Chokepoint Ranking and Breach Window Anchor Survive Total Log Loss.}
 Since $T_{min}$ is derived from topology rather than surviving evidence, it stayed pinned to the true breach window at every completeness level ($T_{min}=2.0$ for LLDOS 1.0, $T_{min}=0.0$ for LLDOS 2.0.2), as shown in Figure~\ref{fig:chokepoint-tmin}(a), so evidence destruction cannot move it. The true pivot host (\texttt{mill}) likewise maintained top-priority ranking ($\chi = 1.0$, Rank \#1 among physical hosts), as plotted in Figure~\ref{fig:chokepoint-tmin}(b), regardless of evidence loss. At the state level, all four compromise states on \texttt{mill} tie at $\chi = 1.0$, where arbitrary sorting places \texttt{mill:mstream\_master} behind prerequisite \texttt{mill:discovered}, but both belong to the same host and share top rank under competition ranking.
@@ -442,10 +440,15 @@ is a strictly increasing function of the likelihood ratio $LR(x) = \frac{P(x \mi
 
 \textit{Proof:} Write $AF_{conf}(x) = \frac{LR(x)P(H_1)}{LR(x)P(H_1) + (1-P(H_1))}$, which is strictly increasing in $LR(x)$ for any fixed $P(H_1) \in (0,1)$ since $\frac{\partial AF_{conf}}{\partial LR} = \frac{P(H_1)(1-P(H_1))}{(\cdot)^2} > 0$. As $LR(x)$ does not depend on $P(H_1)$, the ordering of $AF_{conf}$ across the two values of $x$ is preserved for every $P(H_1)$, so the ROC curve (which depends only on this ordering) is unchanged. $\square$
 
-\textbf{Implication.} Like Lemmas 1--2, this sanity property confirms that the ranking induced by $AF_{conf}$ is structurally prior-invariant, meaning that varying $P(H_1)$ scales the numerical posteriors while preserving their monotonic ordering. With binary privilege metadata ($x \in \{\text{root}, \text{user}\}$), this simply guarantees that root nodes remain ordered ahead of user nodes for any valid prior. While an investigator can rely on this ordering for coarse binary triage without tuning $P(H_1)$, the resulting ROC curve (AUC $\approx 0.801$) reflects this fixed two-level partition rather than continuous discrimination.
+\textbf{Proposition 2 (Privilege-Blind Loss).}\label{prop:privilege-blind}
+\textit{If $P(x\mid H_1)=P(x\mid H_0)$ for every $x$, then $AF_{conf}(x)=P(H_1)$ for all $x$, and any ranking by $AF_{conf}$ has AUC $=0.5$.}
+
+\textit{Proof.} Here $LR(x)=1$, so $AF_{conf}(x)=P(H_1)/(P(H_1)+1-P(H_1))=P(H_1)$. The score is constant and ranks all samples equally. $\square$
+
+Privilege metadata therefore separates deliberate wiping from routine loss only to the extent that wiping targets privileged hosts. Table~\ref{tab:root-sweep} measures this dependence, so AUC $\approx 0.80$ should not be read as a property of the metric alone.
 
 \paragraph{Operating Points and Step-Function Threshold Behavior.}
-Under the binary privilege formulation with operational prior $P(H_1) = 0.15$, $AF_{conf}$ evaluates to exactly two discrete score levels, namely $0.0475$ for unprivileged nodes and $0.5323$ for root/administrative nodes. Because of this binary structure, threshold behavior is a step function rather than a continuous curve, as detailed in Table~\ref{tab:far}. At threshold $0.50$, all root nodes are flagged (496,279 samples across 30 seeds), achieving 0.773 precision, 0.852 recall, and 0.810 F1, while incurring a false-accusation rate (FAR) of 25.0\% against random benign loss (25.4\% against rotation loss). For any threshold above $0.5323$ (including 0.70, 0.85, and 0.90), the classifier flags exactly zero alerts. Thus, a 0.0\% FAR at 0.85 would reflect classification silence, not discrimination. In practice, operational alerting requires either calibrating the baseline prior $P(H_1)$ to shift the discrete score levels or incorporating multi-tier privilege models.
+Under the binary privilege formulation with operational prior $P(H_1) = 0.15$, $AF_{conf}$ evaluates to exactly two discrete score levels, namely $0.0475$ for unprivileged nodes and $0.5323$ for root/administrative nodes. Because of this binary structure, threshold behavior is a step function rather than a continuous curve, as detailed in Table~\ref{tab:far}. At threshold $0.50$, all root nodes are flagged (496,279 samples across 30 seeds), achieving 0.773 precision, 0.852 recall, and 0.810 F1, while incurring a false-accusation rate (FAR) of 25.0\% against random benign loss (25.4\% against rotation loss). For any threshold above $0.5323$ (including 0.70, 0.85, and 0.90), the classifier flags exactly zero alerts. Thus, a 0.0\% FAR at 0.85 would reflect classification silence, not discrimination. The scores assume $P_{root,H_0} = 11.6\%$, the root share of all hosts, whereas 25.0\% of Random-Benign samples fall on root nodes, which explains why FAR at $\theta \ge 0.50$ equals 25.0\%. In practice, operational alerting requires either calibrating the baseline prior $P(H_1)$ to shift the discrete score levels or incorporating multi-tier privilege models.
 
 \begin{table}[t]
 \centering
@@ -465,7 +468,7 @@ $\ge 0.90$ & 0 & --- & 0.000 & --- & 0.0\% & 0.0\% \\
 \end{table}
 
 \paragraph{Privilege Bias Circularity and Limitations.}
-To test whether the headline discrimination ($\text{AUC} \approx 0.801$) is driven by F-TAG's structural modeling or circular dependence on the wipe generator's privilege bias, we swept the wipe generator's root-node selection weight across $1\times, 2\times, 5\times$, and $10\times$ across 30 seeds (900,900 samples total) in Table~\ref{tab:root-sweep}. When the generator exhibits no privilege bias ($1\times$), AUC collapses to $0.5574$ (95\% CI: [0.5566, 0.5583]), barely above random chance. As root targeting bias increases to $2\times$, $5\times$, and $10\times$, the mean AUC rises monotonically to $0.6421$, $0.7459$, and $0.8007$, respectively. This demonstrates that $AF_{conf}$'s discriminative power strictly tracks the attacker's own privilege targeting bias rather than an independent structural signal. We report this honestly as a fundamental limitation of binary privilege metadata. When an attacker wipes logs uniformly without privilege preference, $AF_{conf}$ cannot separate deliberate wiping from accidental loss. Addressing this requires privilege-agnostic loss models (e.g., volumetric anomaly detection and telemetry continuity checks) in future work.
+To test whether the headline discrimination ($\text{AUC} \approx 0.801$) is driven by F-TAG's structural modeling or circular dependence on the wipe generator's privilege bias, we swept the wipe generator's root-node selection weight across $1\times, 2\times, 5\times$, and $10\times$ across 30 seeds (900,900 samples total) in Table~\ref{tab:root-sweep}. At $1\times$ the wipe class still contains 36.5\% root nodes, because chokepoint scaling favors pivot hosts, so AUC falls to 0.5574 with 95\% CI [0.5566, 0.5583] rather than to the privilege-blind floor of 0.5 (Proposition~\ref{prop:privilege-blind}). As root targeting bias increases to $2\times$, $5\times$, and $10\times$, the mean AUC rises monotonically to $0.6421$, $0.7459$, and $0.8007$, respectively. This demonstrates that $AF_{conf}$'s discriminative power strictly tracks the attacker's own privilege targeting bias rather than an independent structural signal. We report this honestly as a limitation of binary privilege metadata. When an attacker wipes logs uniformly without privilege preference, $AF_{conf}$ cannot separate deliberate wiping from accidental loss. Addressing this requires privilege-agnostic loss models (e.g., volumetric anomaly detection and telemetry continuity checks) in future work.
 
 \begin{table}[t]
 \centering
@@ -515,20 +518,35 @@ Table~\ref{tab:scalability} reports computational scalability, separating proact
 
 By injecting evidence as strict filters over time-varying topologies, F-TAG eliminates static attack graphs' structural failure modes while sustaining real-time triage ($O(|\mathcal{P}_{surviving}| \cdot H_{max})$, under 15\,ms for 99 hosts). However, F-TAG operates within six boundaries. First, empirical validation relies on 2000-era DARPA LLDOS data, with noise evaluated under bounded synthetic skew of $\pm 1$ window in Table~\ref{tab:falsification}. Second, topological redundancy can absorb contradictory evidence when parallel paths exist, bounding falsification detection. Third, $AF_{conf}$ thresholds were calibrated on synthetic graphs, so evaluating against live SIEM telemetry with verified ground truth is the next step. Fourth, the binary privilege model serves as a baseline floor, while richer hierarchies (SELinux, AD) will expand discrimination. Fifth, dense topologies benefit from subnet aggregation to sustain enterprise scalability. Finally, F-TAG treats configuration snapshots and scans as tamper-resistant ground truth. If scan data originates from compromised infrastructure, the reference frame itself is compromised, representing a trust boundary common to all attack graphs.
 
-\paragraph{Adversarial Dormancy Boundary.}\label{sec:adversarial-dormancy} Table~\ref{tab:dormant-apt} stress-tests FWoC against a simulated dormant APT with an 18-window gap between reconnaissance and exploitation, violating the contiguous-execution assumption. At $N=1$, containment fails completely (0\%), as expected when Assumption~A is violated. Soundness recovers to 100\% at full observation ($N=5$) because $\delta_s = 0$, pinning $[\min(\mathcal{E}), \max(\mathcal{E})]$ directly to the true breach and termination windows despite dormancy. Analysts investigating dormancy should widen $\delta_s$ or treat FWoC as a lower bound. A replication package is available at \url{https://github.com/ayangain/TAG-Forensics}.
+\paragraph{Adversarial Dormancy Boundary.}\label{sec:adversarial-dormancy} Block C of Table~\ref{tab:dormant-apt} stress-tests FWoC against a simulated dormant APT with an 18-window gap, which violates Assumption A, where containment is 0\% at $N=1$ and recovers to 100\% only at $N=5$, where $\delta_s=0$ and every hop is observed. Analysts investigating dormancy should widen $\delta_s$ or treat FWoC as an inner estimate of the intrusion window. A replication package is available at \url{https://github.com/ayangain/TAG-Forensics}.
 
 \begin{table}[tb]
 \centering
-\caption{FWoC Behavior under Adversarial Dormancy (MulVAL Synthetic, $H=5, \tau=30$)}
+\caption{FWoC width and containment across contiguous execution and dormancy gaps (MulVAL synthetic, 30 seeds $\times$ 100 trials).}
 \label{tab:dormant-apt}
 \footnotesize
-\begin{tabular}{ccc}
+\begin{tabular}{lccc}
 \toprule
-\textbf{Completeness} & \textbf{Tightness} & \textbf{Soundness (Containment)} \\
+\textbf{Block} & $\mathbf{N}$ & \textbf{Width (\% of $\tau$)} & \textbf{Containment} \\
 \midrule
-25\%  ($N=1$) & 17.9\% & 0\% \\
-50\%  ($N=2$) & 49.7\% & 62\% \\
-100\% ($N=5$) & 70.0\% & 100\% \\
+\multirow{5}{*}{A: Contiguous, $\tau=50$, TAC=[6,18]} 
+ & 1 & 16.8\% & 100\% \\
+ & 2 & 17.2\% & 100\% \\
+ & 3 & 16.0\% & 100\% \\
+ & 4 & 13.2\% & 100\% \\
+ & 5 & 10.0\% & 100\% \\
+\midrule
+\multirow{5}{*}{B: 2-window gap, $\tau=50$} 
+ & 1 & 16.8\% & 60\% \\
+ & 2 & 18.0\% & 90\% \\
+ & 3 & 17.2\% & 90\% \\
+ & 4 & 14.8\% & 80\% \\
+ & 5 & 12.0\% & 100\% \\
+\midrule
+\multirow{3}{*}{C: 18-window dormancy, $\tau=30$} 
+ & 1 & 17.9\% & 0\% \\
+ & 2 & 49.7\% & 62\% \\
+ & 5 & 70.0\% & 100\% \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -539,7 +557,7 @@ We introduced F-TAG, a retrospective forensic model that constrains attack seque
 \section{Future Work}\label{sec:future-work}
 Future work will explore multi-level privilege hierarchies (e.g., SELinux and Active Directory) and telemetry continuity checks to address privilege-bias circularity. Extending F-TAG to continuous sliding windows and live SIEM telemetry represents the natural next step toward operational deployment.
 
-\bibliographystyle{plain}
+\bibliographystyle{unsrt}
 \bibliography{Reference}
 
 \end{document}
