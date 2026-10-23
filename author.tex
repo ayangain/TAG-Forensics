@@ -31,6 +31,7 @@
 \usepackage[font={footnotesize,singlespacing},labelfont=bf]{caption}
 \newtheorem{lemma}{Lemma}
 \newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
 
 \begin{document}
 \setlength{\textfloatsep}{8pt plus 2pt minus 2pt}
@@ -46,7 +47,7 @@ Jadavpur University, Kolkata, India \\
 \maketitle
 
 \begin{abstract}
-Modern network forensics must reconstruct multi-step attack sequences from digital evidence that is incomplete, prone to accidental logging failure, and vulnerable to deliberate anti-forensic tampering. Traditional evidence graphs stall when records are missing, while static attack graphs ignore time-varying configurations and admit physically impossible sequence reconstructions. We investigate whether temporally evolving network topologies can serve as strict structural constraints for retrospective forensic analysis. We formalize Forensic Temporal Attack Graphs (F-TAG), which bind temporal reachability directly to physical graph edges and enforce chronological consistency during traversal. We derive the Forensic Window of Compromise (FWoC) to bound intrusion timelines by intersecting surviving evidence with the topological attack corridor (TAC), proving conditional soundness under contiguous execution while characterizing its breakdown under adversarial dormancy. To distinguish deliberate log wiping from routine operational loss, we formulate the Bayesian Anti-Forensics Confidence ($AF_{conf}$) metric based on host-level privilege metadata. Evaluating across DARPA LLDOS benchmarks and synthetic enterprise topologies shows that F-TAG eliminates timeless path assembly and detects structural falsifications (patched or expired edges) that static attack graphs miss, while trading away adjacent-window swaps under operational tolerance. FWoC contains the intrusion window under contiguous execution (proved and confirmed empirically) and narrows a 13-window corridor to 8.4 windows from one surviving alert, while $AF_{conf}$ achieves an Area Under the Curve (AUC) of 0.80 under administrative privilege-targeting, falling to 0.56 as the wipe generator's privilege bias weakens (0.5 if privilege-blind), so binary privilege metadata discriminates only as far as attackers target privileged hosts.
+Network forensics must reconstruct multi-step attacks from evidence that is incomplete, lost to routine logging failure, or deliberately tampered with. Evidence graphs stall when records are missing, and static attack graphs ignore time-varying configurations, admitting physically impossible reconstructions. We ask whether temporally evolving networks can act as strict structural constraints on retrospective analysis. We formalize Forensic Temporal Attack Graphs (F-TAG), which enforce chronological consistency during traversal, and derive the Forensic Window of Compromise (FWoC), which bounds intrusion timelines by intersecting surviving evidence with the topological attack corridor (TAC). FWoC is probably sound under contiguous execution, and we characterize its breakdown under adversarial dormancy. To distinguish deliberate log wiping from routine loss, we formulate a Bayesian Anti-Forensics Confidence ($AF_{conf}$) metric from host privilege metadata. On DARPA LLDOS benchmarks and synthetic enterprise networks, F-TAG detects structural falsifications (patched or expired edges) that static attack graphs miss, while trading away adjacent-window swaps at its operational tolerance. FWoC narrows a 13-window corridor to 8.4 windows from a single surviving alert. $AF_{conf}$ reaches an AUC of 0.80 when wiping targets privileged hosts and 0.56 as that bias weakens (0.5 if privilege-blind), so binary privilege metadata discriminates only as far as attackers target privileged hosts.
 
 \textbf{Keywords:} Network Forensics, Temporal Attack Graphs, Anti-Forensics, Bayesian Analysis
 \end{abstract}
@@ -63,7 +64,7 @@ For example, if a static attack graph built on Monday ignores a Tuesday patch, i
 
 This lack of temporal enforcement causes three forensic failures. \textbf{Temporal feasibility errors} occur when an edge did not exist when required by the preceding hop. \textbf{Topology transition errors} occur when vulnerabilities disappear mid-attack. \textbf{Evidence stitching errors} occur when individual alerts match static edges, but no chronological sequence can accommodate all alerts together. In all cases, the graph fails to verify if a multi-step sequence was ever physically possible.
 
-Temporal attack graphs (TAGs)~\cite{Gain2023} resolve the first two failure modes structurally, by requiring that the time window in which each hop is used never precede the time window used by the hop before it. This is the key difference from simply stamping timestamps onto static edges. A TAG enforces the ordering constraint jointly across the entire attack path during traversal, not edge by edge after the fact, so a Frankenstein path is never assembled in the first place. What a TAG alone cannot resolve is the third failure mode, because it lacks mechanisms to inject observed evidence against that structure or reason over gaps where evidence is missing. Forensic investigation requires precisely that capability, namely injecting retrospective evidence as a structural constraint over time-aware topologies to draw sound conclusions under incomplete or contradictory logs.
+Temporal attack graphs (TAGs)~\cite{Gain2023} resolve the first two failure modes structurally, by requiring that the time window in which each hop is used never precede the time window used by the hop before it. This is the key difference from simply stamping timestamps onto static edges. A TAG enforces the ordering constraint jointly across the entire attack path during traversal, not edge by edge after the fact, so a Frankenstein path is never assembled in the first place. What a TAG alone cannot resolve is the third failure mode, because it lacks mechanisms to inject observed evidence against that structure or reason over gaps where evidence is missing. Forensic investigation requires precisely that capability, namely injecting retrospective evidence as a structural constraint over time-aware networks to draw sound conclusions under incomplete or contradictory logs.
 
 F-TAG closes this gap. The relevant forensic object is not a static path, but a temporally feasible attack sequence constrained by surviving evidence. Rather than building attack graphs bottom-up from fragile logs, F-TAG enumerates temporally feasible paths from network topology alone and constrains them retrospectively with observed alerts, as illustrated in Figure~\ref{fig:motivating-example}. This rejects temporally impossible evidence outright while bounding unobserved intrusion spans through the Forensic Window of Compromise.
 
@@ -73,7 +74,7 @@ This paper makes the following contributions:
     \item Deriving the Forensic Window of Compromise (FWoC) to establish conditional soundness guarantees that bound unobserved attacker actions when evidence is missing.
     \item Demonstrating temporal contradiction detection to natively identify and filter false-positive alerts and falsified evidence where methods that rely on static attack graphs fail.
     \item Introducing Anti-Forensics Confidence ($AF_{conf}$), a Bayesian metric to quantify the likelihood of deliberate log-wiping versus routine evidence loss.
-    \item Validating timeline containment, chokepoint ranking invariance, and falsification filtering across DARPA LLDOS benchmarks~\cite{haines2001extending,darpa2000lldos} and synthetic enterprise topologies up to 100 hosts.
+    \item Validating timeline containment, chokepoint ranking invariance, and falsification filtering across DARPA LLDOS benchmarks~\cite{haines2001extending,darpa2000lldos} and synthetic enterprise networks up to 100 hosts.
 \end{enumerate}
 
 \section{Related Work}\label{sec:related-work}
@@ -90,7 +91,7 @@ Evidence graphs~\cite{wang2008evidence,he2016network} structure observed digital
 
 Dynamic assessment methods recognize that temporal constraints fundamentally change path structures~\cite{Holme,Casteigts2012}, motivating temporal risk variance analysis~\cite{Awan2016}, dynamic attack surface evaluation~\cite{ENOCH2019102448}, and Temporal Attack Graph (TAG) formalisms~\cite{Gain2023}. 
 
-TAG formalisms~\cite{Gain2023} represent temporal topology as discrete snapshot sequences to assess future reachability, but lack mechanisms for retrospective forensic evidence. F-TAG bridges this gap by transforming temporal topologies into an evidence-constrained forensic model. Table~\ref{tab:related-comparison} compares F-TAG to existing approaches across six core capabilities.
+TAG formalisms~\cite{Gain2023} represent temporal topology as discrete snapshot sequences to assess future reachability, but lack mechanisms for retrospective forensic evidence. F-TAG bridges this gap by transforming temporal networks into an evidence-constrained forensic model. Table~\ref{tab:related-comparison} compares F-TAG to existing approaches across six core capabilities.
 
 \begin{table}[t]
 \centering
@@ -123,7 +124,7 @@ False-positive filtering & \texttimes & \texttimes & \texttimes & Partial & \che
 
 \section{Foundational Theory}\label{sec:theory}
 
-To model enterprise network forensics without state-space explosion or causal ambiguity, F-TAG formalizes how time-varying physical topologies constrain observed digital evidence.
+To model enterprise network forensics without state-space explosion or causal ambiguity, F-TAG formalizes how time-varying physical networks constrain observed digital evidence.
 
 \subsection{Definition 1: Forensic Temporal Attack Graph (F-TAG)}\label{sec:def1}
 
@@ -222,14 +223,16 @@ The topology-aware correction term $\delta_s = \max(0, H - N)$ expands the raw e
 
 The TAC intersection enforces a hard boundary, ensuring that an attacker cannot exploit a vulnerability before it existed or after it was patched. For example, if $H=5$ and evidence survives for $N=2$ hops, $\delta_s=3$ expands evidence bounds outward by 3 windows, while the TAC clamps the span to physically active windows.
 
-\textbf{Proposition 1 (FWoC Soundness).} \textit{Let $p = (e_0, \dots, e_{H-1})$ be a temporal attack path with true execution time windows $\sigma_0 \le \sigma_1 \le \dots \le \sigma_{H-1}$, and let $\mathcal{E} = \{t_1, \dots, t_N\}$ be the set of surviving evidence timestamps. Under the contiguous-execution assumption (Assumption~A):}
+\begin{proposition}[FWoC Soundness]\label{prop:soundness}
+\textit{Let $p = (e_0, \dots, e_{H-1})$ be a temporal attack path with true execution time windows $\sigma_0 \le \sigma_1 \le \dots \le \sigma_{H-1}$, and let $\mathcal{E} = \{t_1, \dots, t_N\}$ be the set of surviving evidence timestamps. Under the contiguous-execution assumption (Assumption~A):}
 \begin{enumerate}
     \item \textit{\textbf{Contiguous Inter-Hop Cadence:} Each successive hop starts within at most one time window of the preceding hop, i.e.\ $\sigma_{k+1} - \sigma_k \le 1$ for all $k \in \{0, \dots, H-2\}$ (no inter-hop dormancy exceeding one window).}
     \item \textit{\textbf{Distinct Evidence Mapping:} Each of the $N$ observed evidence timestamps corresponds to a distinct hop on $p$, i.e.\ $t_i = \sigma_{k_i}$ with indices $0 \le k_1 < k_2 < \dots < k_N \le H-1$.}
 \end{enumerate}
 \textit{the true compromise window $[\sigma_0, \sigma_{H-1}]$ is contained in $\text{FWoC}(p)$ whenever clock skew margin $\delta \ge 0$ and $\delta_s = \max(0, H-N)$.}
+\end{proposition}
 
-\textit{Proof sketch:} Under condition~(2), exactly $N$ distinct hops are observed, leaving at most $H - N$ unobserved hops across the path. The unobserved hops preceding the earliest observed hop $k_1$ number at most $k_1 \le H - N$, and those following the latest hop $k_N$ number at most $H - 1 - k_N \le H - N$. By condition~(1), each unobserved hop advances execution by at most one window. Thus, the true start window satisfies $\sigma_0 \ge \sigma_{k_1} - k_1 \ge \min(\mathcal{E}) - (H - N)$, and true termination satisfies $\sigma_{H-1} \le \sigma_{k_N} + (H - 1 - k_N) \le \max(\mathcal{E}) + (H - N)$. The expanded evidence interval $[\min(\mathcal{E}) - \delta_s, \max(\mathcal{E}) + \delta_s]$ strictly contains $[\sigma_0, \sigma_{H-1}]$. Furthermore, because the realized execution $\sigma^*$ belongs to $\Sigma(p)$, Definition~\ref{eq:tac} guarantees $[\sigma_0, \sigma_{H-1}] \subseteq \text{TAC}(p)$ by topological validity. Their intersection $\text{FWoC}(p)$ therefore contains $[\sigma_0, \sigma_{H-1}]$. When condition~(1) is violated (dormancy gaps $> 1$ window), $\delta_s$ under-expands and containment may fail, demonstrated in Table~\ref{tab:dormant-apt}. $\square$
+\textit{Proof sketch:} Under condition~(2), exactly $N$ distinct hops are observed, leaving at most $H - N$ unobserved hops across the path. The unobserved hops preceding the earliest observed hop $k_1$ number at most $k_1 \le H - N$, and those following the latest hop $k_N$ number at most $H - 1 - k_N \le H - N$. By condition~(1), each unobserved hop advances execution by at most one window. Thus, the true start window satisfies $\sigma_0 \ge \sigma_{k_1} - k_1 \ge \min(\mathcal{E}) - (H - N)$, and true termination satisfies $\sigma_{H-1} \le \sigma_{k_N} + (H - 1 - k_N) \le \max(\mathcal{E}) + (H - N)$. The expanded evidence interval $[\min(\mathcal{E}) - \delta_s, \max(\mathcal{E}) + \delta_s]$ strictly contains $[\sigma_0, \sigma_{H-1}]$. Furthermore, because the realized execution $\sigma^*$ belongs to $\Sigma(p)$, Definition~3 guarantees $[\sigma_0, \sigma_{H-1}] \subseteq \text{TAC}(p)$ by topological validity. Their intersection $\text{FWoC}(p)$ therefore contains $[\sigma_0, \sigma_{H-1}]$. When condition~(1) is violated (dormancy gaps $> 1$ window), $\delta_s$ under-expands and containment may fail, demonstrated in Table~\ref{tab:dormant-apt}. $\square$
 
 \paragraph{Structural Contradiction Detection.}
 When the intersection in Equation~\ref{eq:fwoc} yields an empty set ($\text{FWoC}(p) = \emptyset$), the evidence timestamps are physically incompatible with the topological attack corridor under tolerance margin $\delta$. This contradiction flags false-positive alerts, falsified timestamps, or invalid path hypotheses. In practice, operational precision depends on calibrating $\delta$ against background timing noise. Operating at strict equality ($\delta=0$) flags unmodeled $\pm 1$-window clock skew on serial paths as false alarms (precision 0.75), whereas setting $\delta \ge 1$ absorbs benign transit jitter to achieve 1.00 precision, with structural violations detected by construction in Table~\ref{tab:falsification}.
@@ -302,7 +305,7 @@ Together, Lemma~1 and Lemma~2 formally characterize $AF_{conf}$ under extreme ba
 To evaluate F-TAG, its performance is assessed across two complementary environments.
 \begin{itemize}
     \item \textbf{Historically Verified Intrusions (DARPA LLDOS 1.0 and 2.0.2)}~\cite{haines2001extending,darpa2000lldos}: Provides packet-level ground truth to test timeline reconstruction, FWoC bounds under evidence degradation, topological triage stability, and adversarial falsification detection.
-    \item \textbf{Scalable Enterprise Topologies (MulVAL)}~\cite{mulval}: Generates multi-tier enterprise networks to validate temporal Datalog mapping, Bayesian $AF_{conf}$ anti-forensics calibration, and computational scalability up to 100 hosts.
+    \item \textbf{Scalable Enterprise Networks (MulVAL)}~\cite{mulval}: Generates multi-tier enterprise networks to validate temporal Datalog mapping, Bayesian $AF_{conf}$ anti-forensics calibration, and computational scalability up to 100 hosts.
 \end{itemize}
 
 \subsection{Evaluation Environments and Setup}\label{sec:eval-setup}
@@ -311,10 +314,10 @@ To evaluate F-TAG, its performance is assessed across two complementary environm
 We mapped the verified capability paths from both LLDOS scenarios into F-TAGs, using the real, historical packet captures and IDS alerts from the dataset as our evidence base. LLDOS 1.0 represents an attacker executing a multi-stage distributed denial-of-service (DDoS) attack across multiple hosts (\texttt{mill}, \texttt{pascal}, \texttt{locke}), exhibiting topological path redundancy. In contrast, LLDOS 2.0.2 models a stealthy, serial intrusion executing without topological redundancy.
 
 \paragraph{Enterprise Topology Generation.} 
-We procedurally generated synthetic multi-tier enterprise network topologies and used MulVAL~\cite{mulval} to generate corresponding attack graphs across discrete time windows, modeling time-varying vulnerability lifespans and configuration updates. Attack paths and evidence logs across generated topologies were evaluated via a Monte Carlo injection pipeline to validate our metrics at scale.
+We procedurally generated synthetic multi-tier enterprise network topologies and used MulVAL~\cite{mulval} to generate corresponding attack graphs across discrete time windows, modeling time-varying vulnerability lifespans and configuration updates. Attack paths and evidence logs across generated networks were evaluated via a Monte Carlo injection pipeline to validate our metrics at scale.
 
 \paragraph{Static vs. Temporal Attack Feasibility.} 
-To illustrate temporal constraints, we evaluated a 5-hop path (6 hosts) across $\tau=20$ windows where vulnerabilities coexisted only during $[w_8, w_{13}]$. While static attack graphs collapse this into a single timeless path, F-TAG identifies the 252 valid temporal paths satisfying $\sigma_0 \le \dots \le \sigma_4$ within $[8, 13]$, as illustrated in Figure~\ref{fig:static-vs-tag}. An alert outside this active window (e.g., false alarm at $w_0$) yields $\text{FWoC} = \emptyset$, natively filtering impossible alerts that static graphs accept.
+To illustrate temporal constraints, we evaluated a 5-hop path (6 hosts) across $\tau=20$ windows where vulnerabilities coexisted only during $[w_8, w_{13}]$. While static attack graphs collapse this into a single timeless path, F-TAG identifies the 252 valid temporal paths satisfying $\sigma_0 \le \dots \le \sigma_4$ within $[8, 13]$, as illustrated in Figure~\ref{fig:static-vs-tag}. An alert outside this active window (e.g., false alarm at $w_0$) yields $\text{FWoC} = \emptyset$, natively filtering impossible alerts that static attack graphs accept.
 
 \begin{figure}[t]
 \centering
@@ -329,7 +332,7 @@ Table~\ref{tab:fwoc-degradation} checks Proposition 1 on both LLDOS datasets und
 
 \begin{table}[t]
 \centering
-\caption{Consistency check of Proposition 1 on LLDOS under evidence degradation for LLDOS 1.0 and 2.0.2 (100 Monte Carlo trials each). Soundness reports 95\% Wilson score confidence intervals. Tightness represents the mean FWoC width as a percentage of observation duration $\tau$. Ambiguity $k = |\mathcal{P}_{surviving}|$ denotes surviving candidate paths. *For LLDOS, overlap and containment soundness coincide due to tight true execution spans.}
+\caption{Consistency check of Proposition 1 under evidence degradation for LLDOS 1.0 and 2.0.2 (100 Monte Carlo trials each). Soundness reports 95\% Wilson score confidence intervals. Tightness represents the mean FWoC width as a percentage of observation duration $\tau$. Ambiguity $k = |\mathcal{P}_{surviving}|$ denotes surviving candidate paths. *For LLDOS, overlap and containment soundness coincide due to tight true execution spans.}
 \label{tab:fwoc-degradation}
 \resizebox{0.95\columnwidth}{!}{%
 \begin{tabular}{lccccc}
@@ -349,7 +352,7 @@ Table~\ref{tab:fwoc-degradation} checks Proposition 1 on both LLDOS datasets und
 \end{table}
 
 \paragraph{FWoC Narrowing and Dormancy.}
-We embed a 5-hop MulVAL path in $\tau=50$ windows (30 seeds $\times$ 100 trials). With vulnerabilities present only in windows 8--13, TAC $=[8,13]$ equals the intrusion span, so TAC alone gives the whole 88\% reduction ($1-6/50$) and evidence adds nothing. Where vulnerabilities outlive the intrusion (TAC $=[6,18]$, breach at $[8,12]$), evidence narrows the bound below the corridor, reported in Table~\ref{tab:dormant-apt} (Block A), where containment is 100\% for every $N$ under Assumption A. Under a 2-window gap that violates Assumption A (Block B), containment falls to 60\% at $N=1$, and more evidence can lower it (90\% at $N=3$, 80\% at $N=4$), because each extra observed hop shrinks $\delta_s=H-N$ before the gap is pinned. Block C repeats the test with an 18-window dormancy gap ($\tau=30$), where containment is 0\% at $N=1$. Overlap soundness stays 100\% in blocks A and B.
+We embed a 5-hop MulVAL path in $\tau=50$ windows. Blocks A and B are exact enumerations over observed-hop subsets, and only Block C is Monte Carlo (30 seeds $\times$ 100 trials). With vulnerabilities present only in windows 8--13, TAC $=[8,13]$ equals the intrusion span, so TAC alone gives the whole 88\% reduction ($1-6/50$) and evidence adds nothing. Where vulnerabilities outlive the intrusion (TAC $=[6,18]$, breach at $[8,12]$), evidence narrows the bound below the corridor, reported in Table~\ref{tab:dormant-apt} (Block A), where containment is 100\% for every $N$ under Assumption A. Under a 2-window gap that violates Assumption A (Block B), containment falls to 60\% at $N=1$, and more evidence can lower it (90\% at $N=3$, 80\% at $N=4$), because each extra observed hop shrinks $\delta_s=H-N$ before the gap is pinned. Block C repeats the test with an 18-window dormancy gap ($\tau=30$), where containment is 0\% at $N=1$. Overlap soundness stays 100\% in blocks A and B.
 
 \paragraph{The Chokepoint Ranking and Breach Window Anchor Survive Total Log Loss.}
 Since $T_{min}$ is derived from topology rather than surviving evidence, it stayed pinned to the true breach window at every completeness level ($T_{min}=2.0$ for LLDOS 1.0, $T_{min}=0.0$ for LLDOS 2.0.2), as shown in Figure~\ref{fig:chokepoint-tmin}(a), so evidence destruction cannot move it. The true pivot host (\texttt{mill}) likewise maintained top-priority ranking ($\chi = 1.0$, Rank \#1 among physical hosts), as plotted in Figure~\ref{fig:chokepoint-tmin}(b), regardless of evidence loss. At the state level, all four compromise states on \texttt{mill} tie at $\chi = 1.0$, where arbitrary sorting places \texttt{mill:mstream\_master} behind prerequisite \texttt{mill:discovered}, but both belong to the same host and share top rank under competition ranking.
@@ -440,15 +443,16 @@ is a strictly increasing function of the likelihood ratio $LR(x) = \frac{P(x \mi
 
 \textit{Proof:} Write $AF_{conf}(x) = \frac{LR(x)P(H_1)}{LR(x)P(H_1) + (1-P(H_1))}$, which is strictly increasing in $LR(x)$ for any fixed $P(H_1) \in (0,1)$ since $\frac{\partial AF_{conf}}{\partial LR} = \frac{P(H_1)(1-P(H_1))}{(\cdot)^2} > 0$. As $LR(x)$ does not depend on $P(H_1)$, the ordering of $AF_{conf}$ across the two values of $x$ is preserved for every $P(H_1)$, so the ROC curve (which depends only on this ordering) is unchanged. $\square$
 
-\textbf{Proposition 2 (Privilege-Blind Loss).}\label{prop:privilege-blind}
+\begin{proposition}[Privilege-Blind Loss]\label{prop:blind}
 \textit{If $P(x\mid H_1)=P(x\mid H_0)$ for every $x$, then $AF_{conf}(x)=P(H_1)$ for all $x$, and any ranking by $AF_{conf}$ has AUC $=0.5$.}
+\end{proposition}
 
 \textit{Proof.} Here $LR(x)=1$, so $AF_{conf}(x)=P(H_1)/(P(H_1)+1-P(H_1))=P(H_1)$. The score is constant and ranks all samples equally. $\square$
 
 Privilege metadata therefore separates deliberate wiping from routine loss only to the extent that wiping targets privileged hosts. Table~\ref{tab:root-sweep} measures this dependence, so AUC $\approx 0.80$ should not be read as a property of the metric alone.
 
 \paragraph{Operating Points and Step-Function Threshold Behavior.}
-Under the binary privilege formulation with operational prior $P(H_1) = 0.15$, $AF_{conf}$ evaluates to exactly two discrete score levels, namely $0.0475$ for unprivileged nodes and $0.5323$ for root/administrative nodes. Because of this binary structure, threshold behavior is a step function rather than a continuous curve, as detailed in Table~\ref{tab:far}. At threshold $0.50$, all root nodes are flagged (496,279 samples across 30 seeds), achieving 0.773 precision, 0.852 recall, and 0.810 F1, while incurring a false-accusation rate (FAR) of 25.0\% against random benign loss (25.4\% against rotation loss). For any threshold above $0.5323$ (including 0.70, 0.85, and 0.90), the classifier flags exactly zero alerts. Thus, a 0.0\% FAR at 0.85 would reflect classification silence, not discrimination. The scores assume $P_{root,H_0} = 11.6\%$, the root share of all hosts, whereas 25.0\% of Random-Benign samples fall on root nodes, which explains why FAR at $\theta \ge 0.50$ equals 25.0\%. In practice, operational alerting requires either calibrating the baseline prior $P(H_1)$ to shift the discrete score levels or incorporating multi-tier privilege models.
+Under the binary privilege formulation with operational prior $P(H_1) = 0.15$, $AF_{conf}$ evaluates to exactly two discrete score levels, namely $0.0475$ for unprivileged nodes and $0.5323$ for root/administrative nodes. Because of this binary structure, threshold behavior is a step function rather than a continuous curve, as detailed in Table~\ref{tab:far}. At threshold $0.50$, all root nodes are flagged (496,279 samples across 30 seeds), achieving 0.773 precision, 0.852 recall, and 0.810 F1, while incurring a false-accusation rate (FAR) of 25.0\% against random benign loss (25.4\% against rotation loss). For any threshold above $0.5323$ (including 0.70, 0.85, and 0.90), the classifier flags exactly zero alerts. Thus, a 0.0\% FAR at 0.85 would reflect classification silence, not discrimination. The scores assume $P_{root,H_0} = 11.6\%$, the root share of all hosts, whereas 25.0\% of Random-Benign samples fall on root nodes. FAR at $\theta \ge 0.50$ equals that root share, more than twice the 11.6\% the scores assume. In practice, operational alerting requires either calibrating the baseline prior $P(H_1)$ to shift the discrete score levels or incorporating multi-tier privilege models.
 
 \begin{table}[t]
 \centering
@@ -468,7 +472,7 @@ $\ge 0.90$ & 0 & --- & 0.000 & --- & 0.0\% & 0.0\% \\
 \end{table}
 
 \paragraph{Privilege Bias Circularity and Limitations.}
-To test whether the headline discrimination ($\text{AUC} \approx 0.801$) is driven by F-TAG's structural modeling or circular dependence on the wipe generator's privilege bias, we swept the wipe generator's root-node selection weight across $1\times, 2\times, 5\times$, and $10\times$ across 30 seeds (900,900 samples total) in Table~\ref{tab:root-sweep}. At $1\times$ the wipe class still contains 36.5\% root nodes, because chokepoint scaling favors pivot hosts, so AUC falls to 0.5574 with 95\% CI [0.5566, 0.5583] rather than to the privilege-blind floor of 0.5 (Proposition~\ref{prop:privilege-blind}). As root targeting bias increases to $2\times$, $5\times$, and $10\times$, the mean AUC rises monotonically to $0.6421$, $0.7459$, and $0.8007$, respectively. This demonstrates that $AF_{conf}$'s discriminative power strictly tracks the attacker's own privilege targeting bias rather than an independent structural signal. We report this honestly as a limitation of binary privilege metadata. When an attacker wipes logs uniformly without privilege preference, $AF_{conf}$ cannot separate deliberate wiping from accidental loss. Addressing this requires privilege-agnostic loss models (e.g., volumetric anomaly detection and telemetry continuity checks) in future work.
+To test whether the headline discrimination ($\text{AUC} \approx 0.801$) is driven by F-TAG's structural modeling or circular dependence on the wipe generator's privilege bias, we swept the wipe generator's root-node selection weight across $1\times, 2\times, 5\times$, and $10\times$ across 30 seeds (900,900 samples total) in Table~\ref{tab:root-sweep}. At $1\times$ the wipe class still contains 36.5\% root nodes, because chokepoint scaling favors pivot hosts, so AUC falls to 0.5574 with 95\% CI [0.5566, 0.5583] rather than to the privilege-blind floor of 0.5 (Proposition~\ref{prop:blind}). As root targeting bias increases to $2\times$, $5\times$, and $10\times$, the mean AUC rises monotonically to $0.6421$, $0.7459$, and $0.8007$, respectively. This demonstrates that $AF_{conf}$'s discriminative power strictly tracks the attacker's own privilege targeting bias rather than an independent structural signal. We report this honestly as a limitation of binary privilege metadata. When an attacker wipes logs uniformly without privilege preference, $AF_{conf}$ cannot separate deliberate wiping from accidental loss. Addressing this requires privilege-agnostic loss models (e.g., volumetric anomaly detection and telemetry continuity checks) in future work.
 
 \begin{table}[t]
 \centering
@@ -496,7 +500,7 @@ We evaluated the computational performance of F-TAG on synthetic F-TAGs represen
 
 \begin{table}[t]
 \centering
-\caption{F-TAG Empirical Scalability across 3-Tier Enterprise Topologies ($\tau=5$ windows, $H_{max} \le 5$). Proactive MulVAL generation runs offline, while online triage measures path enumeration and metric evaluation.}
+\caption{F-TAG Empirical Scalability across 3-Tier Enterprise Networks ($\tau=5$ windows, $H_{max} \le 5$). Proactive MulVAL generation runs offline, while online triage measures path enumeration and metric evaluation.}
 \label{tab:scalability}
 \footnotesize
 \begin{tabular}{ccccc}
@@ -516,13 +520,13 @@ Table~\ref{tab:scalability} reports computational scalability, separating proact
 
 \section{Discussion and Threats to Validity}\label{sec:discussion}\label{sec:threats}
 
-By injecting evidence as strict filters over time-varying topologies, F-TAG eliminates static attack graphs' structural failure modes while sustaining real-time triage ($O(|\mathcal{P}_{surviving}| \cdot H_{max})$, under 15\,ms for 99 hosts). However, F-TAG operates within six boundaries. First, empirical validation relies on 2000-era DARPA LLDOS data, with noise evaluated under bounded synthetic skew of $\pm 1$ window in Table~\ref{tab:falsification}. Second, topological redundancy can absorb contradictory evidence when parallel paths exist, bounding falsification detection. Third, $AF_{conf}$ thresholds were calibrated on synthetic graphs, so evaluating against live SIEM telemetry with verified ground truth is the next step. Fourth, the binary privilege model serves as a baseline floor, while richer hierarchies (SELinux, AD) will expand discrimination. Fifth, dense topologies benefit from subnet aggregation to sustain enterprise scalability. Finally, F-TAG treats configuration snapshots and scans as tamper-resistant ground truth. If scan data originates from compromised infrastructure, the reference frame itself is compromised, representing a trust boundary common to all attack graphs.
+By injecting evidence as strict filters over time-varying networks, F-TAG eliminates static attack graphs' structural failure modes while sustaining real-time triage ($O(|\mathcal{P}_{surviving}| \cdot H_{max})$, under 15\,ms for 99 hosts). However, F-TAG operates within six boundaries. First, empirical validation relies on 2000-era DARPA LLDOS data and author-built simulators for falsifications, wipes and noise (bounded $\pm 1$ skew in Table~\ref{tab:falsification}). Second, topological redundancy can absorb contradictory evidence when parallel paths exist, bounding falsification detection. Third, $AF_{conf}$ thresholds were calibrated on synthetic graphs, so evaluating against live SIEM telemetry with verified ground truth is the next step. Fourth, the binary privilege model serves as a baseline floor, while richer hierarchies (SELinux, AD) will expand discrimination. Fifth, dense topologies benefit from subnet aggregation to sustain enterprise scalability. Finally, F-TAG treats configuration snapshots and scans as tamper-resistant ground truth. If scan data originates from compromised infrastructure, the reference frame itself is compromised, representing a trust boundary common to all attack graphs.
 
 \paragraph{Adversarial Dormancy Boundary.}\label{sec:adversarial-dormancy} Block C of Table~\ref{tab:dormant-apt} stress-tests FWoC against a simulated dormant APT with an 18-window gap, which violates Assumption A, where containment is 0\% at $N=1$ and recovers to 100\% only at $N=5$, where $\delta_s=0$ and every hop is observed. Analysts investigating dormancy should widen $\delta_s$ or treat FWoC as an inner estimate of the intrusion window. A replication package is available at \url{https://github.com/ayangain/TAG-Forensics}.
 
 \begin{table}[tb]
 \centering
-\caption{FWoC width and containment across contiguous execution and dormancy gaps (MulVAL synthetic, 30 seeds $\times$ 100 trials).}
+\caption{FWoC width and containment across contiguous execution and dormancy gaps (MulVAL synthetic, where Blocks A and B are exact enumerations over observed-hop subsets and only Block C is Monte Carlo with 30 seeds $\times$ 100 trials).}
 \label{tab:dormant-apt}
 \footnotesize
 \begin{tabular}{lccc}
@@ -552,7 +556,7 @@ By injecting evidence as strict filters over time-varying topologies, F-TAG elim
 \end{table}
 
 \section{Conclusion}\label{sec:conclusion}
-We introduced F-TAG, a retrospective forensic model that constrains attack sequence reconstruction over time-varying topologies. We derived the Forensic Window of Compromise (FWoC) to bound unobserved actions, characterized its breakdown under dormancy, and formulated Bayesian $AF_{conf}$ to evaluate deliberate log wiping. Across DARPA LLDOS and enterprise topologies, F-TAG eliminates timeless path assembly and detects structural falsifications that static graphs miss.
+We introduced F-TAG to constrain retrospective sequence reconstruction over time-varying networks. We derived the Forensic Window of Compromise (FWoC) to bound unobserved actions, characterized its breakdown under dormancy, and formulated $AF_{conf}$ to evaluate deliberate log wiping. Across DARPA LLDOS and enterprise networks, F-TAG eliminates timeless path assembly and detects structural falsifications that static attack graphs miss, while $AF_{conf}$'s discrimination tracks attacker privilege targeting (AUC 0.80 falling to 0.56).
 
 \section{Future Work}\label{sec:future-work}
 Future work will explore multi-level privilege hierarchies (e.g., SELinux and Active Directory) and telemetry continuity checks to address privilege-bias circularity. Extending F-TAG to continuous sliding windows and live SIEM telemetry represents the natural next step toward operational deployment.
